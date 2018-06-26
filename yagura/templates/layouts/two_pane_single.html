@@ -1,0 +1,22 @@
+{% extends 'layouts/bootstrap4.html' %}
+{% load static %}
+
+{% block bootstrap4_extra_head %}
+<link href="{% static '/layouts/two-pane.css' %}" rel="stlyesheet">
+{% endblock %}
+
+{% block bootstrap4_content %}
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'sites:list' %}">Yagura</a>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+{% endblock %}
