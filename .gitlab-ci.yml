@@ -18,3 +18,15 @@ pytest:
     - pip install -r requirements.txt -r requirements/test.txt
     - pytest
 
+build-testpypi-packages:
+  stage: build
+  only:
+    - master
+    - /^release\/.*$/
+  script:
+    - tools/gen_pypirc
+    - tools/gen_dev_ver
+    - pip install -r requirements/packaging.txt
+    - python setup.py sdist bdist_wheel
+    - twine upload -r testpypi dist/*
+
