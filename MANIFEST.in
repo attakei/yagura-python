@@ -1,0 +1,8 @@
+include README.rst
+include LICENSE
+include MANIFEST.in
+include requirements.txt
+recursive-include requirements *.txt
+recursive-include docs *
+recursive-include yagura *
+recursive-exclude yagura *.pyc
