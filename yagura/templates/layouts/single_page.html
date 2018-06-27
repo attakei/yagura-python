@@ -1,0 +1,15 @@
+{% extends 'layouts/bootstrap4.html' %}
+{% load static %}
+
+{% block bootstrap4_extra_head %}
+<link href="{% static '/layouts/top.css' %}" rel="stlyesheet">
+{% endblock %}
+
+{% block bootstrap4_content %}
+  {% block content_section %}{% endblock %}
+  <div class="py-5">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
