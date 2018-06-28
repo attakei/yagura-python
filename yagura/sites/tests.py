@@ -48,7 +48,7 @@ class SiteCreate_ViewTest(ViewTestCase):
         self.client.force_login(user)
         resp = self.client.post(self.url, {'url': 'http://example.com/'})
         assert resp.status_code == 302
-        site = Site.objects.first()
+        site = Site.objects.filter(url='http://example.com/').first()
         assert site.created_by == user
 
 
