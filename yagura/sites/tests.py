@@ -41,6 +41,29 @@ class SiteList_ViewTest(TestCase):
         assert resp.status_code == 200
 
 
+class SiteCreate_ViewTest(TestCase):
+    fixtures = [
+        'initial',
+        'unittest_suite',
+    ]
+
+    url = reverse_lazy('sites:create')
+
+    def test_login_required(self):
+        client = Client()
+        resp = client.post(self.url, {'url': 'http://example.com/'})
+        assert resp.status_code == 302
+
+    def test_add(self):
+        user = get_user_model().objects.first()
+        client = Client()
+        client.force_login(user)
+        resp = client.post(self.url, {'url': 'http://example.com/'})
+        assert resp.status_code == 302
+        site = Site.objects.first()
+        assert site.created_by == user
+
+
 class SiteDetail_ViewTest(TestCase):
     fixtures = [
         'initial',
