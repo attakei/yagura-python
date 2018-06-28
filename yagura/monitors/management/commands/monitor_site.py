@@ -9,6 +9,28 @@ from yagura.monitors.models import StateHistory
 from yagura.sites.models import Site
 
 
+def monitor_site(site):
+    try:
+        resp = urlopen(site.url)
+        return 'OK' if resp.code == 200 else 'NG'
+    except HTTPError:
+        return 'NG'
+
+
+def handle_state(site, state, monitor_date):
+    current = StateHistory.objects.filter(site=site).last()
+    if current is None:
+        StateHistory.objects.create(site=site, state=state)
+        return
+    if current.state == state:
+        current.save()
+        return
+    current.end_at = monitor_date
+    current.save()
+    StateHistory.objects.create(
+        site=site, state=state, begin_at=monitor_date)
+
+
 class Command(BaseCommand):
     help = 'monitor specified website'
 
@@ -28,19 +50,5 @@ class Command(BaseCommand):
             site = Site.objects.get(pk=site_id)
         except Site.DoesNotExist:
             raise CommandError(f"Site is not found")
-        try:
-            resp = urlopen(site.url)
-            state = 'OK' if resp.code == 200 else 'NG'
-        except HTTPError:
-            state = 'NG'
-        current = StateHistory.objects.filter(site=site).last()
-        if current is None:
-            StateHistory.objects.create(site=site, state=state)
-            return
-        if current.state == state:
-            current.save()
-            return
-        current.end_at = monitor_date
-        current.save()
-        StateHistory.objects.create(
-            site=site, state=state, begin_at=monitor_date)
+        state = monitor_site(site)
+        handle_state(site, state, monitor_date)

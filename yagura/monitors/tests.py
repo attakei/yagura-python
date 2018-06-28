@@ -106,7 +106,7 @@ class MonitorAll_CommandTest(TestCase):
     ]
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_all.urlopen',
+        'yagura.monitors.management.commands.monitor_site.urlopen',
         side_effect=mocked_urlopen
     )
     def test_save_all_states(self, mock_get):
@@ -115,7 +115,7 @@ class MonitorAll_CommandTest(TestCase):
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_all.urlopen',
+        'yagura.monitors.management.commands.monitor_site.urlopen',
         side_effect=mocked_urlopen
     )
     def test_states_not_changed(self, mock_get):
@@ -124,7 +124,7 @@ class MonitorAll_CommandTest(TestCase):
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_all.urlopen',
+        'yagura.monitors.management.commands.monitor_site.urlopen',
         side_effect=mocked_urlopen
     )
     def test_states_changed(self, mock_get):
