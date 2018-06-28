@@ -98,3 +98,39 @@ class MonitorSite_CommandTest(TestCase):
         before = StateHistory.objects.first()
         after = StateHistory.objects.last()
         assert before.end_at == after.begin_at
+
+
+class MonitorAll_CommandTest(TestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+
+    @mock.patch(
+        'yagura.monitors.management.commands.monitor_all.urlopen',
+        side_effect=mocked_urlopen
+    )
+    def test_save_all_states(self, mock_get):
+        out, err = run_command('monitor_all')
+        print(StateHistory.objects.first().site)
+        assert StateHistory.objects.count() == 2
+
+    @mock.patch(
+        'yagura.monitors.management.commands.monitor_all.urlopen',
+        side_effect=mocked_urlopen
+    )
+    def test_states_not_changed(self, mock_get):
+        self.test_save_all_states()
+        out, err = run_command('monitor_all')
+        assert StateHistory.objects.count() == 2
+
+    @mock.patch(
+        'yagura.monitors.management.commands.monitor_all.urlopen',
+        side_effect=mocked_urlopen
+    )
+    def test_states_changed(self, mock_get):
+        self.test_save_all_states()
+        site = Site.objects.first()
+        site.url += '403'
+        site.save()
+        out, err = run_command('monitor_all')
+        assert StateHistory.objects.count() == 3
