@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 
-# Create your views here.
+from yagura.sites.models import Site
+
+
+class SiteListView(LoginRequiredMixin, ListView):
+    model = Site

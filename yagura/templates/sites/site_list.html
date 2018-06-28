@@ -1,0 +1,16 @@
+{% extends 'layouts/two_pane.html' %}
+{% load bootstrap4 %}
+
+{% block content_main %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h2>List of web sites</h2>
+  {% bootstrap_button 'Add new site' 'link' href='/sites/new' %}
+</div>
+<div>
+  <ul>
+    {% for site in site_list %}
+    <li>{{ site.url }}</li>
+    {% endfor %}
+  <ul>
+</div>
+{% endblock %}
