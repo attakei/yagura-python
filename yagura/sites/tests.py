@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.test import Client, TestCase, override_settings
+from django.test import TestCase, override_settings
 from django.urls import reverse_lazy
 from parameterized import parameterized
 
 from yagura.sites.models import Site
+from yagura.tests.base import ViewTestCase
 
 
 class Site_ModelTest(TestCase):
@@ -21,76 +22,54 @@ class Site_ModelTest(TestCase):
         assert site.get_absolute_url() == site_url
 
 
-class SiteList_ViewTest(TestCase):
-    fixtures = [
-        'initial',
-        'unittest_suite',
-    ]
-
+class SiteList_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:list')
 
     def test_login_required(self):
-        client = Client()
-        resp = client.get(self.url)
+        resp = self.client.get(self.url)
         assert resp.status_code == 302
 
     def test_logined_user(self):
         user = get_user_model().objects.first()
-        client = Client()
-        client.force_login(user)
-        resp = client.get(self.url)
+        self.client.force_login(user)
+        resp = self.client.get(self.url)
         assert resp.status_code == 200
 
 
-class SiteCreate_ViewTest(TestCase):
-    fixtures = [
-        'initial',
-        'unittest_suite',
-    ]
-
+class SiteCreate_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:create')
 
     def test_login_required(self):
-        client = Client()
-        resp = client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, {'url': 'http://example.com/'})
         assert resp.status_code == 302
 
     def test_add(self):
         user = get_user_model().objects.first()
-        client = Client()
-        client.force_login(user)
-        resp = client.post(self.url, {'url': 'http://example.com/'})
+        self.client.force_login(user)
+        resp = self.client.post(self.url, {'url': 'http://example.com/'})
         assert resp.status_code == 302
         site = Site.objects.first()
         assert site.created_by == user
 
 
-class SiteDetail_ViewTest(TestCase):
-    fixtures = [
-        'initial',
-        'unittest_suite',
-    ]
-
+class SiteDetail_ViewTest(ViewTestCase):
     url = reverse_lazy(
         'sites:detail',
         args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
 
     def test_login_required(self):
-        client = Client()
-        resp = client.get(self.url)
+        resp = self.client.get(self.url)
         assert resp.status_code == 302
 
     def test_logined_user(self):
-        client = Client()
-        client.force_login(get_user_model().objects.first())
-        resp = client.get(self.url)
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
         assert resp.status_code == 200
 
     def test_not_found(self):
-        client = Client()
-        client.force_login(get_user_model().objects.first())
+        self.client.force_login(get_user_model().objects.first())
         url = reverse_lazy(
             'sites:detail',
             args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
-        resp = client.get(url)
+        resp = self.client.get(url)
         assert resp.status_code == 404
