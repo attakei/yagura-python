@@ -23,6 +23,7 @@ class Site_ModelTest(TestCase):
 
 class SiteList_ViewTest(TestCase):
     fixtures = [
+        'initial',
         'unittest_suite',
     ]
 
@@ -34,9 +35,9 @@ class SiteList_ViewTest(TestCase):
         assert resp.status_code == 302
 
     def test_logined_user(self):
-        get_user_model().objects.create_user('test')
+        user = get_user_model().objects.first()
         client = Client()
-        client.force_login(get_user_model().objects.first())
+        client.force_login(user)
         resp = client.get(self.url)
         assert resp.status_code == 200
 
