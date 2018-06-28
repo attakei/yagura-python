@@ -43,6 +43,12 @@ class SiteCreate_ViewTest(ViewTestCase):
         resp = self.client.post(self.url, {'url': 'http://example.com/'})
         assert resp.status_code == 302
 
+    def test_get_form(self):
+        user = get_user_model().objects.first()
+        self.client.force_login(user)
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+
     def test_add(self):
         user = get_user_model().objects.first()
         self.client.force_login(user)
