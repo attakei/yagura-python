@@ -1,8 +1,6 @@
 from django.urls import path
 
-from yagura.sites.views import (
-    SiteCreateView, SiteDetailView, SiteListView,
-)
+from yagura.sites.views import SiteCreateView, SiteDetailView, SiteListView
 
 app_name = 'sites'
 urlpatterns = [
