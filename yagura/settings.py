@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # Third-party apps
     'bootstrap4',
     'registration',
+    # Yagura core apps
+    'yagura.sites',
 ]
 
 MIDDLEWARE = [
