@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-party apps
     'bootstrap4',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'yagura', 'static'),
 ]
 
+
+# Fixtures
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, 'yagura', 'fixtures'),
+]
+
 # django-bootstrap4
 BOOTSTRAP4 = {
     'include_jquery': 'full',
 }
+
+
+# django-registration
+ACCOUNT_ACTIVATION_DAYS = 7

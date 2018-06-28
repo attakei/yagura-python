@@ -1,0 +1,11 @@
+{% autoescape off %}
+Hello {{ user.username }}!
+
+Welcome to Yagura.
+
+If you want to use features of this service, please complete activation by
+click this URL.
+
+{{ scheme }}://{{ site }}{% url 'registration_activate' activation_key %}
+
+{% endautoescape %}
