@@ -9,7 +9,7 @@
 <div>
   <ul>
     {% for site in site_list %}
-    <li>{{ site.url }}</li>
+    <li><a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a></li>
     {% endfor %}
   <ul>
 </div>

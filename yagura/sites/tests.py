@@ -39,3 +39,34 @@ class SiteList_ViewTest(TestCase):
         client.force_login(get_user_model().objects.first())
         resp = client.get(self.url)
         assert resp.status_code == 200
+
+
+class SiteDetail_ViewTest(TestCase):
+    fixtures = [
+        'initial',
+        'unittest_suite',
+    ]
+
+    url = reverse_lazy(
+        'sites:detail',
+        args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+
+    def test_login_required(self):
+        client = Client()
+        resp = client.get(self.url)
+        assert resp.status_code == 302
+
+    def test_logined_user(self):
+        client = Client()
+        client.force_login(get_user_model().objects.first())
+        resp = client.get(self.url)
+        assert resp.status_code == 200
+
+    def test_not_found(self):
+        client = Client()
+        client.force_login(get_user_model().objects.first())
+        url = reverse_lazy(
+            'sites:detail',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
+        resp = client.get(url)
+        assert resp.status_code == 404
