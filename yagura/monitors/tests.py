@@ -3,7 +3,7 @@ from django.test import TestCase
 from yagura.sites.models import Site
 
 
-class SiteState_ModelTest(TestCase):
+class StateHistory_ModelTest(TestCase):
     fixtures = [
         'unittest_suite',
     ]

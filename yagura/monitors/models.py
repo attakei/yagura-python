@@ -9,8 +9,8 @@ WEBSITE_STATE_CHOICES = (
 )
 
 
-class SiteState(models.Model):
-    """State histories per sites
+class StateHistory(models.Model):
+    """State history per sites
     """
     site = models.ForeignKey(
         Site, on_delete=models.CASCADE, related_name='states')
