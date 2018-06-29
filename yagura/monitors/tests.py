@@ -2,6 +2,8 @@ from unittest import mock
 from urllib.error import HTTPError
 
 import pytest
+from django.contrib.auth import get_user_model
+from django.core import mail
 from django.core.management.base import CommandError
 from django.test import TestCase
 from django.utils.six import StringIO
@@ -34,8 +36,14 @@ class StateHistory_ModelTest(TestCase):
 
 class MonitorSite_CommandTest(TestCase):
     fixtures = [
+        'initial',
         'unittest_suite',
     ]
+
+    def setUp(self):
+        super().setUp()
+        owner = get_user_model().objects.first()
+        Site.objects.update(created_by=owner)
 
     def test_not_uuid(self):
         with pytest.raises(CommandError) as err:
@@ -69,6 +77,7 @@ class MonitorSite_CommandTest(TestCase):
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'NG'
+        assert len(mail.outbox) == 1
 
     @mock.patch(
         'yagura.monitors.services.urlopen',
@@ -98,12 +107,21 @@ class MonitorSite_CommandTest(TestCase):
         before = StateHistory.objects.first()
         after = StateHistory.objects.last()
         assert before.end_at == after.begin_at
+        assert len(mail.outbox) == 2
+        mail_body = mail.outbox[1].body
+        assert 'changing state' in mail_body
 
 
 class MonitorAll_CommandTest(TestCase):
     fixtures = [
+        'initial',
         'unittest_suite',
     ]
+
+    def setUp(self):
+        super().setUp()
+        owner = get_user_model().objects.first()
+        Site.objects.update(created_by=owner)
 
     @mock.patch(
         'yagura.monitors.services.urlopen',

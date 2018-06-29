@@ -1,6 +1,8 @@
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
+from templated_email import send_templated_mail
+
 from yagura.monitors.models import StateHistory
 
 
@@ -15,7 +17,8 @@ def monitor_site(site):
 def handle_state(site, state, monitor_date):
     current = StateHistory.objects.filter(site=site).last()
     if current is None:
-        StateHistory.objects.create(site=site, state=state)
+        current = StateHistory.objects.create(site=site, state=state)
+        send_state_email(current, 'monitors/handle_state_first')
         return
     if current.state == state:
         current.save()
@@ -24,3 +27,19 @@ def handle_state(site, state, monitor_date):
     current.save()
     StateHistory.objects.create(
         site=site, state=state, begin_at=monitor_date)
+    send_state_email(current, 'monitors/handle_state_changed')
+
+
+def send_state_email(current, template_name):
+    owner = current.site.created_by
+    context = {
+        'site': current.site,
+        'history': current,
+        'owner': owner,
+    }
+    send_templated_mail(
+        template_name=template_name,
+        from_email='yagura@exemple.com',
+        recipient_list=[owner.email],
+        context=context,
+    )

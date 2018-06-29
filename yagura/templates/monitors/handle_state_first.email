@@ -1,0 +1,9 @@
+{% block subject %}State is {{ history.state }}: {{ site.url }}{% endblock %}
+
+{% block plain %}
+Hi {{ owner.full_name }},
+
+Yagura has detected new state "{{ history.state }}" from your monitoring website.
+
+URL is {{ site.url }}
+{% endblock %}
