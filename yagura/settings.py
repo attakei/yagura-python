@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'registration',
     # Yagura core apps
     'yagura.sites',
+    'yagura.monitors',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +144,7 @@ BOOTSTRAP4 = {
 
 # django-registration
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# django-templated-email
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
+TEMPLATED_EMAIL_TEMPLATE_DIR = ''
