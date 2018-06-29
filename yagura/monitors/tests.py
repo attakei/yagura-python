@@ -49,7 +49,7 @@ class MonitorSite_CommandTest(TestCase):
         assert 'not found' in str(err)
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_site_found(self, mock_get):
@@ -60,7 +60,7 @@ class MonitorSite_CommandTest(TestCase):
         assert state.state == 'OK'
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_site_not_found(self, mock_get):
@@ -71,7 +71,7 @@ class MonitorSite_CommandTest(TestCase):
         assert state.state == 'NG'
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_keep_state(self, mock_get):
@@ -84,7 +84,7 @@ class MonitorSite_CommandTest(TestCase):
         assert before_updated != after_updated
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_change_state(self, mock_get):
@@ -106,7 +106,7 @@ class MonitorAll_CommandTest(TestCase):
     ]
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_save_all_states(self, mock_get):
@@ -115,7 +115,7 @@ class MonitorAll_CommandTest(TestCase):
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_states_not_changed(self, mock_get):
@@ -124,7 +124,7 @@ class MonitorAll_CommandTest(TestCase):
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
-        'yagura.monitors.management.commands.monitor_site.urlopen',
+        'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
     def test_states_changed(self, mock_get):
