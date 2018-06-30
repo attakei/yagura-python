@@ -1,4 +1,4 @@
-from yagura.settings import *
+from yagura.settings.base import *
 
 
 DATABASES = {
