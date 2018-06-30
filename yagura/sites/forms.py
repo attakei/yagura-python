@@ -14,6 +14,7 @@ class SiteCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def clean(self):
+        # TODO: Implements method only to check site limit
         if self.request.user.is_superuser:
             return
         sites_limit = getattr(settings, 'YAGURA_SITES_LIMIT', 1)

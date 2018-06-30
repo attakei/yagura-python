@@ -29,6 +29,7 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
+        # TODO: Must save 'created_by' in form cobject
         site = form.instance
         site.created_by = self.request.user
         site.save()
