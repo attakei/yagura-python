@@ -1,3 +1,7 @@
+import os
+
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
@@ -8,6 +12,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self._run_command('flush', '--noinput')
         self._run_command('loaddata', 'initial')
+        if hasattr(settings, 'YAGURA_DEMO_ADMIN_PASSWORD'):
+            user = get_user_model().objects.get(username='admin')
+            user.set_password(settings.YAGURA_DEMO_ADMIN_PASSWORD)
+            user.save()
+        if 'YAGURA_DEMO_ADMIN_PASSWORD' in os.environ:
+            user = get_user_model().objects.get(username='admin')
+            user.set_password(os.environ['YAGURA_DEMO_ADMIN_PASSWORD'])
+            user.save()
 
     def _run_command(self, *args):
         """Shortcut of call_command that bind stdout and stderr
