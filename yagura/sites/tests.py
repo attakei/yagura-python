@@ -73,6 +73,15 @@ class SiteCreate_ViewTest(ViewTestCase):
         resp = self.client.post(self.url, {'url': 'http://example.com/'})
         assert resp.status_code == 302
 
+    @override_settings(YAGURA_SITES_LIMIT=1)
+    def test_post_superuser(self):
+        """If user is granted as superuser, not limit sites.
+        """
+        self.client.force_login(get_user_model().objects.first())
+        self.client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, {'url': 'http://example.com/2'})
+        assert resp.status_code == 302
+
 
 class SiteDetail_ViewTest(ViewTestCase):
     url = reverse_lazy(
