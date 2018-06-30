@@ -2,6 +2,7 @@ import os
 from unittest import mock
 
 from django.contrib.auth import get_user_model
+from django.core import mail
 from django.test import TestCase, override_settings
 
 from yagura.monitors.models import StateHistory
@@ -44,3 +45,9 @@ class CleanupDb_CommandTest(TestCase):
         run_command('cleanup_db')
         admin = UserModel.objects.first()
         assert admin.check_password('Password?!1234')
+
+    def test_send_email(self):
+        run_command('cleanup_db')
+        assert len(mail.outbox) == 1
+        mail_body = mail.outbox[0].body
+        assert 'http://localhost' in mail_body
