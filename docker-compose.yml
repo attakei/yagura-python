@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    user: "${UID}:${GID}"
+    volumes:
+      - "./var:/app/var"
+    ports:
+      - "8000:8000"
+
