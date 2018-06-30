@@ -1,0 +1,9 @@
+{% block subject %}Yagura database is cleaned up{% endblock %}
+
+{% block plain %}
+Hi admin,
+
+Yagura database is cleaned up by automated.
+
+To access, go to {{ base_url }}/
+{% endblock %}

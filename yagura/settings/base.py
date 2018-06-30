@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,9 +41,11 @@ INSTALLED_APPS = [
     # Third-party apps
     'bootstrap4',
     'registration',
+    'django_crontab',
     # Yagura core apps
     'yagura.sites',
     'yagura.monitors',
+    'yagura.demo',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +151,11 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # django-templated-email
 TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 TEMPLATED_EMAIL_TEMPLATE_DIR = ''
+
+
+# --------------------------
+# Yagura core configuraitons
+# --------------------------
+# YAGURA_BASE_URL = ''
+#
+YAGURA_SITES_LIMIT = 1
