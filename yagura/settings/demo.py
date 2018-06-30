@@ -1,3 +1,5 @@
+"""Settings for Yagura demo site
+"""
 from yagura.settings.base import *
 
 CRONJOBS = [
