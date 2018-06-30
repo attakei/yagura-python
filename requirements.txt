@@ -3,3 +3,4 @@ django-bootstrap4
 django-registration
 django-templated-email
 django-crontab
+django-environ
