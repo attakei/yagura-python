@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Yagura core apps
     'yagura.sites',
     'yagura.monitors',
+    'yagura.demo',
 ]
 
 MIDDLEWARE = [
