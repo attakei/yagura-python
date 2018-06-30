@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Third-party apps
     'bootstrap4',
     'registration',
+    'django_crontab',
     # Yagura core apps
     'yagura.sites',
     'yagura.monitors',
