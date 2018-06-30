@@ -12,7 +12,7 @@ WORKDIR /app
 # PyPI Package installation
 COPY ./requirements.txt /tmp/
 RUN pip install --user -r /tmp/requirements.txt
-COPY ./ /app/
+COPY --chown=app:app ./ /app/
 
 # Run settings
 EXPOSE 8000
