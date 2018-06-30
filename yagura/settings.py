@@ -148,3 +148,11 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # django-templated-email
 TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 TEMPLATED_EMAIL_TEMPLATE_DIR = ''
+
+
+# --------------------------
+# Yagura core configuraitons
+# --------------------------
+# YAGURA_BASE_URL = ''
+#
+YAGURA_SITES_LIMIT = 1
