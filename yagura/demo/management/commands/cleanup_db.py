@@ -16,12 +16,7 @@ class Command(BaseCommand):
         self._run_command('flush', '--noinput')
         self._run_command('loaddata', 'initial')
         admin = get_user_model().objects.get(username='admin')
-        if hasattr(settings, 'YAGURA_DEMO_ADMIN_PASSWORD'):
-            admin.set_password(settings.YAGURA_DEMO_ADMIN_PASSWORD)
-            admin.save()
-        if 'YAGURA_DEMO_ADMIN_PASSWORD' in os.environ:
-            admin.set_password(os.environ['YAGURA_DEMO_ADMIN_PASSWORD'])
-            admin.save()
+        self._change_admin_profile(admin)
         send_templated_mail(
             template_name='demo/cleanup_db',
             from_email='yagura@exemple.com',
@@ -35,3 +30,15 @@ class Command(BaseCommand):
         """Shortcut of call_command that bind stdout and stderr
         """
         call_command(*args, stdout=self.stdout, stderr=self.stderr)
+
+    def _change_admin_profile(self, admin):
+        if hasattr(settings, 'YAGURA_DEMO_ADMIN_PASSWORD'):
+            admin.set_password(settings.YAGURA_DEMO_ADMIN_PASSWORD)
+        if 'YAGURA_DEMO_ADMIN_PASSWORD' in os.environ:
+            admin.set_password(os.environ['YAGURA_DEMO_ADMIN_PASSWORD'])
+        if hasattr(settings, 'YAGURA_DEMO_ADMIN_EMAIL'):
+            admin.email = settings.YAGURA_DEMO_ADMIN_EMAIL
+        if 'YAGURA_DEMO_ADMIN_EMAIL' in os.environ:
+            admin.email = os.environ['YAGURA_DEMO_ADMIN_EMAIL']
+        admin.save()
+        return admin

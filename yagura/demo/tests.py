@@ -46,6 +46,19 @@ class CleanupDb_CommandTest(TestCase):
         admin = UserModel.objects.first()
         assert admin.check_password('Password?!1234')
 
+    @override_settings(YAGURA_DEMO_ADMIN_EMAIL='dummy@example.com')
+    def test_change_email_by_settings(self):
+        run_command('cleanup_db')
+        admin = UserModel.objects.first()
+        assert admin.email == 'dummy@example.com'
+
+    @mock.patch.dict(
+        os.environ, {'YAGURA_DEMO_ADMIN_EMAIL': 'admin@example.com'})
+    def test_change_email_by_env(self):
+        run_command('cleanup_db')
+        admin = UserModel.objects.first()
+        assert admin.email == 'admin@example.com'
+
     def test_send_email(self):
         run_command('cleanup_db')
         assert len(mail.outbox) == 1
