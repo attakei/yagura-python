@@ -15,18 +15,17 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self._run_command('flush', '--noinput')
         self._run_command('loaddata', 'initial')
+        admin = get_user_model().objects.get(username='admin')
         if hasattr(settings, 'YAGURA_DEMO_ADMIN_PASSWORD'):
-            user = get_user_model().objects.get(username='admin')
-            user.set_password(settings.YAGURA_DEMO_ADMIN_PASSWORD)
-            user.save()
+            admin.set_password(settings.YAGURA_DEMO_ADMIN_PASSWORD)
+            admin.save()
         if 'YAGURA_DEMO_ADMIN_PASSWORD' in os.environ:
-            user = get_user_model().objects.get(username='admin')
-            user.set_password(os.environ['YAGURA_DEMO_ADMIN_PASSWORD'])
-            user.save()
+            admin.set_password(os.environ['YAGURA_DEMO_ADMIN_PASSWORD'])
+            admin.save()
         send_templated_mail(
             template_name='demo/cleanup_db',
             from_email='yagura@exemple.com',
-            recipient_list=['admin@example.com', ],
+            recipient_list=[admin.email],
             context={
                 'base_url': get_base_url(),
             },

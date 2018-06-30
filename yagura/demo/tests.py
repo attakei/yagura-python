@@ -50,4 +50,6 @@ class CleanupDb_CommandTest(TestCase):
         run_command('cleanup_db')
         assert len(mail.outbox) == 1
         mail_body = mail.outbox[0].body
+        mail_to = mail.outbox[0].to
         assert 'http://localhost' in mail_body
+        assert mail_to == ['root@localhost']
