@@ -15,17 +15,21 @@ env = environ.Env(
 )
 env.read_env(root('.env'))
 
-
 # System
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 DATABASES = {
     'default': env.db(),
 }
+EMAIL_CONFIG = env.email_url()
+vars().update(EMAIL_CONFIG)
+
+# django-crontab
+CRONTAB_DJANGO_SETTINGS_MODULE = env('DJANGO_SETTINGS_MODULE')
 
 # django-registration
 ACCOUNT_ACTIVATION_DAYS = env.int('YAGURA_ACTIVATION_DAYS', default=7)
 
 # Yagura app
-YAGURA_BASE_URL = env.url('YAGURA_BASE_URL', 'http://localhost:8000')
+YAGURA_BASE_URL = env('YAGURA_BASE_URL', default='http://localhost:8000')
 YAGURA_DEMO = env('YAGURA_DEMO', default=False)

@@ -4,3 +4,4 @@ django-registration
 django-templated-email
 django-crontab
 django-environ
+pyasn1
