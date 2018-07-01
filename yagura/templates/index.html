@@ -5,6 +5,11 @@
     <div class="container">
       <h1 class="jumbotron-heading">Yagura</h1>
       <p class="lead text-muted">Simple website monitoring</p> 
+      <p>
+        <a href="{% url 'login' %}" class="btn btn-primary my-2">Log in</a>
+        or
+        <a href="{% url 'registration_register' %}" class="my-2">Registration</a>
+      </p>
     </div>
   </section>
 {% endblock %}

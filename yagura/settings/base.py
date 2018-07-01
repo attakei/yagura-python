@@ -134,6 +134,9 @@ STATICFILES_DIRS = [
 ]
 
 
+# Auth
+LOGIN_REDIRECT_URL = 'sites:list'
+
 # Fixtures
 FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'yagura', 'fixtures'),
