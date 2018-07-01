@@ -1,6 +1,6 @@
 """Settings for Yagura demo site
 """
-from yagura.settings.base import *
+from yagura.settings.env import *
 
 CRONJOBS = [
     ('5 0 * * SUN', 'django.core.management.call_command', ['cleanup_db']),

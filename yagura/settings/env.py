@@ -13,6 +13,8 @@ root = environ.Path(__file__) - 3
 env = environ.Env(
     DEBUG=(bool, False),
 )
+env.read_env(root('.env'))
+
 
 # System
 DEBUG = env('DEBUG')
