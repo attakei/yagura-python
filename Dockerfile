@@ -7,7 +7,9 @@ RUN addgroup -g 1000 app \
     && mkdir /app \
     && chown app:app /app
 RUN apk add --no-cache sudo busybox-suid \
-	&& echo 'app ALL=(ALL) NOPASSWD: /usr/sbin/crond' > /etc/sudoers.d/app
+    && echo 'app ALL=(ALL) NOPASSWD: /usr/sbin/crond' > /etc/sudoers.d/app \
+    && touch /etc/crontabs/app
+
 USER app
 WORKDIR /app
 
