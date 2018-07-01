@@ -32,4 +32,5 @@ ACCOUNT_ACTIVATION_DAYS = env.int('YAGURA_ACTIVATION_DAYS', default=7)
 
 # Yagura app
 YAGURA_BASE_URL = env('YAGURA_BASE_URL', default='http://localhost:8000')
+YAGURA_EMAIL_FROM = env('YAGURA_EMAIL_FROM', default=YAGURA_EMAIL_FROM)
 YAGURA_DEMO = env('YAGURA_DEMO', default=False)

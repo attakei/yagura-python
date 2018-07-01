@@ -1,6 +1,7 @@
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
+from django.conf import settings
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
@@ -41,7 +42,7 @@ def send_state_email(current, template_name):
     }
     send_templated_mail(
         template_name=template_name,
-        from_email='yagura@exemple.com',
+        from_email=settings.YAGURA_EMAIL_FROM,
         recipient_list=[owner.email],
         context=context,
     )

@@ -158,4 +158,7 @@ TEMPLATED_EMAIL_TEMPLATE_DIR = ''
 # --------------------------
 # YAGURA_BASE_URL = ''
 #
+# Email addres used as from
+YAGURA_EMAIL_FROM = 'noreply@example.com'
+
 YAGURA_SITES_LIMIT = 1
