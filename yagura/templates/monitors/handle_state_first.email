@@ -3,10 +3,13 @@
 {% block plain %}
 Hi {{ owner.full_name }},
 
+
 Yagura has detected new state "{{ history.state }}" from your monitoring website.
 
-Website URL: {{ site.url }}
-Website state: {{ history.te }}
+* Website URL: {{ site.url }}
+
+* Website state: {{ history.state }}
+
 
 To see history, jump to {{ base_url }}{{ site.get_absolute_url }}
 {% endblock %}

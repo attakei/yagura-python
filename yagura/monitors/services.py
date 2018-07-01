@@ -1,4 +1,3 @@
-import os
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
@@ -6,6 +5,7 @@ from django.conf import settings
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
+from yagura.utils import get_base_url
 
 
 def monitor_site(site):
@@ -33,23 +33,16 @@ def handle_state(site, state, monitor_date):
 
 
 def send_state_email(current, template_name):
-    def _get_base_url():
-        key = 'YAGURA_BASE_URL'
-        if key in os.environ:
-            return os.environ[key]
-        elif hasattr(settings, key):
-            return getattr(settings, key)
-        return 'http://localhost'
     owner = current.site.created_by
     context = {
         'site': current.site,
         'history': current,
         'owner': owner,
-        'base_url': _get_base_url(),
+        'base_url': get_base_url(),
     }
     send_templated_mail(
         template_name=template_name,
-        from_email='yagura@exemple.com',
+        from_email=settings.YAGURA_EMAIL_FROM,
         recipient_list=[owner.email],
         context=context,
     )

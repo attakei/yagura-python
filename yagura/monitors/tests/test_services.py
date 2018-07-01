@@ -61,3 +61,11 @@ class SendStateEmail_Test(TestCase):
         assert len(mail.outbox) == 1
         mail_body = mail.outbox[0].body
         assert 'https://example.jp' in mail_body
+
+    @override_settings(YAGURA_EMAIL_FROM='test@example.com')
+    def test_from_email(self):
+        current = StateHistory.objects.create(
+            site=Site.objects.first(), state='OK')
+        send_state_email(current, 'monitors/handle_state_first')
+        mail_from = mail.outbox[0].from_email
+        assert mail_from == 'test@example.com'
