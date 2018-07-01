@@ -25,7 +25,7 @@ build-testpypi-packages:
     - /^release\/.*$/
   script:
     - bin/gen-pypirc
-    - bin/gen-dev-ver
+    - bin/gen-devver
     - pip install -r requirements/packaging.txt
     - python setup.py sdist bdist_wheel
     - twine upload -r testpypi dist/*
