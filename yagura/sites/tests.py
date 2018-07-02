@@ -104,3 +104,33 @@ class SiteDetail_ViewTest(ViewTestCase):
             args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
         resp = self.client.get(url)
         assert resp.status_code == 404
+
+
+class SiteDelete_ViewTest(ViewTestCase):
+    url = reverse_lazy(
+        'sites:delete',
+        args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+
+    def test_login_required(self):
+        resp = self.client.get(self.url)
+        assert resp.status_code == 302
+
+    def test_logined_user(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+
+    def test_not_found(self):
+        self.client.force_login(get_user_model().objects.first())
+        url = reverse_lazy(
+            'sites:detail',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
+        resp = self.client.get(url)
+        assert resp.status_code == 404
+
+    def test_confirmed(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.post(self.url)
+        assert resp.status_code == 302
+        assert resp['Location'] == reverse_lazy('sites:list')
+        assert Site.objects.count() == 1

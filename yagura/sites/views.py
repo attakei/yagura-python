@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic.list import ListView
 
 from yagura.sites.forms import SiteCreateForm
@@ -34,3 +35,8 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
         site.created_by = self.request.user
         site.save()
         return super().form_valid(form)
+
+
+class SiteDeleteView(LoginRequiredMixin, DeleteView):
+    model = Site
+    success_url = reverse_lazy('sites:list')
