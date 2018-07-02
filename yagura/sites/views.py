@@ -40,3 +40,14 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
 class SiteDeleteView(LoginRequiredMixin, DeleteView):
     model = Site
     success_url = reverse_lazy('sites:list')
+
+    def get_template_names(self):
+        if self.object.created_by == self.request.user:
+            return ['sites/site_confirm_delete.html']
+        return ['sites/site_delete_ng.html']
+
+    def post(self, request, *args, **kwargs):
+        site = self.get_object()
+        if site.created_by == request.user:
+            return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
