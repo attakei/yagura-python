@@ -9,4 +9,20 @@ align-items-center pb-2 mb-3 border-bottom">
 <div>
     {{ site.url }}
 </div>
+<div>
+  <h3>History</h3>
+  <table class="table keyvalue_table">
+    <tbody>
+      <tr>
+        <th>State</th><td>Range</td>
+      </tr>
+      {% for history in site.states.all reversed %}
+      <tr>
+        <td>{{ history.state }}</td>
+        <td>{{ history.begin_at }} - {{ history.updated_at }} {% if forloop.first %}(now){% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
