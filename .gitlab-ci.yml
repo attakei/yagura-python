@@ -30,3 +30,14 @@ build-testpypi-packages:
     - python setup.py sdist bdist_wheel
     - twine upload -r testpypi dist/*
 
+build-docker-image:
+  stage: build
+  only:
+    - master
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t registry.gitlab.com/attakei-lab/yagura:latest .
+    - docker push registry.gitlab.com/attakei-lab/yagura:latest
