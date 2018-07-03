@@ -1,12 +1,12 @@
-FROM python:3.6-alpine
+FROM python:3.6-alpine3.7
 LABEL maintainer "Kazuya Takei"
 
 # System
 RUN addgroup -g 1000 app \
     && adduser -G app -u 1000 -D -h /home/app app \
     && mkdir /app \
-    && chown app:app /app
-RUN apk add --no-cache sudo busybox-suid \
+    && chown app:app /app \
+    && apk add --no-cache sudo busybox-suid shadow \
     && echo 'app ALL=(ALL) NOPASSWD: /usr/sbin/crond' > /etc/sudoers.d/app \
     && touch /etc/crontabs/app
 

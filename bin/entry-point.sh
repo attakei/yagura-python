@@ -1,5 +1,8 @@
 #!/bin/sh
 
+usermod -u $APPUID -o -m app
+groupmod -g $APP_GID app
+
 if [ $# -ge 1 ] ; then
     mode=$1
 else
