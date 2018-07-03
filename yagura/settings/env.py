@@ -18,6 +18,8 @@ env.read_env(root('.env'))
 # System
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
+ALLOWED_HOSTS += env('ALLOWED_HOSTS', default='').split()
+
 DATABASES = {
     'default': env.db(),
 }
