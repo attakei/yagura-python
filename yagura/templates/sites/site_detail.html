@@ -5,8 +5,28 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap
 align-items-center pb-2 mb-3 border-bottom">
     <h2>Site detail</h2>
+    {% if site.created_by == request.user %}
+      {% url 'sites:delete' site.id as url_to_sites_delete %}
+      {% bootstrap_button 'Delete' 'link' href=url_to_sites_delete %}
+    {% endif %}
 </div>
 <div>
     {{ site.url }}
+</div>
+<div>
+  <h3>History</h3>
+  <table class="table keyvalue_table">
+    <tbody>
+      <tr>
+        <th>State</th><td>Range</td>
+      </tr>
+      {% for history in site.states.all reversed %}
+      <tr>
+        <td>{{ history.state }}</td>
+        <td>{{ history.begin_at }} - {{ history.updated_at }} {% if forloop.first %}(now){% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

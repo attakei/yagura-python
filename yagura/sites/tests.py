@@ -104,3 +104,50 @@ class SiteDetail_ViewTest(ViewTestCase):
             args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
         resp = self.client.get(url)
         assert resp.status_code == 404
+
+
+class SiteDelete_ViewTest(ViewTestCase):
+    url = reverse_lazy(
+        'sites:delete',
+        args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+
+    def setUp(self):
+        super().setUp()
+        owner = get_user_model().objects.first()
+        Site.objects.update(created_by=owner)
+
+    def test_login_required(self):
+        resp = self.client.get(self.url)
+        assert resp.status_code == 302
+
+    def test_logined_user(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+
+    def test_not_found(self):
+        self.client.force_login(get_user_model().objects.first())
+        url = reverse_lazy(
+            'sites:detail',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
+        resp = self.client.get(url)
+        assert resp.status_code == 404
+
+    def test_confirmed(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.post(self.url)
+        assert resp.status_code == 302
+        assert resp['Location'] == reverse_lazy('sites:list')
+        assert Site.objects.count() == 1
+
+    def test_only_owner__get(self):
+        user = get_user_model().objects.create_user('not-owner')
+        self.client.force_login(user)
+        resp = self.client.get(self.url)
+        assert 'sites/site_delete_ng.html' in resp.template_name
+
+    def test_only_owner__post(self):
+        user = get_user_model().objects.create_user('not-owner')
+        self.client.force_login(user)
+        resp = self.client.post(self.url)
+        assert resp.status_code == 200
