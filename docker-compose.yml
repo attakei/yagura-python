@@ -3,7 +3,6 @@ version: '2'
 services:
   app:
     build: .
-    user: "${UID}:${GID}"
     volumes:
       - "./var:/app/var"
     ports:
@@ -12,7 +11,6 @@ services:
     command: sh /app/bin/entry-point.sh web
   cron:
     build: .
-    user: "${UID}:${GID}"
     volumes:
       - "./var:/app/var"
     env_file: ".env"

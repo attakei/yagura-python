@@ -1,8 +1,5 @@
 #!/bin/sh
 
-usermod -u $APPUID -o -m app
-groupmod -g $APP_GID app
-
 if [ $# -ge 1 ] ; then
     mode=$1
 else
@@ -12,6 +9,10 @@ fi
 env >> /app/.env
 
 case $mode in
+    init)
+	python ./manage.py migrate
+	python ./manage.py loaddata initial
+	;;
     web)
         python ./manage.py runserver 0.0.0.0:8000
         ;;
