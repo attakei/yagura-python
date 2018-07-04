@@ -165,3 +165,9 @@ TEMPLATED_EMAIL_TEMPLATE_DIR = ''
 YAGURA_EMAIL_FROM = 'noreply@example.com'
 
 YAGURA_SITES_LIMIT = 1
+
+
+# --------------------------------------
+# Custom from Yagura configurations
+# --------------------------------------
+DEFAULT_FROM_EMAIL = YAGURA_EMAIL_FROM
