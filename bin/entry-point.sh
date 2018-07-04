@@ -18,6 +18,6 @@ case $mode in
         ;;
     cron)
         python ./manage.py crontab add
-        sudo crond -f -L /dev/stderr
+        crond -f -L /dev/stderr
         ;;
 esac
