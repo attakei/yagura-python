@@ -39,5 +39,5 @@ build-docker-image:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker build -t registry.gitlab.com/attakei-lab/yagura:latest .
-    - docker push registry.gitlab.com/attakei-lab/yagura:latest
+    - docker build -t registry.gitlab.com/attakei/yagura:latest .
+    - docker push registry.gitlab.com/attakei/yagura:latest
