@@ -9,7 +9,20 @@
 <div>
   <ul class="list-group">
     {% for site in site_list %}
-    <li class="list-group-item"><a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a></li>
+    {% with history=site.states.last %}
+    <li class="list-group-item">
+        {# Add badge for latest state #}
+        {% if history.state == "OK" %}
+        <span class="badge badge-success">OK</span>
+        {% elif history.state == "NG" %}
+        <span class="badge badge-danger">NG</span>
+        {% else %}
+        <span class="badge badge-secondary">Unknown</span>
+        {% endif %}
+
+        <a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a>
+    </li>
+    {% endwith %}
     {% endfor %}
   <ul>
 </div>
