@@ -42,7 +42,7 @@ def send_state_email(current, template_name):
     }
     send_templated_mail(
         template_name=template_name,
-        from_email=settings.YAGURA_EMAIL_FROM,
+        from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[owner.email],
         context=context,
     )

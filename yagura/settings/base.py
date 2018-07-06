@@ -91,6 +91,9 @@ DATABASES = {
     }
 }
 
+# Email sending
+DEFAULT_FROM_EMAIL = 'noreply@example.com'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -160,8 +163,5 @@ TEMPLATED_EMAIL_TEMPLATE_DIR = ''
 # Yagura core configuraitons
 # --------------------------
 # YAGURA_BASE_URL = ''
-#
-# Email addres used as from
-YAGURA_EMAIL_FROM = 'noreply@example.com'
 
 YAGURA_SITES_LIMIT = 1
