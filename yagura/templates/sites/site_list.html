@@ -7,9 +7,9 @@
   {% bootstrap_button 'Add new site' 'link' href='/sites/new' %}
 </div>
 <div>
-  <ul>
+  <ul class="list-group">
     {% for site in site_list %}
-    <li><a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a></li>
+    <li class="list-group-item"><a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a></li>
     {% endfor %}
   <ul>
 </div>
