@@ -20,7 +20,11 @@
         <span class="badge badge-secondary">Unknown</span>
         {% endif %}
 
-        <a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a>
+        <a href="{% url 'sites:detail' site.id %}">
+          <strong>{{ site.url }}</strong>
+        </a>
+
+        <small>(current state from {{ history.begin_at }})</small>
     </li>
     {% endwith %}
     {% endfor %}
