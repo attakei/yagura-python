@@ -7,9 +7,26 @@
   {% bootstrap_button 'Add new site' 'link' href='/sites/new' %}
 </div>
 <div>
-  <ul>
+  <ul class="list-group">
     {% for site in site_list %}
-    <li><a href="{% url 'sites:detail' site.id %}">{{ site.url }}</a></li>
+    {% with history=site.states.last %}
+    <li class="list-group-item">
+        {# Add badge for latest state #}
+        {% if history.state == "OK" %}
+        <span class="badge badge-success">OK</span>
+        {% elif history.state == "NG" %}
+        <span class="badge badge-danger">NG</span>
+        {% else %}
+        <span class="badge badge-secondary">Unknown</span>
+        {% endif %}
+
+        <a href="{% url 'sites:detail' site.id %}">
+          <strong>{{ site.url }}</strong>
+        </a>
+
+        <small>(from {{ history.begin_at }})</small>
+    </li>
+    {% endwith %}
     {% endfor %}
   <ul>
 </div>
