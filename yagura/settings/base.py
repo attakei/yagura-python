@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'registration',
     'django_crontab',
     # Yagura core apps
+    'yagura.accounts',
     'yagura.sites',
     'yagura.monitors',
     'yagura.demo',
