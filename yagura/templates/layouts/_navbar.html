@@ -7,6 +7,7 @@
           {{ request.user.full_name|default:request.user }}
         </a>
         <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button"><a href="{% url 'accounts:profile' %}">Profile</a></button>
           <button class="dropdown-item" type="button"><a href="{% url 'logout' %}">Log out</a></button>
         </div>
       </li>
