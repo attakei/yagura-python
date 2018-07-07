@@ -13,7 +13,7 @@ align-items-center pb-2 mb-3 border-bottom">
   <div>
     <form method="POST">
       {% csrf_token %}
-      {% trans 'Confirm' confirm_label %}
+      {% trans 'Confirm' as confirm_label %}
       {% bootstrap_button confirm_label 'submit' %}
     </form>
   </div>
