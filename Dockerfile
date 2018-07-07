@@ -10,6 +10,9 @@ COPY ./requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
 COPY ./ /app/
 
+RUN apk add --no-cache --update gettext \
+    && python manage.py compilemessages
+
 # Run settings
 EXPOSE 8000
 ENV DJANGO_SETTINGS_MODULE=yagura.settings.env
