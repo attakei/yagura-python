@@ -27,7 +27,7 @@ def handle_state(site, state, monitor_date):
         return
     current.end_at = monitor_date
     current.save()
-    StateHistory.objects.create(
+    current = StateHistory.objects.create(
         site=site, state=state, begin_at=monitor_date)
     send_state_email(current, 'monitors/handle_state_changed')
 

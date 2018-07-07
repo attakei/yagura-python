@@ -110,6 +110,7 @@ class MonitorSite_CommandTest(TestCase):
         assert len(mail.outbox) == 2
         mail_body = mail.outbox[1].body
         assert 'changing state' in mail_body
+        assert 'NG' in mail_body
 
 
 class MonitorAll_CommandTest(TestCase):
