@@ -33,6 +33,12 @@ Features
 * Notify state changing by email
 
 
+Try demo
+========
+
+See http://yagura-demo.attakei.net
+
+
 Initial user
 ============
 
