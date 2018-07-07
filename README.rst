@@ -16,13 +16,8 @@ Features
 ========
 
 * Health-check report of websites
+* Notify state changing by email
 
-
-NOT Features
-============
-
-* User management(if use ``yagura.url`` , include ``django.contrib.auth`` )
-* Notifications (Planned to implement)
 
 Initial user
 ============
