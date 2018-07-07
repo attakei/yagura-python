@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 03:54+0000\n"
+"POT-Creation-Date: 2018-07-07 05:40+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -25,3 +25,32 @@ msgstr "日本語"
 #: yagura/settings/base.py:139
 msgid "English"
 msgstr "英語"
+
+#: yagura/templates/accounts/profile.html:7
+msgid "Profile"
+msgstr "プロフィール"
+
+#: yagura/templates/accounts/profile.html:11
+msgid "Basic information"
+msgstr "基本情報"
+
+#: yagura/templates/accounts/profile.html:15
+msgid "Username"
+msgstr "ユーザー名"
+
+#: yagura/templates/accounts/profile.html:16
+msgid "Email address"
+msgstr "メールアドレス"
+
+#: yagura/templates/accounts/profile.html:17
+msgid "Full name"
+msgstr "フルネーム"
+
+#: yagura/templates/accounts/profile.html:22
+#: yagura/templates/accounts/profile_edit.html:7
+msgid "Edit profile"
+msgstr "プロフィールを編集する"
+
+#: yagura/templates/accounts/profile_edit.html:13
+msgid "Submit"
+msgstr "送信"
