@@ -2,6 +2,20 @@
 Yagura
 ======
 
+
+.. image:: https://img.shields.io/pypi/v/yagura.svg
+   :alt: PyPI - Version
+   :target: https://pypi.org/project/yagura/
+
+.. image:: https://img.shields.io/pypi/l/Yagura.svg
+   :alt: PyPI - License
+   :target: https://pypi.org/project/yagura/
+
+.. image:: https://gitlab.com/attakei/yagura/badges/master/pipeline.svg
+   :alt: GitLab-CI pipeline
+   :target: https://gitlab.com/attakei/yagura/pipelines
+
+
 Simple site monitoring web-app for small team.
 
 
