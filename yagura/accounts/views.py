@@ -10,6 +10,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 
 class ProfileEditView(LoginRequiredMixin, FormView):
+    """Update user profile (name and email only)
+
+    TODO: must be verify changed email is available.
+    """
     form_class = ProfileEditForm
     template_name = 'accounts/profile_edit.html'
     success_url = reverse_lazy('accounts:profile')
