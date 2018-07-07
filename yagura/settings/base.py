@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'registration',
     'django_crontab',
     # Yagura core apps
+    'yagura.accounts',
     'yagura.sites',
     'yagura.monitors',
     'yagura.demo',
@@ -148,6 +149,7 @@ FIXTURE_DIRS = [
 # django-bootstrap4
 BOOTSTRAP4 = {
     'include_jquery': 'full',
+    'theme_url': '/static/theme.css',
 }
 
 
