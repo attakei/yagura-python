@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 14:31+0000\n"
+"POT-Creation-Date: 2018-07-07 14:35+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -73,6 +73,7 @@ msgid "Simple website monitoring"
 msgstr "シンプルなWebサイト監視"
 
 #: yagura/templates/index.html:9 yagura/templates/registration/login.html:7
+#: yagura/templates/registration/login.html:16
 msgid "Log in"
 msgstr "ログイン"
 
@@ -107,7 +108,9 @@ msgstr "再度ログインする"
 
 #: yagura/templates/registration/registration_complete.html:12
 msgid "Thank you for registration. Please activate from email."
-msgstr "登録ありがとうございました。送信されるメールから、アクティベーションを行ってください"
+msgstr ""
+"登録ありがとうございました。送信されるメールから、アクティベーションを行って"
+"ください"
 
 #: yagura/templates/registration/registration_form.html:16
 #: yagura/templates/sites/site_form.html:12

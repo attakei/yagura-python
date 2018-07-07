@@ -13,7 +13,7 @@
 <form method="POST">
 {% csrf_token %}
 {% bootstrap_form form %}
-{% tran 'Log in' as login_label %}
+{% trans 'Log in' as login_label %}
 {% bootstrap_button login_label 'submit' %}
 </form>
 {% endblock %}
