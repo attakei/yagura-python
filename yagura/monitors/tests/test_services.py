@@ -69,3 +69,18 @@ class SendStateEmail_Test(TestCase):
         send_state_email(current, 'monitors/handle_state_first')
         mail_from = mail.outbox[0].from_email
         assert mail_from == 'test@example.com'
+
+    @parameterized.expand([
+        ('monitors/handle_state_changed', ),
+        ('monitors/handle_state_first', ),
+    ])
+    def test_use_user_full_name(self, template_name):
+        user = get_user_model().objects.first()
+        user.first_name = 'test'
+        user.last_name = 'admin'
+        user.save()
+        current = StateHistory.objects.create(
+            site=Site.objects.first(), state='OK')
+        send_state_email(current, template_name)
+        mail_body = mail.outbox[0].body
+        assert 'test admin' in mail_body
