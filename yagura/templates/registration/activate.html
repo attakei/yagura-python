@@ -3,12 +3,13 @@
 {% block content_section %}
 <section class="jumbotron text-center">
   <div class="container">
-    <h2 class="jumbotron-heading">Registration</h2>
+    <h2 class="jumbotron-heading">{% trans 'Registration user' %}</h2>
   </div>
 </section>
 {% endblock %}
 
 {% block content_main %}
+{# TODO: Translation after #}
 {# Original: https://github.com/yourcelf/django-registration-defaults/blob/master/registration_defaults/templates/registration/activate.html #}
 Oops &ndash; it seems that your activation key is invalid.  Please check the url again.
 {% endblock %}

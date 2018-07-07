@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 11:14+0000\n"
+"POT-Creation-Date: 2018-07-07 14:27+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -78,24 +78,52 @@ msgstr "ログアウト"
 msgid "List of web sites"
 msgstr "監視対象一覧"
 
-#: yagura/templates/sites/site_confirm_delete.html:7
+#: yagura/templates/registration/activate.html:6
+#: yagura/templates/registration/activation_complete.html:6
+#: yagura/templates/registration/registration_complete.html:6
+#: yagura/templates/registration/registration_form.html:7
+msgid "Registration user"
+msgstr "ユーザー登録"
+
+#: yagura/templates/registration/logged_out.html:4
+msgid "Logged out"
+msgstr "ログアウトしました"
+
+#: yagura/templates/registration/logged_out.html:5
+msgid "Log in again"
+msgstr "再度ログインする"
+
+#: yagura/templates/registration/login.html:7
+msgid "Log in"
+msgstr "ログイン"
+
+#: yagura/templates/registration/registration_complete.html:12
+msgid "Thank you for registration. Please activate from email."
+msgstr "登録ありがとうございました。送信されるメールから、アクティベーションを行ってください"
+
+#: yagura/templates/registration/registration_form.html:16
+#: yagura/templates/sites/site_form.html:12
+msgid "Register"
+msgstr "登録"
+
+#: yagura/templates/sites/site_confirm_delete.html:6
 msgid "Confirm of deleteing site"
 msgstr "サイト削除の確認"
 
-#: yagura/templates/sites/site_confirm_delete.html:11
+#: yagura/templates/sites/site_confirm_delete.html:10
 #, python-format
 msgid "Deleting for <strong>%(url)s</strong>"
 msgstr "<strong>%(url)s</strong> を削除します"
 
-#: yagura/templates/sites/site_confirm_delete.html:16
+#: yagura/templates/sites/site_confirm_delete.html:15
 msgid "Confirm"
 msgstr "確認"
 
-#: yagura/templates/sites/site_delete_ng.html:7
+#: yagura/templates/sites/site_delete_ng.html:6
 msgid "Deleteing site"
 msgstr "サイトの削除"
 
-#: yagura/templates/sites/site_delete_ng.html:10
+#: yagura/templates/sites/site_delete_ng.html:9
 #, python-format
 msgid "Site owner only can delete %(url)s"
 msgstr "%(url)s の登録者のみが削除できます"
@@ -112,19 +140,11 @@ msgstr "状態"
 msgid "Range"
 msgstr "期間"
 
-#: yagura/templates/sites/site_form.html:7
+#: yagura/templates/sites/site_form.html:6
 msgid "Register new site"
 msgstr "新しくサイトを監視する"
-
-#: yagura/templates/sites/site_form.html:13
-msgid "Register"
-msgstr "登録"
 
 #: yagura/templates/sites/site_list.html:7
 msgid "Add new site"
 msgstr "監視サイトを追加する"
 
-#, fuzzy
-#~| msgid "Profile"
-#~ msgid "Profile "
-#~ msgstr "プロフィール"
