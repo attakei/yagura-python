@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from yagura.sites.models import Site
 
@@ -21,4 +22,4 @@ class SiteCreateForm(forms.ModelForm):
         sites_count = Site.objects.filter(created_by=self.request.user).count()
         if sites_count >= sites_limit:
             raise forms.ValidationError(
-                'You are reached limits for nums of monitoring sites.')
+                _('You are reached limits for nums of monitoring sites.'))

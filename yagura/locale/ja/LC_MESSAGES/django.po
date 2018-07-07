@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 05:40+0000\n"
+"POT-Creation-Date: 2018-07-07 11:06+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -18,13 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/settings/base.py:138
+#: yagura/settings/base.py:141
 msgid "Japanese"
 msgstr "日本語"
 
-#: yagura/settings/base.py:139
+#: yagura/settings/base.py:142
 msgid "English"
 msgstr "英語"
+
+#: yagura/sites/forms.py:25
+msgid "You are reached limits for nums of monitoring sites."
+msgstr "監視可能なサイト数の上限に到達しています"
+
+#: yagura/sites/models.py:12
+msgid "Site ID in project"
+msgstr "サイトID"
+
+#: yagura/sites/models.py:13
+msgid "Site URL"
+msgstr "サイトのURL"
 
 #: yagura/templates/accounts/profile.html:7
 msgid "Profile"
@@ -54,3 +66,55 @@ msgstr "プロフィールを編集する"
 #: yagura/templates/accounts/profile_edit.html:13
 msgid "Submit"
 msgstr "送信"
+
+#: yagura/templates/sites/site_confirm_delete.html:7
+msgid "Confirm of deleteing site"
+msgstr "サイト削除の確認"
+
+#: yagura/templates/sites/site_confirm_delete.html:11
+#, python-format
+msgid "Deleting for <strong>%(url)s</strong>"
+msgstr "<strong>%(url)s</strong> を削除します"
+
+#: yagura/templates/sites/site_confirm_delete.html:16
+msgid "Confirm"
+msgstr "確認"
+
+#: yagura/templates/sites/site_delete_ng.html:7
+#, fuzzy
+#| msgid "Confirm of deleteing site"
+msgid "Deleteing site"
+msgstr "サイトの削除"
+
+#: yagura/templates/sites/site_delete_ng.html:10
+#, python-format
+msgid "Site owner only can delete %(url)s"
+msgstr "%(url)s の登録者のみが削除できます"
+
+#: yagura/templates/sites/site_detail.html:7
+msgid "Site detail"
+msgstr "サイト情報"
+
+#: yagura/templates/sites/site_detail.html:21
+msgid "State"
+msgstr "状態"
+
+#: yagura/templates/sites/site_detail.html:21
+msgid "Range"
+msgstr "期間"
+
+#: yagura/templates/sites/site_form.html:7
+msgid "Register new site"
+msgstr "新しくサイトを監視する"
+
+#: yagura/templates/sites/site_form.html:13
+msgid "Register"
+msgstr "登録"
+
+#: yagura/templates/sites/site_list.html:6
+msgid "List of web sites"
+msgstr "監視対象一覧"
+
+#: yagura/templates/sites/site_list.html:7
+msgid "Add new site"
+msgstr "監視サイトを追加する"

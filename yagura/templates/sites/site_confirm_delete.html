@@ -4,14 +4,17 @@
 {% block content_main %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap
 align-items-center pb-2 mb-3 border-bottom">
-    <h2>Confirm of deleteing site</h2>
+    <h2>{% trans 'Confirm of deleteing site' %}</h2>
 </div>
 <div>
-  <p>Deleting for <strong>{{ site.url }}</strong></p>
+    <p>
+      {% blocktrans with url=site.url %}Deleting for <strong>{{ url }}</strong>{% endblocktrans %}
+    </p>
   <div>
     <form method="POST">
       {% csrf_token %}
-      {% bootstrap_button 'Confirm' 'submit' %}
+      {% trans 'Confirm' confirm_label %}
+      {% bootstrap_button confirm_label 'submit' %}
     </form>
   </div>
 </div>

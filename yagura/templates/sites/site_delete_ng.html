@@ -4,9 +4,9 @@
 {% block content_main %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap
 align-items-center pb-2 mb-3 border-bottom">
-    <h2>Deleteing site</h2>
+    <h2>{% trans 'Deleteing site' %}</h2>
 </div>
 <div>
-  <p>Site owner only can delete {{ site.url }}</p>
+  <p>{% blocktrans with url=site.url %}Site owner only can delete {{ url }}{% endblocktrans %}</p>
 </div>
 {% endblock %}
