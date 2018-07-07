@@ -1,0 +1,27 @@
+# Yagura package translations
+# Copyright (C) 2018 attakei
+# This file is distributed under the same license as the yagura package.
+# Kazuya Takei <attakei@gmail.com>, 2018
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-07 03:54+0000\n"
+"PO-Revision-Date: 2018-07-07 12:58+0900\n"
+"Last-Translator: Kazya Takei <attakei@gmail.com>\n"
+"Language-Team: KazuyaTake <attakei@gmail.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: yagura/settings/base.py:138
+msgid "Japanese"
+msgstr "日本語"
+
+#: yagura/settings/base.py:139
+msgid "English"
+msgstr "英語"
