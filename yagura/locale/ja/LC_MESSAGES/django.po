@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 11:06+0000\n"
+"POT-Creation-Date: 2018-07-07 11:14+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -39,6 +39,7 @@ msgid "Site URL"
 msgstr "サイトのURL"
 
 #: yagura/templates/accounts/profile.html:7
+#: yagura/templates/layouts/_navbar.html:10
 msgid "Profile"
 msgstr "プロフィール"
 
@@ -67,6 +68,16 @@ msgstr "プロフィールを編集する"
 msgid "Submit"
 msgstr "送信"
 
+#: yagura/templates/layouts/_navbar.html:11
+#: yagura/templates/layouts/two_pane.html:18
+msgid "Log out"
+msgstr "ログアウト"
+
+#: yagura/templates/layouts/two_pane.html:14
+#: yagura/templates/sites/site_list.html:6
+msgid "List of web sites"
+msgstr "監視対象一覧"
+
 #: yagura/templates/sites/site_confirm_delete.html:7
 msgid "Confirm of deleteing site"
 msgstr "サイト削除の確認"
@@ -81,8 +92,6 @@ msgid "Confirm"
 msgstr "確認"
 
 #: yagura/templates/sites/site_delete_ng.html:7
-#, fuzzy
-#| msgid "Confirm of deleteing site"
 msgid "Deleteing site"
 msgstr "サイトの削除"
 
@@ -111,10 +120,11 @@ msgstr "新しくサイトを監視する"
 msgid "Register"
 msgstr "登録"
 
-#: yagura/templates/sites/site_list.html:6
-msgid "List of web sites"
-msgstr "監視対象一覧"
-
 #: yagura/templates/sites/site_list.html:7
 msgid "Add new site"
 msgstr "監視サイトを追加する"
+
+#, fuzzy
+#~| msgid "Profile"
+#~ msgid "Profile "
+#~ msgstr "プロフィール"
