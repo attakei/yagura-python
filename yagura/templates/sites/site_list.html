@@ -3,8 +3,9 @@
 
 {% block content_main %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-  <h2>List of web sites</h2>
-  {% bootstrap_button 'Add new site' 'link' href='/sites/new' %}
+  <h2>{% trans 'List of web sites' %}</h2>
+  {% trans 'Add new site' as site_create_label %}
+  {% bootstrap_button site_create_label 'link' href='/sites/new' %}
 </div>
 <div>
   <ul class="list-group">

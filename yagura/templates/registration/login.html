@@ -4,7 +4,7 @@
 {% block content_section %}
 <section class="jumbotron text-center">
   <div class="container">
-    <h2 class="jumbotron-heading">Log in</h2>
+      <h2 class="jumbotron-heading">{% trans 'Log in' %}</h2>
   </div>
 </section>
 {% endblock %}
@@ -13,6 +13,7 @@
 <form method="POST">
 {% csrf_token %}
 {% bootstrap_form form %}
-{% bootstrap_button 'Log in' 'submit' %}
+{% trans 'Log in' as login_label %}
+{% bootstrap_button login_label 'submit' %}
 </form>
 {% endblock %}

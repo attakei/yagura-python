@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 03:54+0000\n"
+"POT-Creation-Date: 2018-07-07 14:35+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -18,10 +18,143 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/settings/base.py:138
+#: yagura/settings/base.py:141
 msgid "Japanese"
 msgstr "日本語"
 
-#: yagura/settings/base.py:139
+#: yagura/settings/base.py:142
 msgid "English"
 msgstr "英語"
+
+#: yagura/sites/forms.py:25
+msgid "You are reached limits for nums of monitoring sites."
+msgstr "監視可能なサイト数の上限に到達しています"
+
+#: yagura/sites/models.py:12
+msgid "Site ID in project"
+msgstr "サイトID"
+
+#: yagura/sites/models.py:13
+msgid "Site URL"
+msgstr "サイトのURL"
+
+#: yagura/templates/accounts/profile.html:7
+#: yagura/templates/layouts/_navbar.html:10
+msgid "Profile"
+msgstr "プロフィール"
+
+#: yagura/templates/accounts/profile.html:11
+msgid "Basic information"
+msgstr "基本情報"
+
+#: yagura/templates/accounts/profile.html:15
+msgid "Username"
+msgstr "ユーザー名"
+
+#: yagura/templates/accounts/profile.html:16
+msgid "Email address"
+msgstr "メールアドレス"
+
+#: yagura/templates/accounts/profile.html:17
+msgid "Full name"
+msgstr "フルネーム"
+
+#: yagura/templates/accounts/profile.html:22
+#: yagura/templates/accounts/profile_edit.html:7
+msgid "Edit profile"
+msgstr "プロフィールを編集する"
+
+#: yagura/templates/accounts/profile_edit.html:13
+msgid "Submit"
+msgstr "送信"
+
+#: yagura/templates/index.html:7
+msgid "Simple website monitoring"
+msgstr "シンプルなWebサイト監視"
+
+#: yagura/templates/index.html:9 yagura/templates/registration/login.html:7
+#: yagura/templates/registration/login.html:16
+msgid "Log in"
+msgstr "ログイン"
+
+#: yagura/templates/index.html:10
+msgid "or"
+msgstr "または"
+
+#: yagura/templates/index.html:11 yagura/templates/registration/activate.html:6
+#: yagura/templates/registration/activation_complete.html:6
+#: yagura/templates/registration/registration_complete.html:6
+#: yagura/templates/registration/registration_form.html:7
+msgid "Registration user"
+msgstr "ユーザー登録"
+
+#: yagura/templates/layouts/_navbar.html:11
+#: yagura/templates/layouts/two_pane.html:18
+msgid "Log out"
+msgstr "ログアウト"
+
+#: yagura/templates/layouts/two_pane.html:14
+#: yagura/templates/sites/site_list.html:6
+msgid "List of web sites"
+msgstr "監視対象一覧"
+
+#: yagura/templates/registration/logged_out.html:4
+msgid "Logged out"
+msgstr "ログアウトしました"
+
+#: yagura/templates/registration/logged_out.html:5
+msgid "Log in again"
+msgstr "再度ログインする"
+
+#: yagura/templates/registration/registration_complete.html:12
+msgid "Thank you for registration. Please activate from email."
+msgstr ""
+"登録ありがとうございました。送信されるメールから、アクティベーションを行って"
+"ください"
+
+#: yagura/templates/registration/registration_form.html:16
+#: yagura/templates/sites/site_form.html:12
+msgid "Register"
+msgstr "登録"
+
+#: yagura/templates/sites/site_confirm_delete.html:6
+msgid "Confirm of deleteing site"
+msgstr "サイト削除の確認"
+
+#: yagura/templates/sites/site_confirm_delete.html:10
+#, python-format
+msgid "Deleting for <strong>%(url)s</strong>"
+msgstr "<strong>%(url)s</strong> を削除します"
+
+#: yagura/templates/sites/site_confirm_delete.html:15
+msgid "Confirm"
+msgstr "確認"
+
+#: yagura/templates/sites/site_delete_ng.html:6
+msgid "Deleteing site"
+msgstr "サイトの削除"
+
+#: yagura/templates/sites/site_delete_ng.html:9
+#, python-format
+msgid "Site owner only can delete %(url)s"
+msgstr "%(url)s の登録者のみが削除できます"
+
+#: yagura/templates/sites/site_detail.html:7
+msgid "Site detail"
+msgstr "サイト情報"
+
+#: yagura/templates/sites/site_detail.html:21
+msgid "State"
+msgstr "状態"
+
+#: yagura/templates/sites/site_detail.html:21
+msgid "Range"
+msgstr "期間"
+
+#: yagura/templates/sites/site_form.html:6
+msgid "Register new site"
+msgstr "新しくサイトを監視する"
+
+#: yagura/templates/sites/site_list.html:7
+msgid "Add new site"
+msgstr "監視サイトを追加する"

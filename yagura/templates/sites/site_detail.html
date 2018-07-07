@@ -1,9 +1,10 @@
 {% extends 'layouts/two_pane.html' %}
+{% load i18n %}
 {% load bootstrap4 %}
 
 {% block content_main %}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>Site detail</h2>
+    <h2>{% trans 'Site detail' %}</h2>
     {% if site.created_by == request.user %}
       {% url 'sites:delete' site.id as url_to_sites_delete %}
       {% bootstrap_button 'Delete' 'link' href=url_to_sites_delete %}
@@ -17,7 +18,7 @@
   <table class="table keyvalue_table">
     <tbody>
       <tr>
-        <th>State</th><td>Range</td>
+        <th>{% trans 'State' %}</th><td>{% trans 'Range' %}</td>
       </tr>
       {% for history in site.states.all reversed %}
       <tr>
