@@ -45,3 +45,13 @@ build-docker-image:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker build -t registry.gitlab.com/attakei/yagura:latest .
     - docker push registry.gitlab.com/attakei/yagura:latest
+
+build-pypi-packages:
+  stage: build
+  only:
+    - tags
+  script:
+    - bin/gen-pypirc
+    - pip install -r requirements/packaging.txt -r requirements.txt
+    - python setup.py sdist bdist_wheel
+    - twine upload dist/*
