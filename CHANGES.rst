@@ -5,7 +5,7 @@ Change logs
 Ver 0.3.0
 =========
 
-:Date: 2018-07-??
+:Date: 2018-07-08
 
 **Important!**
 This version is not same code base from old version, does not have compatbility.
