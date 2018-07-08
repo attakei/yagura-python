@@ -12,10 +12,13 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+from pathlib import Path
+import sys
 
+_root = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(_root))
+
+import yagura
 
 # -- Project information -----------------------------------------------------
 
@@ -26,7 +29,7 @@ author = 'Kazuya Takei'
 # The short X.Y version
 version = '0.3'
 # The full version, including alpha/beta/rc tags
-release = '0.3.0'
+release = yagura.__version__
 
 
 # -- General configuration ---------------------------------------------------
