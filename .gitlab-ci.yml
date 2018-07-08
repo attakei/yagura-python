@@ -55,3 +55,16 @@ build-pypi-packages:
     - pip install -r requirements/packaging.txt -r requirements.txt
     - python setup.py sdist bdist_wheel
     - twine upload dist/*
+
+build-docker-tagged-image:
+  stage: build
+  only:
+    - tags
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t registry.gitlab.com/attakei/yagura:${CI_COMMIT_TAG} .
+    - docker push registry.gitlab.com/attakei/yagura:${CI_COMMIT_TAG}
+
