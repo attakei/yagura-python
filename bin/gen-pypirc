@@ -30,7 +30,7 @@ with pypirc.open('w') as fp:
         testpypi
 
     [pypi]
-    repository: https://pypi.org/legacy/
+    repository: https://upload.pypi.org/legacy/ 
     username: {pypi_user}
     password: {pypi_pass}
 
