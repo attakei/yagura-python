@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    volumes:
+      - "./var:/app/var"
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    env_file: ".env"
+    command: web
+  cron:
+    build: .
+    volumes:
+      - "./var:/app/var"
+    links:
+      - db
+    env_file: ".env"
+    command: cron
+  db:
+    image: mysql:5.7
+    volumes:
+      - "./var/mysql:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: yagura
+      MYSQL_USER: yagura
+      MYSQL_PASSWORD: Ya9VRa!xx
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
