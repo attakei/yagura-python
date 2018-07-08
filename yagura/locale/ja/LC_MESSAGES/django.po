@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-07 14:35+0000\n"
+"POT-Creation-Date: 2018-07-08 07:54+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/settings/base.py:141
+#: yagura/settings/base.py:142
 msgid "Japanese"
 msgstr "日本語"
 
-#: yagura/settings/base.py:142
+#: yagura/settings/base.py:143
 msgid "English"
 msgstr "英語"
 
@@ -64,24 +64,32 @@ msgstr "フルネーム"
 msgid "Edit profile"
 msgstr "プロフィールを編集する"
 
+#: yagura/templates/accounts/profile.html:26
+msgid "Set language"
+msgstr "言語設定"
+
+#: yagura/templates/accounts/profile.html:33
+msgid "Apply"
+msgstr "適用する"
+
 #: yagura/templates/accounts/profile_edit.html:13
 msgid "Submit"
 msgstr "送信"
 
-#: yagura/templates/index.html:7
+#: yagura/templates/index.html:3 yagura/templates/index.html:9
 msgid "Simple website monitoring"
 msgstr "シンプルなWebサイト監視"
 
-#: yagura/templates/index.html:9 yagura/templates/registration/login.html:7
+#: yagura/templates/index.html:11 yagura/templates/registration/login.html:7
 #: yagura/templates/registration/login.html:16
 msgid "Log in"
 msgstr "ログイン"
 
-#: yagura/templates/index.html:10
+#: yagura/templates/index.html:12
 msgid "or"
 msgstr "または"
 
-#: yagura/templates/index.html:11 yagura/templates/registration/activate.html:6
+#: yagura/templates/index.html:13 yagura/templates/registration/activate.html:6
 #: yagura/templates/registration/activation_complete.html:6
 #: yagura/templates/registration/registration_complete.html:6
 #: yagura/templates/registration/registration_form.html:7
@@ -89,11 +97,11 @@ msgid "Registration user"
 msgstr "ユーザー登録"
 
 #: yagura/templates/layouts/_navbar.html:11
-#: yagura/templates/layouts/two_pane.html:18
+#: yagura/templates/layouts/two_pane.html:22
 msgid "Log out"
 msgstr "ログアウト"
 
-#: yagura/templates/layouts/two_pane.html:14
+#: yagura/templates/layouts/two_pane.html:18
 #: yagura/templates/sites/site_list.html:6
 msgid "List of web sites"
 msgstr "監視対象一覧"

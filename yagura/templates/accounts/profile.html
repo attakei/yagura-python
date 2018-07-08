@@ -23,5 +23,17 @@
     {% url 'accounts:profile-edit' as profile_edit_url %}
     {% bootstrap_button profile_edit_label href=profile_edit_url %}
   </div>
+  <h3>{% trans 'Set language' %}</h3>
+  <div class="row">
+    <div>
+      <form class="form-inline" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form language_form layout='inline' %}
+        　
+        {% trans 'Apply' as apply_label %}
+        {% bootstrap_button apply_label 'submit' %}
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}
