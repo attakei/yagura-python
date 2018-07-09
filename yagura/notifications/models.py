@@ -17,3 +17,11 @@ class ExtraRecipient(models.Model):
         unique_together = (
             ('site', 'email'),
         )
+
+
+class Activation(models.Model):
+    """Recipient activation code
+    """
+    recipient = models.ForeignKey(
+        ExtraRecipient, on_delete=models.CASCADE)
+    code = models.UUIDField()

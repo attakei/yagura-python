@@ -1,0 +1,14 @@
+{% extends 'layouts/single_page.html' %}
+
+{% block content_section %}
+<section class="jumbotron text-center">
+  <div class="container">
+    <h2 class="jumbotron-heading">Activation</h2>
+  </div>
+</section>
+{% endblock %}
+
+{% block content_main %}
+<p>Thank you for activation.</p>
+<p>If {{ site.url }} state is changed, send notify for {{ recipient.email }}</p>
+{% endblock %}
