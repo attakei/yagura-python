@@ -33,6 +33,7 @@ def handle_state(site, state, monitor_date):
 
 
 def send_state_email(current, template_name):
+    # For owner
     owner = current.site.created_by
     context = {
         'site': current.site,
@@ -46,3 +47,17 @@ def send_state_email(current, template_name):
         recipient_list=[owner.email],
         context=context,
     )
+    # For extra
+    for recipient in current.site.extra_recipients.filter(enabled=True):
+        context = {
+            'site': current.site,
+            'history': current,
+            'owner': {'get_full_name': 'Subscriber'},
+            'base_url': get_base_url(),
+        }
+        send_templated_mail(
+            template_name=template_name,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient.email],
+            context=context,
+        )

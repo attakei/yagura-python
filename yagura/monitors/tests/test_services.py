@@ -84,3 +84,17 @@ class SendStateEmail_Test(TestCase):
         send_state_email(current, template_name)
         mail_body = mail.outbox[0].body
         assert 'test admin' in mail_body
+
+    @parameterized.expand([
+        (True, 2),
+        (False, 1),
+    ])
+    def test_send_extra_recipient(self, extra_enabled, expect_mails):
+        from yagura.notifications.models import ExtraRecipient
+        ExtraRecipient.objects.create(
+            site=Site.objects.first(),
+            email='test2@example.com', enabled=extra_enabled)
+        current = StateHistory.objects.create(
+            site=Site.objects.first(), state='OK')
+        send_state_email(current, 'monitors/handle_state_first')
+        assert len(mail.outbox) == expect_mails
