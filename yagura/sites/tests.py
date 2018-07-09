@@ -82,6 +82,14 @@ class SiteCreate_ViewTest(ViewTestCase):
         resp = self.client.post(self.url, {'url': 'http://example.com/2'})
         assert resp.status_code == 302
 
+    @override_settings(YAGURA_SITES_LIMIT=0)
+    def test_post_nolimit(self):
+        """If settgins has sites-limit, user can register more than limit
+        """
+        self.test_add()
+        resp = self.client.post(self.url, {'url': 'http://example.com/'})
+        assert resp.status_code == 302
+
 
 class SiteDetail_ViewTest(ViewTestCase):
     url = reverse_lazy(
