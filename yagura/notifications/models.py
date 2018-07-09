@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.db import models
 
 from yagura.sites.models import Site
@@ -25,3 +27,8 @@ class Activation(models.Model):
     recipient = models.ForeignKey(
         ExtraRecipient, on_delete=models.CASCADE)
     code = models.UUIDField()
+
+    @classmethod
+    def generate_code(cls, recipient):
+        act = cls.objects.create(recipient=recipient, code=uuid4())
+        return act
