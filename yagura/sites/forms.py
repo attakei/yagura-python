@@ -19,6 +19,9 @@ class SiteCreateForm(forms.ModelForm):
         if self.request.user.is_superuser:
             return
         sites_limit = getattr(settings, 'YAGURA_SITES_LIMIT', 1)
+        # 'limit is 0' mean 'no limit'
+        if sites_limit == 0:
+            return
         sites_count = Site.objects.filter(created_by=self.request.user).count()
         if sites_count >= sites_limit:
             raise forms.ValidationError(
