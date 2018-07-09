@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'yagura.accounts',
     'yagura.sites',
     'yagura.monitors',
+    'yagura.notifications',
     'yagura.demo',
 ]
 
