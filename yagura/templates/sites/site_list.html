@@ -14,11 +14,11 @@
     <li class="list-group-item">
         {# Add badge for latest state #}
         {% if history.state == "OK" %}
-        <span class="badge badge-success">OK</span>
+        <span class="label label-success">OK</span>
         {% elif history.state == "NG" %}
-        <span class="badge badge-danger">NG</span>
+        <span class="label label-danger">NG</span>
         {% else %}
-        <span class="badge badge-secondary">Unknown</span>
+        <span class="label label-default">Unknown</span>
         {% endif %}
 
         <a href="{% url 'sites:detail' site.id %}">
