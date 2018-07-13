@@ -11,7 +11,14 @@
     {% endif %}
 </div>
 <div>
-    {{ site.url }}
+  <p>Target: {{ site.url }}</p>
+  {% if site.created_by == request.user %}
+    <p>
+      Menu:
+    {% url 'notifications:add-extra-recipient' site.id as url_to_add_notification %}
+    {% bootstrap_button 'Add notification' 'button' href=url_to_add_notification size='xs' %}
+    </p>
+  {% endif %}
 </div>
 <div>
   <h3>History</h3>
