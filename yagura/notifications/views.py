@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import FormMixin
@@ -10,7 +11,7 @@ from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 
-class AddNotificationView(FormMixin, DetailView):
+class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
     form_class = AddNotificationForm
     template_name = 'notifications/extrarecipient_form.html'
@@ -29,7 +30,6 @@ class AddNotificationView(FormMixin, DetailView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        # TODO: Verify by test code
         form.save()
         activation = Activation.generate_code(form.instance)
         send_templated_mail(
