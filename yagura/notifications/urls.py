@@ -1,7 +1,9 @@
 from django.urls import path
 
 from yagura.notifications.views import (
-    ActivateView, AddNotificationView, NotificationListView
+    ActivateView, AddNotificationView, DeactivateView,
+    NotificationDeleteCompleteView, NotificationDeleteView,
+    NotificationListView
 )
 
 app_name = 'notifications'
@@ -14,5 +16,17 @@ urlpatterns = (
         'sites/<uuid:pk>',
         NotificationListView.as_view(),
         name='list-extra-recipient'),
+    path(
+        '<int:pk>/delete',
+        NotificationDeleteView.as_view(),
+        name='delete-extra-recipient'),
+    path(
+        'delete/complete',
+        NotificationDeleteCompleteView.as_view(),
+        name='delete-complete'),
     path('activate/<uuid:code>', ActivateView.as_view(), name='activate'),
+    path(
+        'deactivate/<uuid:code>',
+        DeactivateView.as_view(),
+        name='deactivate'),
 )

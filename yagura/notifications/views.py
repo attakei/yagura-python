@@ -1,12 +1,14 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import AddNotificationForm
-from yagura.notifications.models import Activation, ExtraRecipient
+from yagura.notifications.models import (
+    Activation, Deactivation, ExtraRecipient
+)
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
@@ -50,6 +52,32 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
             'sites:detail', args=(self.object.id, ))
 
 
+class NotificationDeleteView(LoginRequiredMixin, DetailView):
+    model = ExtraRecipient
+    success_url = reverse_lazy('notifications:delete-complete')
+    template_name = 'notifications/extrarecipient_confirm_delete.html'
+
+    def post(self, request, *args, **kwargs):
+        recipient = self.get_object()
+        deactivation = Deactivation.generate_code(recipient)
+        send_templated_mail(
+            template_name='notifications/extrarecipient_confirm_delete',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[recipient.email],
+            context={
+                'site': recipient.site,
+                'recipient': recipient,
+                'deactivation': deactivation,
+                'base_url': get_base_url(),
+            }
+        )
+        return super().post(request, *args, **kwargs)
+
+
+class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
+    template_name = 'notifications/extrarecipient_complete_delete.html'
+
+
 class NotificationListView(LoginRequiredMixin, ListView):
     model = ExtraRecipient
 
@@ -78,4 +106,21 @@ class ActivateView(DetailView):
         activation.recipient.save()
         ctx['recipient'] = activation.recipient
         ctx['site'] = activation.recipient.site
+        return ctx
+
+
+class DeactivateView(DetailView):
+    model = Deactivation
+    slug_field = 'code'
+    slug_url_kwarg = 'code'
+
+    def get_context_data(self, **kwargs):
+        """If can get object, parent recipient enable.
+        """
+        ctx = super().get_context_data(**kwargs)
+        # TODO: This proc is valid place?
+        deactivation = self.get_object()
+        ctx['site'] = deactivation.recipient.site
+        ctx['recipient'] = {'email': deactivation.recipient.email}
+        deactivation.recipient.delete()
         return ctx

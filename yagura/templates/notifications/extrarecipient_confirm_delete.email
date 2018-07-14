@@ -1,0 +1,12 @@
+{% block subject %}Deactivate to recieve notify of {{ site.url }}{% endblock %}
+
+{% block plain %}
+Hi {{ recipient.email }},
+
+Your email address has been deleted from notify recipient of site state by Yagura user.
+If you want to confirm this deactivate, please click this "Deactivate URL".
+
+* Website URL: {{ site.url }}
+
+* Deactivate URL: {{ base_url }}{% url 'notifications:deactivate' deactivation.code %}
+{% endblock %}
