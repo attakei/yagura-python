@@ -32,3 +32,16 @@ class Activation(models.Model):
     def generate_code(cls, recipient):
         act = cls.objects.create(recipient=recipient, code=uuid4())
         return act
+
+
+class Deactivation(models.Model):
+    """Recipient deactivation code
+    """
+    recipient = models.ForeignKey(
+        ExtraRecipient, on_delete=models.CASCADE)
+    code = models.UUIDField()
+
+    @classmethod
+    def generate_code(cls, recipient):
+        inst = cls.objects.create(recipient=recipient, code=uuid4())
+        return inst
