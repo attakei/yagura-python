@@ -15,6 +15,8 @@
   {% if site.created_by == request.user %}
     <p>
       Menu:
+    {% url 'notifications:list-extra-recipient' site.id as url_to_list_notifications %}
+    {% bootstrap_button 'Show notifications' 'button' href=url_to_list_notifications size='xs' %}
     {% url 'notifications:add-extra-recipient' site.id as url_to_add_notification %}
     {% bootstrap_button 'Add notification' 'button' href=url_to_add_notification size='xs' %}
     </p>

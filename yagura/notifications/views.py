@@ -1,12 +1,12 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import AddNotificationForm
-from yagura.notifications.models import Activation
+from yagura.notifications.models import Activation, ExtraRecipient
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
@@ -48,6 +48,19 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         return reverse_lazy(
             'sites:detail', args=(self.object.id, ))
+
+
+class NotificationListView(LoginRequiredMixin, ListView):
+    model = ExtraRecipient
+
+    def get_queryset(self):
+        qs_ = super().get_queryset()
+        return qs_.filter(site_id=self.kwargs['pk'])
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx['site'] = Site.objects.get(id=self.kwargs['pk'])
+        return ctx
 
 
 class ActivateView(DetailView):
