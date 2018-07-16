@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-08 07:54+0000\n"
+"POT-Creation-Date: 2018-07-16 16:11+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/settings/base.py:142
+#: yagura/settings/base.py:143
 msgid "Japanese"
 msgstr "日本語"
 
-#: yagura/settings/base.py:143
+#: yagura/settings/base.py:144
 msgid "English"
 msgstr "英語"
 
-#: yagura/sites/forms.py:25
+#: yagura/sites/forms.py:28
 msgid "You are reached limits for nums of monitoring sites."
 msgstr "監視可能なサイト数の上限に到達しています"
 
@@ -106,6 +106,27 @@ msgstr "ログアウト"
 msgid "List of web sites"
 msgstr "監視対象一覧"
 
+#: yagura/templates/notifications/recipient_confirm_delete.html:6
+#, fuzzy
+#| msgid "Confddirm of deleteing site"
+msgid "Confirm of deleteing recipient"
+msgstr "通知先削除の確認"
+
+#: yagura/templates/notifications/recipient_confirm_delete.html:10
+#, fuzzy, python-format
+#| msgid "Deleting for <strong>%(url)s</strong>"
+msgid "Deleting notification for <strong>%(recipient)s</strong>"
+msgstr "<strong>%(url)s</strong> を削除します"
+
+#: yagura/templates/notifications/recipient_confirm_delete.html:15
+#: yagura/templates/sites/site_confirm_delete.html:15
+msgid "Confirm"
+msgstr "確認"
+
+#: yagura/templates/notifications/recipient_list.html:7
+msgid "List of notifications"
+msgstr "通知先の一覧"
+
 #: yagura/templates/registration/logged_out.html:4
 msgid "Logged out"
 msgstr "ログアウトしました"
@@ -134,10 +155,6 @@ msgstr "サイト削除の確認"
 msgid "Deleting for <strong>%(url)s</strong>"
 msgstr "<strong>%(url)s</strong> を削除します"
 
-#: yagura/templates/sites/site_confirm_delete.html:15
-msgid "Confirm"
-msgstr "確認"
-
 #: yagura/templates/sites/site_delete_ng.html:6
 msgid "Deleteing site"
 msgstr "サイトの削除"
@@ -151,11 +168,11 @@ msgstr "%(url)s の登録者のみが削除できます"
 msgid "Site detail"
 msgstr "サイト情報"
 
-#: yagura/templates/sites/site_detail.html:21
+#: yagura/templates/sites/site_detail.html:30
 msgid "State"
 msgstr "状態"
 
-#: yagura/templates/sites/site_detail.html:21
+#: yagura/templates/sites/site_detail.html:30
 msgid "Range"
 msgstr "期間"
 
