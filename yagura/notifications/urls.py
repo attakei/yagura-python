@@ -9,7 +9,7 @@ from yagura.notifications.views import (
 app_name = 'notifications'
 urlpatterns = (
     path(
-        'new/sites/<uuid:pk>',
+        'sites/<uuid:pk>/new',
         AddNotificationView.as_view(),
         name='add-recipient'),
     path(
