@@ -6,9 +6,7 @@ from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import AddNotificationForm
-from yagura.notifications.models import (
-    Activation, Deactivation, ExtraRecipient
-)
+from yagura.notifications.models import Activation, Deactivation, Recipient
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
@@ -16,7 +14,7 @@ from yagura.utils import get_base_url
 class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
     form_class = AddNotificationForm
-    template_name = 'notifications/extrarecipient_form.html'
+    template_name = 'notifications/recipient_form.html'
 
     def get_initial(self):
         initial = super().get_initial()
@@ -53,15 +51,15 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
 
 
 class NotificationDeleteView(LoginRequiredMixin, DetailView):
-    model = ExtraRecipient
+    model = Recipient
     success_url = reverse_lazy('notifications:delete-complete')
-    template_name = 'notifications/extrarecipient_confirm_delete.html'
+    template_name = 'notifications/recipient_confirm_delete.html'
 
     def post(self, request, *args, **kwargs):
         recipient = self.get_object()
         deactivation = Deactivation.generate_code(recipient)
         send_templated_mail(
-            template_name='notifications/extrarecipient_confirm_delete',
+            template_name='notifications/recipient_confirm_delete',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[recipient.email],
             context={
@@ -75,11 +73,11 @@ class NotificationDeleteView(LoginRequiredMixin, DetailView):
 
 
 class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
-    template_name = 'notifications/extrarecipient_complete_delete.html'
+    template_name = 'notifications/recipient_complete_delete.html'
 
 
 class NotificationListView(LoginRequiredMixin, ListView):
-    model = ExtraRecipient
+    model = Recipient
 
     def get_queryset(self):
         qs_ = super().get_queryset()

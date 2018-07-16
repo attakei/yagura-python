@@ -10,21 +10,21 @@
 </div>
 <div>
   <p>
-    {% url 'notifications:add-extra-recipient' site.id as url_to_add_notification %}
+    {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
     {% bootstrap_button 'Add notification' 'link' href=url_to_add_notification size='xs' %}
   </p>
   <ul class="list-group">
     <li class="list-group-item">
       {{ site.created_by.email }} <strong>(owner)</strong>
     </li>
-    {% for recipient in extrarecipient_list %}
+    {% for recipient in recipient_list %}
     <li class="list-group-item">
       {{ recipient.email }}
       {% if not recipient.enabled %}
       (not yet enabled)
       {% endif %}
       <div class="btn-group float-right">
-        {% url 'notifications:delete-extra-recipient' recipient.id as link_ %}
+        {% url 'notifications:delete-recipient' recipient.id as link_ %}
         {% bootstrap_button 'Delete' 'button' 'btn-danger' href=link_ size='xs' %}
       </div>
     </li>

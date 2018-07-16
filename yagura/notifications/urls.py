@@ -11,15 +11,15 @@ urlpatterns = (
     path(
         'new/sites/<uuid:pk>',
         AddNotificationView.as_view(),
-        name='add-extra-recipient'),
+        name='add-recipient'),
     path(
         'sites/<uuid:pk>',
         NotificationListView.as_view(),
-        name='list-extra-recipient'),
+        name='list-recipient'),
     path(
         '<int:pk>/delete',
         NotificationDeleteView.as_view(),
-        name='delete-extra-recipient'),
+        name='delete-recipient'),
     path(
         'delete/complete',
         NotificationDeleteCompleteView.as_view(),

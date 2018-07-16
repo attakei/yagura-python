@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import mail
 from django.urls import reverse_lazy
 
-from yagura.notifications.models import Activation, ExtraRecipient
+from yagura.notifications.models import Activation, Recipient
 from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
@@ -14,7 +14,7 @@ class AddNotification_ViewTest(ViewTestCase):
     ]
 
     url = reverse_lazy(
-        'notifications:add-extra-recipient',
+        'notifications:add-recipient',
         args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
 
     def test_login_required(self):
@@ -41,7 +41,7 @@ class Activate_ViewTest(ViewTestCase):
     ]
 
     def test_activation_enabled(self):
-        recipient = ExtraRecipient.objects.create(
+        recipient = Recipient.objects.create(
             site=Site.objects.first(), email='test@example.com')
         Activation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
@@ -50,5 +50,5 @@ class Activate_ViewTest(ViewTestCase):
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 200
-        recipient = ExtraRecipient.objects.first()
+        recipient = Recipient.objects.first()
         assert recipient.enabled is True

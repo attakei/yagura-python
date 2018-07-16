@@ -14,16 +14,16 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='ExtraRecipient',
+            name='Recipient',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('email', models.EmailField(max_length=254)),
                 ('enabled', models.BooleanField(default=False)),
-                ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='extra_recipients', to='sites.Site')),
+                ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='recipients', to='sites.Site')),
             ],
         ),
         migrations.AlterUniqueTogether(
-            name='extrarecipient',
+            name='recipient',
             unique_together={('site', 'email')},
         ),
     ]

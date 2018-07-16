@@ -48,7 +48,7 @@ def send_state_email(current, template_name):
         context=context,
     )
     # For extra
-    for recipient in current.site.extra_recipients.filter(enabled=True):
+    for recipient in current.site.recipients.filter(enabled=True):
         context = {
             'site': current.site,
             'history': current,
