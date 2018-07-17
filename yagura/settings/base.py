@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'registration',
     'django_crontab',
+    'social_django',
     # Yagura core apps
     'yagura.accounts',
     'yagura.sites',

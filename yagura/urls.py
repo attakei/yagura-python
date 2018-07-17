@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('yagura.accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.backends.hmac.urls')),
+    path('accounts/', include('social_django.urls', namespace='social')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
 ]
