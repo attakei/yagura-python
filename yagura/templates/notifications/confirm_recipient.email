@@ -1,0 +1,12 @@
+{% block subject %}Activate to recieve notify of {{ site.url }}{% endblock %}
+
+{% block plain %}
+Hi {{ recipient.email }},
+
+Your email address has been registered as notify recipient of site state by Yagura user.
+If you want to confirm this registration, please click this "Activate URL".
+
+* Website URL: {{ site.url }}
+
+* Activate URL: {{ base_url }}{% url 'notifications:activate' activation.code %}
+{% endblock %}
