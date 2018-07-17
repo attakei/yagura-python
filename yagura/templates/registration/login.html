@@ -10,10 +10,19 @@
 {% endblock %}
 
 {% block content_main %}
-<form method="POST">
-{% csrf_token %}
-{% bootstrap_form form %}
-{% trans 'Log in' as login_label %}
-{% bootstrap_button login_label 'submit' %}
-</form>
+<div class="row">
+  <div class="col">
+    <h3>Auth by username/password</h3>
+    <form method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% trans 'Log in' as login_label %}
+      {% bootstrap_button login_label 'submit' %}
+    </form>
+  </div>
+  <div class="col">
+    <h3>Auth by social accounts</h3>
+    {% include 'registration/_snippets/social-auth.html' %}
+  </div>
+</div>
 {% endblock %}

@@ -1,0 +1,5 @@
+<ul class="list-group">
+  {% for backend in backends.backends %}
+    <li class="list-group-item"><a href="{% url 'social:begin' backend %}">{{ backend }}</a></li>
+  {% endfor %}
+</ul>

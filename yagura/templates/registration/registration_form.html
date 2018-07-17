@@ -10,10 +10,19 @@
 {% endblock %}
 
 {% block content_main %}
-<form method="POST">
-{% csrf_token %}
-{% bootstrap_form form %}
-{% trans 'Register' as register_label %}
-{% bootstrap_button register_label 'submit' %}
-</form>
+<div class="row">
+  <div class="col">
+    <h3>Register by username/password</h3>
+    <form method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% trans 'Register' as register_label %}
+      {% bootstrap_button register_label 'submit' %}
+    </form>
+  </div>
+  <div class="col">
+    <h3>Register by social accounts</h3>
+    {% include 'registration/_snippets/social-auth.html' %}
+  </div>
+</div>
 {% endblock %}
