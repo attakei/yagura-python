@@ -12,7 +12,8 @@
 {% block content_main %}
 <div class="row">
   <div class="col">
-    <h3>Auth by username/password</h3>
+    {% trans 'username/password' as trans_username_password %}
+    <h3>{% blocktrans with by_name=trans_username_password %}Auth by {{ by_name }}{% endblocktrans %}</h3>
     <form method="POST">
       {% csrf_token %}
       {% bootstrap_form form %}
@@ -21,7 +22,8 @@
     </form>
   </div>
   <div class="col">
-    <h3>Auth by social accounts</h3>
+    {% trans 'social accounts' as trans_social_accounts %}
+    <h3>{% blocktrans with by_name=trans_social_accounts %}Auth by {{ by_name }}{% endblocktrans %}</h3>
     {% include 'registration/_snippets/social-auth.html' %}
   </div>
 </div>
