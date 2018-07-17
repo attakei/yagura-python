@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 17:51+0000\n"
+"POT-Creation-Date: 2018-07-17 18:11+0000\n"
 "PO-Revision-Date: 2018-07-07 12:58+0900\n"
 "Last-Translator: Kazya Takei <attakei@gmail.com>\n"
 "Language-Team: KazuyaTake <attakei@gmail.com>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: yagura/accounts/templatetags/social_labels.py:8
+msgid "Google account"
+msgstr "Googleアカウント"
 
 #: yagura/settings/base.py:146
 msgid "Japanese"
@@ -159,6 +163,7 @@ msgstr ""
 
 #: yagura/templates/registration/registration_form.html:16
 #: yagura/templates/registration/registration_form.html:26
+#, python-format
 msgid "Register by %(by_name)s"
 msgstr "%(by_name)sで登録"
 
