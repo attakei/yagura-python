@@ -2,6 +2,28 @@
 Change logs
 ===========
 
+ver 0.4.0
+=========
+
+:Date: 2018-07-19
+
+Features
+--------
+
+* Enable social authentication by social-auth-app-django
+* Toggle password registration
+* Register other notifications for each sites ( not owner emails)
+* Can disable limit of monitring sites
+* MySQL support in docker container
+
+Fixes
+-----
+
+* Split locale file into each applications
+* Split template files into each applications
+* Move statc resource into ``yagura.core`` application
+
+
 Ver 0.3.0
 =========
 
