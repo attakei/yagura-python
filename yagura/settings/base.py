@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'social_django',
     # Yagura core apps
+    'yagura.core',
     'yagura.accounts',
     'yagura.sites',
     'yagura.monitors',
@@ -69,9 +70,7 @@ ROOT_URLCONF = 'yagura.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'yagura', 'templates'),
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,7 +80,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
-                'yagura.context_processors.yagura_conf',
+                'yagura.core.context_processors.yagura_conf',
             ],
             'builtins': [
                 'django.templatetags.i18n',
@@ -138,10 +137,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'yagura/locale'),
-]
 
 LANGUAGES = [
     ('ja', _('Japanese')),
