@@ -160,8 +160,6 @@ STATICFILES_DIRS = [
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    # From social-auth-app-django
-    'social_core.backends.google.GoogleOAuth2',
     # Default backend
     'django.contrib.auth.backends.ModelBackend',
 )
