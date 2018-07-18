@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'social_django',
     # Yagura core apps
+    'yagura.core',
     'yagura.accounts',
     'yagura.sites',
     'yagura.monitors',
