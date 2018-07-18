@@ -11,6 +11,7 @@
 
 {% block content_main %}
 <div class="row">
+  {% if ENABLE_PASSWORD_REGISTRATION %}
   <div class="col">
     {% trans 'username/password' as trans_username_password %}
     <h3>{% blocktrans with by_name=trans_username_password %}Auth by {{ by_name }}{% endblocktrans %}</h3>
@@ -21,6 +22,7 @@
       {% bootstrap_button login_label 'submit' %}
     </form>
   </div>
+  {% endif %}
   <div class="col">
     {% trans 'social accounts' as trans_social_accounts %}
     <h3>{% blocktrans with by_name=trans_social_accounts %}Auth by {{ by_name }}{% endblocktrans %}</h3>
