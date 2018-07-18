@@ -7,7 +7,6 @@ Welcome to Yagura's documentation!
 ==================================
 
 .. toctree::
-
     :maxdepth: 2
     :caption: Contents:
 
