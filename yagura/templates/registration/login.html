@@ -10,10 +10,21 @@
 {% endblock %}
 
 {% block content_main %}
-<form method="POST">
-{% csrf_token %}
-{% bootstrap_form form %}
-{% trans 'Log in' as login_label %}
-{% bootstrap_button login_label 'submit' %}
-</form>
+<div class="row">
+  <div class="col">
+    {% trans 'username/password' as trans_username_password %}
+    <h3>{% blocktrans with by_name=trans_username_password %}Auth by {{ by_name }}{% endblocktrans %}</h3>
+    <form method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% trans 'Log in' as login_label %}
+      {% bootstrap_button login_label 'submit' %}
+    </form>
+  </div>
+  <div class="col">
+    {% trans 'social accounts' as trans_social_accounts %}
+    <h3>{% blocktrans with by_name=trans_social_accounts %}Auth by {{ by_name }}{% endblocktrans %}</h3>
+    {% include 'registration/_snippets/social-auth.html' %}
+  </div>
+</div>
 {% endblock %}

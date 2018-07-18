@@ -1,0 +1,9 @@
+{% load social_labels %}
+
+<ul class="list-group">
+  {% for backend in backends.backends %}
+    <li class="list-group-item">
+      <a href="{% url 'social:begin' backend %}">{{ backend|social_title }}</a>
+    </li>
+  {% endfor %}
+</ul>
