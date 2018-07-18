@@ -81,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'yagura.context_processors.yagura_conf',
             ],
             'builtins': [
                 'django.templatetags.i18n',
@@ -159,8 +160,6 @@ STATICFILES_DIRS = [
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    # From social-auth-app-django
-    'social_core.backends.google.GoogleOAuth2',
     # Default backend
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -205,3 +204,4 @@ SOCIAL_AUTH_PIPELINE = (
 # YAGURA_BASE_URL = ''
 
 YAGURA_SITES_LIMIT = 1
+YAGURA_ENABLE_PASSWORD_REGISTRATION = True
