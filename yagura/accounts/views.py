@@ -2,7 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
-from yagura.accounts.forms import ProfileEditForm, SetLanguageForm, SetTimezoneForm
+from yagura.accounts.forms import (
+    ProfileEditForm, SetLanguageForm, SetTimezoneForm
+)
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
