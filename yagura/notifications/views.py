@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormMixin
@@ -52,7 +53,6 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
 
 class NotificationDeleteView(LoginRequiredMixin, DetailView):
     model = Recipient
-    success_url = reverse_lazy('notifications:delete-complete')
     template_name = 'notifications/recipient_confirm_delete.html'
 
     def post(self, request, *args, **kwargs):
@@ -69,7 +69,8 @@ class NotificationDeleteView(LoginRequiredMixin, DetailView):
                 'base_url': get_base_url(),
             }
         )
-        return super().post(request, *args, **kwargs)
+        return HttpResponseRedirect(
+            reverse_lazy('notifications:delete-complete'))
 
 
 class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
@@ -112,13 +113,12 @@ class DeactivateView(DetailView):
     slug_field = 'code'
     slug_url_kwarg = 'code'
 
-    def get_context_data(self, **kwargs):
-        """If can get object, parent recipient enable.
-        """
-        ctx = super().get_context_data(**kwargs)
-        # TODO: This proc is valid place?
+    def get(self, request, *args, **kwargs):
         deactivation = self.get_object()
-        ctx['site'] = deactivation.recipient.site
-        ctx['recipient'] = {'email': deactivation.recipient.email}
         deactivation.recipient.delete()
-        return ctx
+        return HttpResponseRedirect(
+            reverse_lazy('notifications:deactivate-complete'))
+
+
+class DeactivateCompleteView(TemplateView):
+    template_name = 'notifications/deactivate_complete.html'
