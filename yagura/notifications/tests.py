@@ -35,6 +35,26 @@ class AddNotification_ViewTest(ViewTestCase):
         assert len(mail.outbox) == 1
 
 
+class NotificationDelete_ViewTest(ViewTestCase):
+    fixtures = [
+        'initial',
+        'unittest_suite',
+    ]
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(get_user_model().objects.first())
+        Recipient.objects.create(
+            site=Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'),
+            email='test@example.com', enabled=True)
+
+    def test_it(self):
+        resp = self.client.post(
+            reverse_lazy('notifications:delete-recipient', args=(1,)))
+        assert resp.status_code == 302
+        assert Recipient.objects.count() == 0
+
+
 class Activate_ViewTest(ViewTestCase):
     fixtures = [
         'unittest_suite',

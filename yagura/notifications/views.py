@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import DeleteView, FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import AddNotificationForm
@@ -50,7 +50,7 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
             'sites:detail', args=(self.object.id, ))
 
 
-class NotificationDeleteView(LoginRequiredMixin, DetailView):
+class NotificationDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipient
     success_url = reverse_lazy('notifications:delete-complete')
     template_name = 'notifications/recipient_confirm_delete.html'
