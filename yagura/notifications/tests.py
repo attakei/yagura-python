@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import mail
 from django.urls import reverse_lazy
 
-from yagura.notifications.models import Activation, Recipient
+from yagura.notifications.models import Activation, Deactivation, Recipient
 from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
@@ -48,11 +48,13 @@ class NotificationDelete_ViewTest(ViewTestCase):
             site=Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'),
             email='test@example.com', enabled=True)
 
-    def test_it(self):
+    def test_post_not_delete(self):
         resp = self.client.post(
             reverse_lazy('notifications:delete-recipient', args=(1,)))
         assert resp.status_code == 302
-        assert Recipient.objects.count() == 0
+        assert Recipient.objects.count() == 1
+        assert Deactivation.objects.count() == 1
+        assert len(mail.outbox) == 1
 
 
 class Activate_ViewTest(ViewTestCase):
