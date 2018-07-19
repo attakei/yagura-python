@@ -1,3 +1,4 @@
+========
 Settings
 ========
 
@@ -5,6 +6,8 @@ Yagura is project based by Django adn third party applications. So, most configu
 
 There is following settings Yagura peculiar.
 
+Settings Yagura peciliar
+========================
 
 ``YAGUA_ENABLE_PASSWORD_REGISTRATION``
 --------------------------------------

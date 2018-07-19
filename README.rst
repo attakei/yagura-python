@@ -36,7 +36,7 @@ Features
 Try demo
 ========
 
-See http://yagura-demo.attakei.net
+See https://yagura-demo.attakei.net
 
 
 Initial user
