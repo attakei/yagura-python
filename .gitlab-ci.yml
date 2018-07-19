@@ -38,13 +38,20 @@ build-docker-image:
   stage: build
   only:
     - master
+    - /^release\/.*$/
   image: docker:latest
   services:
     - docker:dind
   script:
+    - |
+      if [ "$CI_COMMIT_REF_NAME" = "master" ] ; then
+        IMAGE_TAG="latest"
+      else
+        IMAGE_TAG=${CI_COMMIT_REF_NAME/\//-}
+      fi
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker build -t registry.gitlab.com/attakei/yagura:latest .
-    - docker push registry.gitlab.com/attakei/yagura:latest
+    - docker build -t registry.gitlab.com/attakei/yagura:$IMAGE_TAG .
+    - docker push registry.gitlab.com/attakei/yagura:$IMAGE_TAG
 
 build-pypi-packages:
   stage: build
