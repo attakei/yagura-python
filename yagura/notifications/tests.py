@@ -81,6 +81,13 @@ class Deactivate_ViewTest(ViewTestCase):
         'unittest_suite',
     ]
 
+    def test_invalid_code(self):
+        url = reverse_lazy(
+            'notifications:deactivate',
+            kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
+        resp = self.client.get(url)
+        assert resp.status_code == 404
+
     def test_deactivation_enabled(self):
         recipient = Recipient.objects.create(
             site=Site.objects.first(), email='test@example.com', enabled=True)

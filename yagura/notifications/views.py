@@ -113,16 +113,6 @@ class DeactivateView(DetailView):
     slug_field = 'code'
     slug_url_kwarg = 'code'
 
-    def get_context_data(self, **kwargs):
-        """If can get object, parent recipient enable.
-        """
-        ctx = super().get_context_data(**kwargs)
-        # TODO: This proc is valid place?
-        deactivation = self.get_object()
-        ctx['site'] = deactivation.recipient.site
-        ctx['recipient'] = {'email': deactivation.recipient.email}
-        return ctx
-
     def get(self, request, *args, **kwargs):
         deactivation = self.get_object()
         deactivation.recipient.delete()
