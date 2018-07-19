@@ -121,5 +121,14 @@ class DeactivateView(DetailView):
         deactivation = self.get_object()
         ctx['site'] = deactivation.recipient.site
         ctx['recipient'] = {'email': deactivation.recipient.email}
-        deactivation.recipient.delete()
         return ctx
+
+    def get(self, request, *args, **kwargs):
+        deactivation = self.get_object()
+        deactivation.recipient.delete()
+        return HttpResponseRedirect(
+            reverse_lazy('notifications:deactivate-complete'))
+
+
+class DeactivateCompleteView(TemplateView):
+    template_name = 'notifications/deactivate_complete.html'

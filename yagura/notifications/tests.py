@@ -74,3 +74,23 @@ class Activate_ViewTest(ViewTestCase):
         assert resp.status_code == 200
         recipient = Recipient.objects.first()
         assert recipient.enabled is True
+
+
+class Deactivate_ViewTest(ViewTestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+
+    def test_deactivation_enabled(self):
+        recipient = Recipient.objects.create(
+            site=Site.objects.first(), email='test@example.com', enabled=True)
+        Deactivation.objects.create(
+            recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
+        url = reverse_lazy(
+            'notifications:deactivate',
+            kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
+        resp = self.client.get(url)
+        assert resp.status_code == 302
+        assert Recipient.objects.count() == 0
+        resp = self.client.get(resp['Location'])
+        assert resp.status_code == 200
