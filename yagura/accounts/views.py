@@ -2,7 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
-from yagura.accounts.forms import ProfileEditForm, SetLanguageForm
+from yagura.accounts.forms import (
+    ProfileEditForm, SetLanguageForm, SetTimezoneForm
+)
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -11,6 +13,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
         ctx['language_form'] = SetLanguageForm()
+        ctx['timezone_form'] = SetTimezoneForm()
         return ctx
 
 
@@ -33,4 +36,13 @@ class ProfileEditView(LoginRequiredMixin, FormView):
         for k in self.form_class.Meta.fields:
             setattr(user, k, form.cleaned_data[k])
         user.save()
+        return super().form_valid(form)
+
+
+class SetTimezoneView(LoginRequiredMixin, FormView):
+    form_class = SetTimezoneForm
+    success_url = reverse_lazy('accounts:profile')
+
+    def form_valid(self, form):
+        self.request.session['django_timezone'] = form.cleaned_data['timezone']
         return super().form_valid(form)

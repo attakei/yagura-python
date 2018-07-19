@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-18 16:22+0000\n"
+"POT-Creation-Date: 2018-07-19 15:27+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -47,9 +47,14 @@ msgstr "プロフィールを編集する"
 msgid "Set language"
 msgstr "表示言語を設定"
 
-#: yagura/accounts/templates/accounts/profile.html:33
+#: yagura/accounts/templates/accounts/profile.html:32
+#: yagura/accounts/templates/accounts/profile.html:43
 msgid "Apply"
 msgstr "適用する"
+
+#: yagura/accounts/templates/accounts/profile.html:37
+msgid "Set timezone"
+msgstr "タイムゾーンを設定"
 
 #: yagura/accounts/templates/accounts/profile_edit.html:13
 msgid "Submit"
