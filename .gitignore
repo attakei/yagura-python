@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/python
+# Created by https://www.gitignore.io/api/Python,VisualStudioCode
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -27,6 +27,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -44,15 +45,20 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
-.pytest_cache/
 nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+.pytest_cache/
 
 # Translations
 *.mo
 *.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
 
 # Flask stuff:
 instance/
@@ -74,7 +80,7 @@ target/
 .python-version
 
 # celery beat schedule file
-celerybeat-schedule.*
+celerybeat-schedule
 
 # SageMath parsed files
 *.sage.py
@@ -101,5 +107,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+### Python Patch ###
+.venv/
 
-# End of https://www.gitignore.io/api/python
+### VisualStudioCode ###
+.vscode/*
+
+# End of https://www.gitignore.io/api/Python,VisualStudioCode
