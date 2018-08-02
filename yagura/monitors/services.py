@@ -1,5 +1,5 @@
 import typing
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
 
 from django.conf import settings
@@ -15,6 +15,8 @@ def monitor_site(site: Site) -> typing.Tuple[str, str]:
         resp = urlopen(site.url)
     except HTTPError as err:
         resp = err
+    except URLError as err:
+        return 'NG', err.reason
     result = 'OK' if resp.code == site.ok_status_code else 'NG'
     reason = f"HTTP status code is {resp.code}" \
         f" (expected: {site.ok_status_code})" \

@@ -1,4 +1,4 @@
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 
 from django.utils.six import StringIO
 
@@ -12,3 +12,9 @@ def mocked_urlopen(*args, **kwargs):
     if url[-3:] == '200':
         return MockResponse(200)
     raise HTTPError(url=url, code=404, msg='Failure', hdrs='', fp=StringIO())
+
+
+def mocked_urlopen_urlerror(message='Error'):
+    def _mocked_url_urlerror(*args, **kwargs):
+        raise URLError(reason=message)
+    return _mocked_url_urlerror
