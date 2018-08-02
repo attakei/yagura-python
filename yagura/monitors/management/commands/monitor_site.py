@@ -26,5 +26,5 @@ class Command(BaseCommand):
             site = Site.objects.get(pk=site_id)
         except Site.DoesNotExist:
             raise CommandError(f"Site is not found")
-        state = monitor_site(site)
-        handle_state(site, state, monitor_date)
+        state, reason = monitor_site(site)
+        handle_state(site, state, monitor_date, reason=reason)

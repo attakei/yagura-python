@@ -78,6 +78,7 @@ class MonitorSite_CommandTest(TestCase):
         state = StateHistory.objects.first()
         assert state.state == 'NG'
         assert len(mail.outbox) == 1
+        assert '(expected: 200)' in state.reason
 
     @mock.patch(
         'yagura.monitors.services.urlopen',
@@ -145,7 +146,6 @@ class MonitorAll_CommandTest(TestCase):
     )
     def test_save_all_states(self, mock_get):
         out, err = run_command('monitor_all')
-        print(StateHistory.objects.first().site)
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
@@ -155,6 +155,7 @@ class MonitorAll_CommandTest(TestCase):
     def test_states_not_changed(self, mock_get):
         self.test_save_all_states()
         out, err = run_command('monitor_all')
+        print([sh.state for sh in StateHistory.objects.all()])
         assert StateHistory.objects.count() == 2
 
     @mock.patch(

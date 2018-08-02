@@ -1,3 +1,4 @@
+import typing
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
@@ -9,18 +10,22 @@ from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 
-def monitor_site(site: Site):
+def monitor_site(site: Site) -> typing.Tuple[str, str]:
     try:
         resp = urlopen(site.url)
     except HTTPError as err:
         resp = err
-    return 'OK' if resp.code == site.ok_status_code else 'NG'
+    result = 'OK' if resp.code == site.ok_status_code else 'NG'
+    reason = f"(expected: {site.ok_status_code})" \
+        if result == 'NG' else ''
+    return result, reason
 
 
-def handle_state(site, state, monitor_date):
-    current = StateHistory.objects.filter(site=site).last()
+def handle_state(site, state, monitor_date, reason=''):
+    current: StateHistory = StateHistory.objects.filter(site=site).last()
     if current is None:
-        current = StateHistory.objects.create(site=site, state=state)
+        current: StateHistory = StateHistory.objects.create(
+            site=site, state=state, reason=reason)
         send_state_email(current, 'monitors/handle_state_first')
         return
     if current.state == state:
@@ -29,7 +34,7 @@ def handle_state(site, state, monitor_date):
     current.end_at = monitor_date
     current.save()
     current = StateHistory.objects.create(
-        site=site, state=state, begin_at=monitor_date)
+        site=site, state=state, begin_at=monitor_date, reason=reason)
     send_state_email(current, 'monitors/handle_state_changed')
 
 
