@@ -5,15 +5,16 @@ from django.conf import settings
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
+from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 
-def monitor_site(site):
+def monitor_site(site: Site):
     try:
         resp = urlopen(site.url)
-        return 'OK' if resp.code == 200 else 'NG'
-    except HTTPError:
-        return 'NG'
+    except HTTPError as err:
+        resp = err
+    return 'OK' if resp.code == site.ok_status_code else 'NG'
 
 
 def handle_state(site, state, monitor_date):

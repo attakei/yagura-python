@@ -83,6 +83,21 @@ class MonitorSite_CommandTest(TestCase):
         'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
     )
+    def test_site_expected_not_found(self, mock_get):
+        test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee02'
+        site = Site.objects.get(pk=test_uuid)
+        site.ok_status_code = 404
+        site.save()
+        run_command('monitor_site', test_uuid)
+        assert StateHistory.objects.count() == 1
+        state = StateHistory.objects.first()
+        assert state.state == 'OK'
+        assert len(mail.outbox) == 1
+
+    @mock.patch(
+        'yagura.monitors.services.urlopen',
+        side_effect=mocked_urlopen
+    )
     def test_keep_state(self, mock_get):
         self.test_site_found()
         before_updated = StateHistory.objects.first().updated_at
