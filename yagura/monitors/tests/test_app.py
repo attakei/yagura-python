@@ -7,7 +7,7 @@ from django.core.management.base import CommandError
 from django.test import TestCase
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.tests import  mocked_urlopen
+from yagura.monitors.tests import mocked_urlopen
 from yagura.sites.models import Site
 from yagura.tests.utils import run_command
 

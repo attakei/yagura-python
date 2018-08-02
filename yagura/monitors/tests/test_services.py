@@ -9,7 +9,7 @@ from django.test import TestCase, override_settings
 from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.services import send_state_email, monitor_site
+from yagura.monitors.services import monitor_site, send_state_email
 from yagura.monitors.tests import mocked_urlopen, mocked_urlopen_urlerror
 from yagura.sites.models import Site
 
@@ -32,16 +32,19 @@ class MonitorSite_Test(TestCase):
         with mock.patch(
                 'yagura.monitors.services.urlopen',
                 side_effect=mocked_urlopen):
-            site = mock.MagicMock(url='http://example.com/200', ok_status_code=302)
+            site = mock.MagicMock(
+                url='http://example.com/200', ok_status_code=302)
             result, reason = monitor_site(site)
             assert result == 'NG'
-            assert reason == 'HTTP status code is 200 (expected: 302)'
+            assert reason == \
+                'HTTP status code is 200 (expected: 302)'
 
     def test_urlerror(self):
         with mock.patch(
                 'yagura.monitors.services.urlopen',
                 side_effect=mocked_urlopen_urlerror('Test error')):
-            site = mock.MagicMock(url='http://example.com/200', ok_status_code=302)
+            site = mock.MagicMock(
+                url='http://example.com/200', ok_status_code=302)
             result, reason = monitor_site(site)
             assert result == 'NG'
             assert reason == 'Test error'
