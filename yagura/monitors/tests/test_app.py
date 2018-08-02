@@ -1,27 +1,15 @@
 from unittest import mock
-from urllib.error import HTTPError
 
 import pytest
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.management.base import CommandError
 from django.test import TestCase
-from django.utils.six import StringIO
 
 from yagura.monitors.models import StateHistory
+from yagura.monitors.tests import  mocked_urlopen
 from yagura.sites.models import Site
 from yagura.tests.utils import run_command
-
-
-def mocked_urlopen(*args, **kwargs):
-    class MockResponse(object):
-        def __init__(self, status_code):
-            self.code = status_code
-
-    url = args[0]
-    if url[-3:] == '200':
-        return MockResponse(200)
-    raise HTTPError(url=url, code=404, msg='Failure', hdrs='', fp=StringIO())
 
 
 class StateHistory_ModelTest(TestCase):

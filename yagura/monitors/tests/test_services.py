@@ -9,8 +9,33 @@ from django.test import TestCase, override_settings
 from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.services import send_state_email
+from yagura.monitors.services import send_state_email, monitor_site
+from yagura.monitors.tests import  mocked_urlopen
 from yagura.sites.models import Site
+
+
+class MonitorSite_Test(TestCase):
+    @parameterized.expand([
+        ('http://example.com/200', 200, 'OK'),
+        ('http://example.com/404', 404, 'OK'),
+    ])
+    def test_expected_request(self, url, status_code, exp_result):
+        with mock.patch(
+                'yagura.monitors.services.urlopen',
+                side_effect=mocked_urlopen):
+            site = mock.MagicMock(url=url, ok_status_code=status_code)
+            result, reason = monitor_site(site)
+            assert result == exp_result
+            assert reason == ''
+
+    def test_ng_response_with_reason(self):
+        with mock.patch(
+                'yagura.monitors.services.urlopen',
+                side_effect=mocked_urlopen):
+            site = mock.MagicMock(url='http://example.com/200', ok_status_code=302)
+            result, reason = monitor_site(site)
+            assert result == 'NG'
+            assert reason == 'HTTP status code is 200 (expected: 302)'
 
 
 class SendStateEmail_Test(TestCase):
