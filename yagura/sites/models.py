@@ -1,8 +1,12 @@
+from http import HTTPStatus
 from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+
+ALL_HTTP_STATUS = [(s.value, f"{s.value} {s.phrase}") for s in HTTPStatus]
 
 
 class Site(models.Model):
@@ -12,7 +16,7 @@ class Site(models.Model):
         _('Site ID in project'), primary_key=True, default=uuid4)
     url = models.URLField(_('Site URL'))
     ok_status_code = models.PositiveSmallIntegerField(
-        'Excepted HTTP status code', default=200)
+        'Excepted HTTP status code', default=200, choices=ALL_HTTP_STATUS)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
