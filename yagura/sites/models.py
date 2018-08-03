@@ -15,7 +15,7 @@ class Site(models.Model):
     id = models.UUIDField(
         _('Site ID in project'), primary_key=True, default=uuid4)
     url = models.URLField(_('Site URL'))
-    ok_status_code = models.PositiveSmallIntegerField(
+    ok_http_status = models.PositiveSmallIntegerField(
         'Excepted HTTP status code', default=200, choices=ALL_HTTP_STATUS)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)

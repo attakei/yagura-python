@@ -23,7 +23,7 @@ class MonitorSite_Test(TestCase):
         with mock.patch(
                 'yagura.monitors.services.urlopen',
                 side_effect=mocked_urlopen):
-            site = mock.MagicMock(url=url, ok_status_code=status_code)
+            site = mock.MagicMock(url=url, ok_http_status=status_code)
             result, reason = monitor_site(site)
             assert result == exp_result
             assert reason == ''
@@ -33,7 +33,7 @@ class MonitorSite_Test(TestCase):
                 'yagura.monitors.services.urlopen',
                 side_effect=mocked_urlopen):
             site = mock.MagicMock(
-                url='http://example.com/200', ok_status_code=302)
+                url='http://example.com/200', ok_http_status=302)
             result, reason = monitor_site(site)
             assert result == 'NG'
             assert reason == \
@@ -44,7 +44,7 @@ class MonitorSite_Test(TestCase):
                 'yagura.monitors.services.urlopen',
                 side_effect=mocked_urlopen_urlerror('Test error')):
             site = mock.MagicMock(
-                url='http://example.com/200', ok_status_code=302)
+                url='http://example.com/200', ok_http_status=302)
             result, reason = monitor_site(site)
             assert result == 'NG'
             assert reason == 'Test error'

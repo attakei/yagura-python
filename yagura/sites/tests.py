@@ -40,7 +40,7 @@ class SiteCreate_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:create')
     VALID_FORM_VAL = {
         'url': 'http://example.com/',
-        'ok_status_code': 200,
+        'ok_http_status': 200,
     }
 
     def test_login_required(self):
@@ -60,17 +60,17 @@ class SiteCreate_ViewTest(ViewTestCase):
         assert resp.status_code == 302
         site = Site.objects.filter(url='http://example.com/').first()
         assert site.created_by == user
-        assert site.ok_status_code == 200
+        assert site.ok_http_status == 200
 
     def test_add_with_status_code(self):
         user = get_user_model().objects.create_user('test_user')
         self.client.force_login(user)
         resp = self.client.post(
-            self.url, {'url': 'http://example.com/', 'ok_status_code': 302})
+            self.url, {'url': 'http://example.com/', 'ok_http_status': 302})
         assert resp.status_code == 302
         site = Site.objects.filter(url='http://example.com/').first()
         assert site.created_by == user
-        assert site.ok_status_code == 302
+        assert site.ok_http_status == 302
 
     @override_settings(YAGURA_SITES_LIMIT=1)
     def test_post_overlimit(self):

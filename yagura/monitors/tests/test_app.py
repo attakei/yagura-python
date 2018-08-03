@@ -75,7 +75,7 @@ class MonitorSite_CommandTest(TestCase):
     def test_site_expected_not_found(self, mock_get):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee02'
         site = Site.objects.get(pk=test_uuid)
-        site.ok_status_code = 404
+        site.ok_http_status = 404
         site.save()
         run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1

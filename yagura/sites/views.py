@@ -24,7 +24,7 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
     model = Site
     form_class = SiteCreateForm
     initial = {
-        'ok_status_code': 200,
+        'ok_http_status': 200,
     }
 
     def get_form_kwargs(self):

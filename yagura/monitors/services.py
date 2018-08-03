@@ -17,9 +17,9 @@ def monitor_site(site: Site) -> typing.Tuple[str, str]:
         resp = err
     except URLError as err:
         return 'NG', err.reason
-    result = 'OK' if resp.code == site.ok_status_code else 'NG'
+    result = 'OK' if resp.code == site.ok_http_status else 'NG'
     reason = f"HTTP status code is {resp.code}" \
-        f" (expected: {site.ok_status_code})" \
+        f" (expected: {site.ok_http_status})" \
         if result == 'NG' else ''
     return result, reason
 
