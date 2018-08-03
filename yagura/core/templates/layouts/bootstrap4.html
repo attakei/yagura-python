@@ -1,6 +1,7 @@
 {% comment "Optional note" %}
 This template inherit from 'bootstrap4/bootstrap4.html' of django-bootstrap4
 {% endcomment %}
+{% load static %}
 <!DOCTYPE html>
 {% load bootstrap4 %}
 {% if 'use_i18n'|bootstrap_setting %}
@@ -17,6 +18,7 @@ This template inherit from 'bootstrap4/bootstrap4.html' of django-bootstrap4
 
     <!-- Bootstrap CSS -->
     {% bootstrap_css %}
+    <link href="{% static 'custom.css' %}" rel="stylesheet">
 
     {% if 'javascript_in_head'|bootstrap_setting %}
         {% if 'include_jquery'|bootstrap_setting %}
