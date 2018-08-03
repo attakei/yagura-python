@@ -38,9 +38,13 @@ class SiteList_ViewTest(ViewTestCase):
 
 class SiteCreate_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:create')
+    VALID_FORM_VAL = {
+        'url': 'http://example.com/',
+        'ok_status_code': 200,
+    }
 
     def test_login_required(self):
-        resp = self.client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, self.VALID_FORM_VAL)
         assert resp.status_code == 302
 
     def test_get_form(self):
@@ -52,17 +56,28 @@ class SiteCreate_ViewTest(ViewTestCase):
     def test_add(self):
         user = get_user_model().objects.create_user('test_user')
         self.client.force_login(user)
-        resp = self.client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, self.VALID_FORM_VAL)
         assert resp.status_code == 302
         site = Site.objects.filter(url='http://example.com/').first()
         assert site.created_by == user
+        assert site.ok_status_code == 200
+
+    def test_add_with_status_code(self):
+        user = get_user_model().objects.create_user('test_user')
+        self.client.force_login(user)
+        resp = self.client.post(
+            self.url, {'url': 'http://example.com/', 'ok_status_code': 302})
+        assert resp.status_code == 302
+        site = Site.objects.filter(url='http://example.com/').first()
+        assert site.created_by == user
+        assert site.ok_status_code == 302
 
     @override_settings(YAGURA_SITES_LIMIT=1)
     def test_post_overlimit(self):
         """If settgins has sites-limit, user can register more than limit
         """
         self.test_add()
-        resp = self.client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, self.VALID_FORM_VAL)
         assert resp.status_code == 200
 
     @override_settings(YAGURA_SITES_LIMIT=2)
@@ -70,7 +85,7 @@ class SiteCreate_ViewTest(ViewTestCase):
         """If settgins has sites-limit, user can register more than limit
         """
         self.test_add()
-        resp = self.client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, self.VALID_FORM_VAL)
         assert resp.status_code == 302
 
     @override_settings(YAGURA_SITES_LIMIT=1)
@@ -78,8 +93,10 @@ class SiteCreate_ViewTest(ViewTestCase):
         """If user is granted as superuser, not limit sites.
         """
         self.client.force_login(get_user_model().objects.first())
-        self.client.post(self.url, {'url': 'http://example.com/'})
-        resp = self.client.post(self.url, {'url': 'http://example.com/2'})
+        self.client.post(self.url, self.VALID_FORM_VAL)
+        values = self.VALID_FORM_VAL.copy()
+        values['url'] = 'http://example.com/2'
+        resp = self.client.post(self.url, values)
         assert resp.status_code == 302
 
     @override_settings(YAGURA_SITES_LIMIT=0)
@@ -87,7 +104,7 @@ class SiteCreate_ViewTest(ViewTestCase):
         """If settgins has sites-limit, user can register more than limit
         """
         self.test_add()
-        resp = self.client.post(self.url, {'url': 'http://example.com/'})
+        resp = self.client.post(self.url, self.VALID_FORM_VAL)
         assert resp.status_code == 302
 
 
