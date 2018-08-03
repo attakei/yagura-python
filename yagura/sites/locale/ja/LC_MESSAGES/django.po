@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 04:50+0000\n"
+"POT-Creation-Date: 2018-08-03 14:46+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "You are reached limits for nums of monitoring sites."
 msgstr "監視可能なサイト数の上限に到達しています"
 
-#: yagura/sites/models.py:16
+#: yagura/sites/models.py:15
 msgid "Site ID in project"
 msgstr "サイトID"
 
-#: yagura/sites/models.py:17
+#: yagura/sites/models.py:16 yagura/sites/templates/sites/site_detail.html:14
 msgid "Site URL"
 msgstr "サイトのURL"
 
-#: yagura/sites/models.py:19
+#: yagura/sites/models.py:18 yagura/sites/templates/sites/site_detail.html:15
 msgid "Excepted HTTP status code"
 msgstr "期待しているHTTPステータスコード"
 
@@ -60,13 +60,17 @@ msgstr "%(url)s の登録者のみが削除できます"
 msgid "Site detail"
 msgstr "サイト情報"
 
-#: yagura/sites/templates/sites/site_detail.html:30
+#: yagura/sites/templates/sites/site_detail.html:31
 msgid "State"
 msgstr "状態"
 
-#: yagura/sites/templates/sites/site_detail.html:30
+#: yagura/sites/templates/sites/site_detail.html:31
 msgid "Range"
 msgstr "期間"
+
+#: yagura/sites/templates/sites/site_detail.html:31
+msgid "Reason"
+msgstr "理由"
 
 #: yagura/sites/templates/sites/site_form.html:6
 msgid "Register new site"
