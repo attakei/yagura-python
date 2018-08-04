@@ -5,8 +5,8 @@ from django.db import models
 from yagura.sites.models import Site
 
 
-class Recipient(models.Model):
-    """Other recipients not users
+class EmailRecipient(models.Model):
+    """Other email not users
 
     * Manage per recipient and target site
     """
@@ -21,10 +21,10 @@ class Recipient(models.Model):
         )
 
 
-class Activation(models.Model):
-    """Recipient activation code
+class EmailActivation(models.Model):
+    """Email-recipient activation code
     """
-    recipient = models.ForeignKey(Recipient, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(EmailRecipient, on_delete=models.CASCADE)
     code = models.UUIDField()
 
     @classmethod
@@ -33,10 +33,10 @@ class Activation(models.Model):
         return act
 
 
-class Deactivation(models.Model):
-    """Recipient deactivation code
+class EmailDeactivation(models.Model):
+    """Email-recipient deactivation code
     """
-    recipient = models.ForeignKey(Recipient, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(EmailRecipient, on_delete=models.CASCADE)
     code = models.UUIDField()
 
     @classmethod

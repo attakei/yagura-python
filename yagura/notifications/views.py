@@ -7,7 +7,7 @@ from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import AddNotificationForm
-from yagura.notifications.models import Activation, Deactivation, Recipient
+from yagura.notifications.models import EmailActivation, EmailDeactivation, EmailRecipient
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
@@ -32,7 +32,7 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
 
     def form_valid(self, form):
         form.save()
-        activation = Activation.generate_code(form.instance)
+        activation = EmailActivation.generate_code(form.instance)
         send_templated_mail(
             template_name='notifications/confirm_recipient',
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -52,12 +52,12 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
 
 
 class NotificationDeleteView(LoginRequiredMixin, DetailView):
-    model = Recipient
+    model = EmailRecipient
     template_name = 'notifications/recipient_confirm_delete.html'
 
     def post(self, request, *args, **kwargs):
         recipient = self.get_object()
-        deactivation = Deactivation.generate_code(recipient)
+        deactivation = EmailDeactivation.generate_code(recipient)
         send_templated_mail(
             template_name='notifications/recipient_confirm_delete',
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -78,7 +78,7 @@ class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
 
 
 class NotificationListView(LoginRequiredMixin, ListView):
-    model = Recipient
+    model = EmailRecipient
 
     def get_queryset(self):
         qs_ = super().get_queryset()
@@ -91,7 +91,7 @@ class NotificationListView(LoginRequiredMixin, ListView):
 
 
 class ActivateView(DetailView):
-    model = Activation
+    model = EmailActivation
     slug_field = 'code'
     slug_url_kwarg = 'code'
 
@@ -109,7 +109,7 @@ class ActivateView(DetailView):
 
 
 class DeactivateView(DetailView):
-    model = Deactivation
+    model = EmailDeactivation
     slug_field = 'code'
     slug_url_kwarg = 'code'
 
@@ -121,4 +121,4 @@ class DeactivateView(DetailView):
 
 
 class DeactivateCompleteView(TemplateView):
-    template_name = 'notifications/deactivate_complete.html'
+    template_name = 'notifications/emaildeactivate_complete.html'

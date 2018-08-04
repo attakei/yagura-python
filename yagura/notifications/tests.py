@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import mail
 from django.urls import reverse_lazy
 
-from yagura.notifications.models import Activation, Deactivation, Recipient
+from yagura.notifications.models import EmailActivation, EmailDeactivation, EmailRecipient
 from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
@@ -44,7 +44,7 @@ class NotificationDelete_ViewTest(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.client.force_login(get_user_model().objects.first())
-        Recipient.objects.create(
+        EmailRecipient.objects.create(
             site=Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'),
             email='test@example.com', enabled=True)
 
@@ -52,8 +52,8 @@ class NotificationDelete_ViewTest(ViewTestCase):
         resp = self.client.post(
             reverse_lazy('notifications:delete-recipient', args=(1,)))
         assert resp.status_code == 302
-        assert Recipient.objects.count() == 1
-        assert Deactivation.objects.count() == 1
+        assert EmailRecipient.objects.count() == 1
+        assert EmailDeactivation.objects.count() == 1
         assert len(mail.outbox) == 1
 
 
@@ -63,16 +63,16 @@ class Activate_ViewTest(ViewTestCase):
     ]
 
     def test_activation_enabled(self):
-        recipient = Recipient.objects.create(
+        recipient = EmailRecipient.objects.create(
             site=Site.objects.first(), email='test@example.com')
-        Activation.objects.create(
+        EmailActivation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         url = reverse_lazy(
             'notifications:activate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 200
-        recipient = Recipient.objects.first()
+        recipient = EmailRecipient.objects.first()
         assert recipient.enabled is True
 
 
@@ -89,15 +89,15 @@ class Deactivate_ViewTest(ViewTestCase):
         assert resp.status_code == 404
 
     def test_deactivation_enabled(self):
-        recipient = Recipient.objects.create(
+        recipient = EmailRecipient.objects.create(
             site=Site.objects.first(), email='test@example.com', enabled=True)
-        Deactivation.objects.create(
+        EmailDeactivation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         url = reverse_lazy(
             'notifications:deactivate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 302
-        assert Recipient.objects.count() == 0
+        assert EmailRecipient.objects.count() == 0
         resp = self.client.get(resp['Location'])
         assert resp.status_code == 200

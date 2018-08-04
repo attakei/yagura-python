@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from yagura.notifications.models import Activation, Recipient
+from yagura.notifications.models import EmailActivation, EmailRecipient
 
-admin.site.register(Recipient)
-admin.site.register(Activation)
+admin.site.register(EmailRecipient)
+admin.site.register(EmailActivation)
