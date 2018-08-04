@@ -12,5 +12,5 @@ class Command(BaseCommand):
         # Main
         for site in Site.objects.all():
             monitor_date = now()
-            state = monitor_site(site)
-            handle_state(site, state, monitor_date)
+            state, reason = monitor_site(site)
+            handle_state(site, state, monitor_date, reason)

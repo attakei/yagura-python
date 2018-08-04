@@ -11,14 +11,15 @@
     {% endif %}
   </div>
   <div>
-    <p>Target: {{ site.url }}</p>
+    <p>{% trans 'Site URL' %}: {{ site.url }}</p>
+    <p>{% trans 'Excepted HTTP status code' %}: {{ site.ok_http_status }}</p>
     {% if site.created_by == request.user %}
       <p>
         Menu:
-        {% url 'notifications:list-recipient' site.id as url_to_list_notifications %}
-        {% bootstrap_button 'Show notifications' 'button' href=url_to_list_notifications size='xs' %}
-        {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
-        {% bootstrap_button 'Add notification' 'button' href=url_to_add_notification size='xs' %}
+      {% url 'notifications:list-recipient' site.id as url_to_list_notifications %}
+      {% bootstrap_button 'Show notifications' 'button' href=url_to_list_notifications size='xs' %}
+      {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
+      {% bootstrap_button 'Add notification' 'button' href=url_to_add_notification size='xs' %}
       </p>
     {% endif %}
   </div>
@@ -27,13 +28,14 @@
     <table class="table keyvalue_table">
       <tbody>
         <tr>
-          <th>{% trans 'State' %}</th><td>{% trans 'Range' %}</td>
+          <th>{% trans 'State' %}</th><td>{% trans 'Range' %}</td><td>{% trans 'Reason' %}</td>
         </tr>
         {% for history in site.states.all reversed %}
-          <tr>
-            <td>{{ history.state }}</td>
-            <td>{{ history.begin_at }} - {{ history.updated_at }} {% if forloop.first %}(now){% endif %}</td>
-          </tr>
+        <tr>
+          <td>{{ history.state }}</td>
+          <td>{{ history.begin_at }} - {{ history.updated_at }} {% if forloop.first %}(now){% endif %}</td>
+          <td>{{ history.reason }}</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
