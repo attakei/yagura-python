@@ -7,7 +7,9 @@ from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import AddNotificationForm
-from yagura.notifications.models import EmailActivation, EmailDeactivation, EmailRecipient
+from yagura.notifications.models import (
+    EmailActivation, EmailDeactivation, EmailRecipient
+)
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 

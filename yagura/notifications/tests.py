@@ -2,7 +2,9 @@ from django.contrib.auth import get_user_model
 from django.core import mail
 from django.urls import reverse_lazy
 
-from yagura.notifications.models import EmailActivation, EmailDeactivation, EmailRecipient
+from yagura.notifications.models import (
+    EmailActivation, EmailDeactivation, EmailRecipient
+)
 from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
