@@ -1,0 +1,4 @@
+input.form-control,
+select.form-control {
+    min-height: 36px;
+}

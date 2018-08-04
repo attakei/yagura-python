@@ -1,25 +1,34 @@
-from urllib.error import HTTPError
+import typing
+from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
 
 from django.conf import settings
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
+from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 
-def monitor_site(site):
+def monitor_site(site: Site) -> typing.Tuple[str, str]:
     try:
         resp = urlopen(site.url)
-        return 'OK' if resp.code == 200 else 'NG'
-    except HTTPError:
-        return 'NG'
+    except HTTPError as err:
+        resp = err
+    except URLError as err:
+        return 'NG', err.reason
+    result = 'OK' if resp.code == site.ok_http_status else 'NG'
+    reason = f"HTTP status code is {resp.code}" \
+        f" (expected: {site.ok_http_status})" \
+        if result == 'NG' else ''
+    return result, reason
 
 
-def handle_state(site, state, monitor_date):
-    current = StateHistory.objects.filter(site=site).last()
+def handle_state(site, state, monitor_date, reason=''):
+    current: StateHistory = StateHistory.objects.filter(site=site).last()
     if current is None:
-        current = StateHistory.objects.create(site=site, state=state)
+        current: StateHistory = StateHistory.objects.create(
+            site=site, state=state, reason=reason)
         send_state_email(current, 'monitors/handle_state_first')
         return
     if current.state == state:
@@ -28,7 +37,7 @@ def handle_state(site, state, monitor_date):
     current.end_at = monitor_date
     current.save()
     current = StateHistory.objects.create(
-        site=site, state=state, begin_at=monitor_date)
+        site=site, state=state, begin_at=monitor_date, reason=reason)
     send_state_email(current, 'monitors/handle_state_changed')
 
 

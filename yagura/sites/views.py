@@ -23,6 +23,9 @@ class SiteDetailView(LoginRequiredMixin, DetailView):
 class SiteCreateView(LoginRequiredMixin, CreateView):
     model = Site
     form_class = SiteCreateForm
+    initial = {
+        'ok_http_status': 200,
+    }
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

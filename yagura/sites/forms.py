@@ -8,7 +8,7 @@ from yagura.sites.models import Site
 class SiteCreateForm(forms.ModelForm):
     class Meta:
         model = Site
-        fields = ['url', ]
+        fields = ['url', 'ok_http_status', ]
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')

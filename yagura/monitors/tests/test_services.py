@@ -9,8 +9,45 @@ from django.test import TestCase, override_settings
 from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.services import send_state_email
+from yagura.monitors.services import monitor_site, send_state_email
+from yagura.monitors.tests import mocked_urlopen, mocked_urlopen_urlerror
 from yagura.sites.models import Site
+
+
+class MonitorSite_Test(TestCase):
+    @parameterized.expand([
+        ('http://example.com/200', 200, 'OK'),
+        ('http://example.com/404', 404, 'OK'),
+    ])
+    def test_expected_request(self, url, status_code, exp_result):
+        with mock.patch(
+                'yagura.monitors.services.urlopen',
+                side_effect=mocked_urlopen):
+            site = mock.MagicMock(url=url, ok_http_status=status_code)
+            result, reason = monitor_site(site)
+            assert result == exp_result
+            assert reason == ''
+
+    def test_ng_response_with_reason(self):
+        with mock.patch(
+                'yagura.monitors.services.urlopen',
+                side_effect=mocked_urlopen):
+            site = mock.MagicMock(
+                url='http://example.com/200', ok_http_status=302)
+            result, reason = monitor_site(site)
+            assert result == 'NG'
+            assert reason == \
+                'HTTP status code is 200 (expected: 302)'
+
+    def test_urlerror(self):
+        with mock.patch(
+                'yagura.monitors.services.urlopen',
+                side_effect=mocked_urlopen_urlerror('Test error')):
+            site = mock.MagicMock(
+                url='http://example.com/200', ok_http_status=302)
+            result, reason = monitor_site(site)
+            assert result == 'NG'
+            assert reason == 'Test error'
 
 
 class SendStateEmail_Test(TestCase):

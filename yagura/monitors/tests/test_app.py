@@ -1,27 +1,15 @@
 from unittest import mock
-from urllib.error import HTTPError
 
 import pytest
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.management.base import CommandError
 from django.test import TestCase
-from django.utils.six import StringIO
 
 from yagura.monitors.models import StateHistory
+from yagura.monitors.tests import mocked_urlopen
 from yagura.sites.models import Site
 from yagura.tests.utils import run_command
-
-
-def mocked_urlopen(*args, **kwargs):
-    class MockResponse(object):
-        def __init__(self, status_code):
-            self.code = status_code
-
-    url = args[0]
-    if url[-3:] == '200':
-        return MockResponse(200)
-    raise HTTPError(url=url, code=404, msg='Failure', hdrs='', fp=StringIO())
 
 
 class StateHistory_ModelTest(TestCase):
@@ -78,6 +66,22 @@ class MonitorSite_CommandTest(TestCase):
         state = StateHistory.objects.first()
         assert state.state == 'NG'
         assert len(mail.outbox) == 1
+        assert '(expected: 200)' in state.reason
+
+    @mock.patch(
+        'yagura.monitors.services.urlopen',
+        side_effect=mocked_urlopen
+    )
+    def test_site_expected_not_found(self, mock_get):
+        test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee02'
+        site = Site.objects.get(pk=test_uuid)
+        site.ok_http_status = 404
+        site.save()
+        run_command('monitor_site', test_uuid)
+        assert StateHistory.objects.count() == 1
+        state = StateHistory.objects.first()
+        assert state.state == 'OK'
+        assert len(mail.outbox) == 1
 
     @mock.patch(
         'yagura.monitors.services.urlopen',
@@ -130,7 +134,6 @@ class MonitorAll_CommandTest(TestCase):
     )
     def test_save_all_states(self, mock_get):
         out, err = run_command('monitor_all')
-        print(StateHistory.objects.first().site)
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
@@ -140,6 +143,7 @@ class MonitorAll_CommandTest(TestCase):
     def test_states_not_changed(self, mock_get):
         self.test_save_all_states()
         out, err = run_command('monitor_all')
+        print([sh.state for sh in StateHistory.objects.all()])
         assert StateHistory.objects.count() == 2
 
     @mock.patch(
