@@ -43,3 +43,17 @@ class EmailDeactivation(models.Model):
     def generate_code(cls, recipient):
         inst = cls.objects.create(recipient=recipient, code=uuid4())
         return inst
+
+
+class SlackRecipient(models.Model):
+    """Other notification recipient for Slack Incoming web-hook
+    """   
+    site = models.ForeignKey(
+        Site, on_delete=models.CASCADE, related_name='slack_recipients')
+    url = models.URLField('Webhook URL')
+    channel = models.CharField('Channel name(optional)', max_length=22, null=True)
+
+    class Meta:
+        unique_together = (
+            ('site', 'url', 'channel'),
+        )
