@@ -2,16 +2,16 @@
 {% load bootstrap4 %}
 
 {% block content_main %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h2>{% trans 'Register new site' %}</h2>
-</div>
-<div>
-  <form method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% trans 'Register' as register_label %}
-    {% bootstrap_button register_label 'submit' %}
-  </form>
-</div>
+  </div>
+  <div>
+    <form method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% trans 'Register' as register_label %}
+      {% bootstrap_button register_label 'submit' %}
+    </form>
+  </div>
 {% endblock %}
 

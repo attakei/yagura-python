@@ -1,0 +1,23 @@
+# --------------------------------------
+# EditorConfig for Yagura project
+# --------------------------------------
+# top-most EditorConfig file
+root = true
+
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = false
+
+
+# 2 space indentation
+[*.{yml,js,json,rst,html}]
+indent_size = 2
+
+# 4 space indentation
+[*.{py,md}]
+indent_size = 4
