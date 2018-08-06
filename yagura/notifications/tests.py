@@ -128,3 +128,16 @@ class SlackNotification_ModelTest(TestCase):
         message = called_kwargs['text']
         assert site.url in message
         assert current_state.state in message
+
+    def test_notification_with_channel(self):
+        site = Site.objects.first()
+        recipient = SlackRecipient.objects.create(
+            site=site, url='http://example.com', channel='dummy')
+        current_state = mock.MagicMock(
+            site=site, state='NG', reason='Testing error')
+        notifier = SlackNotifier(recipient)
+        notifier.slack = mock.MagicMock()
+        notifier.send(current_state)
+        assert notifier.slack.notify.called
+        _, called_kwargs = notifier.slack.notify.call_args
+        assert 'channel' in called_kwargs

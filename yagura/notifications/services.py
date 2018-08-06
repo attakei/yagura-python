@@ -26,4 +26,7 @@ class SlackNotifier(object):
             - Status: {current_state.state}
             - History: {base_url}{site.get_absolute_url()}
         """)
-        self.slack.notify(text=message)
+        if self.recipient.channel:
+            self.slack.notify(text=message, channel=self.recipient.channel)
+        else:
+            self.slack.notify(text=message)
