@@ -6,7 +6,9 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
-from yagura.notifications.forms import AddNotificationForm
+from yagura.notifications.forms import (
+    AddNotificationForm, AddSlackRecipientForm
+)
 from yagura.notifications.models import (
     EmailActivation, EmailDeactivation, EmailRecipient
 )
@@ -124,3 +126,30 @@ class DeactivateView(DetailView):
 
 class DeactivateCompleteView(TemplateView):
     template_name = 'notifications/emaildeactivate_complete.html'
+
+
+class AddSlackRecipientView(LoginRequiredMixin, FormMixin, DetailView):
+    model = Site
+    form_class = AddSlackRecipientForm
+    template_name = 'notifications/slackrecipient_form.html'
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['site'] = self.object
+        return initial
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy(
+            'sites:detail', args=(self.object.id,))
