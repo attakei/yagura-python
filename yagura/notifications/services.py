@@ -15,6 +15,7 @@ class SlackNotifier(object):
     def send(
         self,
         current_state: StateHistory,
+        base_url: str=None,
     ):
         # Build message
         site = self.recipient.site
@@ -23,6 +24,6 @@ class SlackNotifier(object):
             
             - URL: {site.url}
             - Status: {current_state.state}
-            - History: {site.get_absolute_url()}
+            - History: {base_url}{site.get_absolute_url()}
         """)
         self.slack.notify(text=message)
