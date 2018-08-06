@@ -1,10 +1,14 @@
+from unittest import mock
+
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.urls import reverse_lazy
+from django.test import TestCase
 
 from yagura.notifications.models import (
-    EmailActivation, EmailDeactivation, EmailRecipient
+    EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
 )
+from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
@@ -103,3 +107,24 @@ class Deactivate_ViewTest(ViewTestCase):
         assert EmailRecipient.objects.count() == 0
         resp = self.client.get(resp['Location'])
         assert resp.status_code == 200
+
+
+class SlackNotification_ModelTest(TestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+    
+    def test_notification(self):
+        site = Site.objects.first()
+        recipient = SlackRecipient.objects.create(
+            site=site, url='http://example.com')
+        current_state = mock.MagicMock(
+            site=site, state='NG', reason='Testing error')
+        notifier = SlackNotifier(recipient)
+        notifier.slack = mock.MagicMock()
+        notifier.send(current_state)
+        assert notifier.slack.notify.called
+        _, called_kwargs = notifier.slack.notify.call_args
+        message = called_kwargs['text']
+        assert site.url in message
+        assert current_state.state in message
