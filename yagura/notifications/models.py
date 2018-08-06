@@ -51,7 +51,8 @@ class SlackRecipient(models.Model):
     site = models.ForeignKey(
         Site, on_delete=models.CASCADE, related_name='slack_recipients')
     url = models.URLField('Webhook URL')
-    channel = models.CharField('Channel name(optional)', max_length=22, null=True)
+    channel = models.CharField(
+        'Channel name(optional)', max_length=22, null=True, blank=True)
 
     class Meta:
         unique_together = (
