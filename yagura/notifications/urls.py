@@ -3,7 +3,7 @@ from django.urls import path
 from yagura.notifications.views import (
     EmailActivateView, AddNotificationView, AddSlackRecipientView,
     EmailDeactivateCompleteView, EmailDeactivateView, NotificationDeleteCompleteView,
-    NotificationDeleteView, EmailRecipientListView
+    NotificationDeleteView, EmailRecipientListView, SlackRecipientListView
 )
 
 app_name = 'notifications'
@@ -12,6 +12,11 @@ urlpatterns = (
         'sites/<uuid:pk>/new',
         AddNotificationView.as_view(),
         name='add-recipient'),
+    # Slack recipient urlconf
+    path(
+        'sites/<uuid:pk>/slack',
+        SlackRecipientListView.as_view(),
+        name='list-slack-recipient'),
     path(
         'sites/<uuid:pk>/slack/new',
         AddSlackRecipientView.as_view(),

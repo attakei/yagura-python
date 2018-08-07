@@ -10,7 +10,7 @@ from yagura.notifications.forms import (
     AddNotificationForm, AddSlackRecipientForm
 )
 from yagura.notifications.models import (
-    EmailActivation, EmailDeactivation, EmailRecipient
+    EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
 )
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
@@ -126,6 +126,19 @@ class EmailDeactivateView(DetailView):
 
 class EmailDeactivateCompleteView(TemplateView):
     template_name = 'notifications/emaildeactivate_complete.html'
+
+
+class SlackRecipientListView(LoginRequiredMixin, ListView):
+    model = SlackRecipient
+
+    def get_queryset(self):
+        qs_ = super().get_queryset()
+        return qs_.filter(site_id=self.kwargs['pk'])
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx['site'] = Site.objects.get(id=self.kwargs['pk'])
+        return ctx
 
 
 class AddSlackRecipientView(LoginRequiredMixin, FormMixin, DetailView):

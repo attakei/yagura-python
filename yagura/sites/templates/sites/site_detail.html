@@ -17,9 +17,11 @@
       <p>
         Menu:
       {% url 'notifications:list-email-recipient' site.id as url_to_list_notifications %}
-      {% bootstrap_button 'Show notifications' 'button' href=url_to_list_notifications size='xs' %}
+      {% bootstrap_button 'Show email-notifications' 'button' href=url_to_list_notifications size='xs' %}
       {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
       {% bootstrap_button 'Add email-notification' 'button' href=url_to_add_notification size='xs' %}
+      {% url 'notifications:list-slack-recipient' site.id as url_to_add_notification %}
+      {% bootstrap_button 'Show slack-notification' 'button' href=url_to_add_notification size='xs' %}
       {% url 'notifications:add-slack-recipient' site.id as url_to_add_notification %}
       {% bootstrap_button 'Add slack-notification' 'button' href=url_to_add_notification size='xs' %}
       </p>
