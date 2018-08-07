@@ -81,7 +81,7 @@ class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
     template_name = 'notifications/recipient_complete_delete.html'
 
 
-class NotificationListView(LoginRequiredMixin, ListView):
+class EmailRecipientListView(LoginRequiredMixin, ListView):
     model = EmailRecipient
 
     def get_queryset(self):
@@ -94,7 +94,7 @@ class NotificationListView(LoginRequiredMixin, ListView):
         return ctx
 
 
-class ActivateView(DetailView):
+class EmailActivateView(DetailView):
     model = EmailActivation
     slug_field = 'code'
     slug_url_kwarg = 'code'
@@ -112,7 +112,7 @@ class ActivateView(DetailView):
         return ctx
 
 
-class DeactivateView(DetailView):
+class EmailDeactivateView(DetailView):
     model = EmailDeactivation
     slug_field = 'code'
     slug_url_kwarg = 'code'
@@ -124,7 +124,7 @@ class DeactivateView(DetailView):
             reverse_lazy('notifications:email-deactivate-complete'))
 
 
-class DeactivateCompleteView(TemplateView):
+class EmailDeactivateCompleteView(TemplateView):
     template_name = 'notifications/emaildeactivate_complete.html'
 
 

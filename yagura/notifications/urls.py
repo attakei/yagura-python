@@ -1,9 +1,9 @@
 from django.urls import path
 
 from yagura.notifications.views import (
-    ActivateView, AddNotificationView, AddSlackRecipientView,
-    DeactivateCompleteView, DeactivateView, NotificationDeleteCompleteView,
-    NotificationDeleteView, NotificationListView
+    EmailActivateView, AddNotificationView, AddSlackRecipientView,
+    EmailDeactivateCompleteView, EmailDeactivateView, NotificationDeleteCompleteView,
+    NotificationDeleteView, EmailRecipientListView
 )
 
 app_name = 'notifications'
@@ -19,7 +19,7 @@ urlpatterns = (
     # Email recipient urlconf
     path(
         'sites/<uuid:pk>/email',
-        NotificationListView.as_view(),
+        EmailRecipientListView.as_view(),
         name='list-email-recipient'),
     path(
         'email/<int:pk>/delete',
@@ -31,14 +31,14 @@ urlpatterns = (
         name='delete-email-complete'),
     path(
         'emailactivate/<uuid:code>',
-        ActivateView.as_view(),
+        EmailActivateView.as_view(),
         name='email-activate'),
     path(
         'emaildeactivate/<uuid:code>',
-        DeactivateView.as_view(),
+        EmailDeactivateView.as_view(),
         name='email-deactivate'),
     path(
         'emaildeactivate/complete',
-        DeactivateCompleteView.as_view(),
+        EmailDeactivateCompleteView.as_view(),
         name='email-deactivate-complete'),
 )
