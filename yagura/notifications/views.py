@@ -38,7 +38,7 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
         form.save()
         activation = EmailActivation.generate_code(form.instance)
         send_templated_mail(
-            template_name='notifications/confirm_recipient',
+            template_name='notifications/emailrecipient_confirm_activate',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[form.instance.email],
             context={
@@ -57,13 +57,13 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
 
 class NotificationDeleteView(LoginRequiredMixin, DetailView):
     model = EmailRecipient
-    template_name = 'notifications/recipient_confirm_delete.html'
+    template_name = 'notifications/emailrecipient_confirm_delete.html'
 
     def post(self, request, *args, **kwargs):
         recipient = self.get_object()
         deactivation = EmailDeactivation.generate_code(recipient)
         send_templated_mail(
-            template_name='notifications/recipient_confirm_delete',
+            template_name='notifications/emailrecipient_confirm_delete',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[recipient.email],
             context={
@@ -78,7 +78,7 @@ class NotificationDeleteView(LoginRequiredMixin, DetailView):
 
 
 class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
-    template_name = 'notifications/recipient_complete_delete.html'
+    template_name = 'notifications/emailrecipient_complete_delete.html'
 
 
 class EmailRecipientListView(LoginRequiredMixin, ListView):
