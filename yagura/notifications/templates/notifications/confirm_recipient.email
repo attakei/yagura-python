@@ -8,5 +8,5 @@ If you want to confirm this registration, please click this "Activate URL".
 
 * Website URL: {{ site.url }}
 
-* Activate URL: {{ base_url }}{% url 'notifications:activate' activation.code %}
+* Activate URL: {{ base_url }}{% url 'notifications:email-activate' activation.code %}
 {% endblock %}

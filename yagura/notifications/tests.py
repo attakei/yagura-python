@@ -56,7 +56,7 @@ class NotificationDelete_ViewTest(ViewTestCase):
 
     def test_post_not_delete(self):
         resp = self.client.post(
-            reverse_lazy('notifications:delete-recipient', args=(1,)))
+            reverse_lazy('notifications:delete-email-recipient', args=(1,)))
         assert resp.status_code == 302
         assert EmailRecipient.objects.count() == 1
         assert EmailDeactivation.objects.count() == 1
@@ -74,7 +74,7 @@ class Activate_ViewTest(ViewTestCase):
         EmailActivation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         url = reverse_lazy(
-            'notifications:activate',
+            'notifications:email-activate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 200
@@ -89,7 +89,7 @@ class Deactivate_ViewTest(ViewTestCase):
 
     def test_invalid_code(self):
         url = reverse_lazy(
-            'notifications:deactivate',
+            'notifications:email-deactivate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 404
@@ -100,7 +100,7 @@ class Deactivate_ViewTest(ViewTestCase):
         EmailDeactivation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         url = reverse_lazy(
-            'notifications:deactivate',
+            'notifications:email-deactivate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 302

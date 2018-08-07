@@ -16,25 +16,29 @@ urlpatterns = (
         'sites/<uuid:pk>/slack/new',
         AddSlackRecipientView.as_view(),
         name='add-slack-recipient'),
+    # Email recipient urlconf
     path(
-        'sites/<uuid:pk>',
+        'sites/<uuid:pk>/email',
         NotificationListView.as_view(),
-        name='list-recipient'),
+        name='list-email-recipient'),
     path(
-        '<int:pk>/delete',
+        'email/<int:pk>/delete',
         NotificationDeleteView.as_view(),
-        name='delete-recipient'),
+        name='delete-email-recipient'),
     path(
         'delete/complete',
         NotificationDeleteCompleteView.as_view(),
-        name='delete-complete'),
-    path('activate/<uuid:code>', ActivateView.as_view(), name='activate'),
+        name='delete-email-complete'),
     path(
-        'deactivate/<uuid:code>',
+        'emailactivate/<uuid:code>',
+        ActivateView.as_view(),
+        name='email-activate'),
+    path(
+        'emaildeactivate/<uuid:code>',
         DeactivateView.as_view(),
-        name='deactivate'),
+        name='email-deactivate'),
     path(
-        'deactivate/complete',
+        'emaildeactivate/complete',
         DeactivateCompleteView.as_view(),
-        name='deactivate-complete'),
+        name='email-deactivate-complete'),
 )

@@ -74,7 +74,7 @@ class NotificationDeleteView(LoginRequiredMixin, DetailView):
             }
         )
         return HttpResponseRedirect(
-            reverse_lazy('notifications:delete-complete'))
+            reverse_lazy('notifications:delete-email-complete'))
 
 
 class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
@@ -121,7 +121,7 @@ class DeactivateView(DetailView):
         deactivation = self.get_object()
         deactivation.recipient.delete()
         return HttpResponseRedirect(
-            reverse_lazy('notifications:deactivate-complete'))
+            reverse_lazy('notifications:email-deactivate-complete'))
 
 
 class DeactivateCompleteView(TemplateView):

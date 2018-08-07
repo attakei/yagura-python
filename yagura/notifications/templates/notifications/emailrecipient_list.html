@@ -24,7 +24,7 @@
         (not yet enabled)
         {% endif %}
         <div class="btn-group float-right">
-          {% url 'notifications:delete-recipient' recipient.id as link_ %}
+          {% url 'notifications:delete-email-recipient' recipient.id as link_ %}
           {% bootstrap_button 'Delete' 'button' 'btn-danger' href=link_ size='xs' %}
         </div>
       </li>

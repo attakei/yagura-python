@@ -16,7 +16,7 @@
     {% if site.created_by == request.user %}
       <p>
         Menu:
-      {% url 'notifications:list-recipient' site.id as url_to_list_notifications %}
+      {% url 'notifications:list-email-recipient' site.id as url_to_list_notifications %}
       {% bootstrap_button 'Show notifications' 'button' href=url_to_list_notifications size='xs' %}
       {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
       {% bootstrap_button 'Add email-notification' 'button' href=url_to_add_notification size='xs' %}
