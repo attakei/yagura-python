@@ -16,7 +16,7 @@ from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 
-class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
+class EmailRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
     form_class = AddNotificationForm
     template_name = 'notifications/recipient_form.html'
@@ -55,7 +55,7 @@ class AddNotificationView(LoginRequiredMixin, FormMixin, DetailView):
             'sites:detail', args=(self.object.id, ))
 
 
-class NotificationDeleteView(LoginRequiredMixin, DetailView):
+class EmailRecipientDeleteView(LoginRequiredMixin, DetailView):
     model = EmailRecipient
     template_name = 'notifications/emailrecipient_confirm_delete.html'
 
@@ -77,7 +77,7 @@ class NotificationDeleteView(LoginRequiredMixin, DetailView):
             reverse_lazy('notifications:delete-email-complete'))
 
 
-class NotificationDeleteCompleteView(LoginRequiredMixin, TemplateView):
+class EmailRecipientDeleteCompleteView(LoginRequiredMixin, TemplateView):
     template_name = 'notifications/emailrecipient_complete_delete.html'
 
 
@@ -141,7 +141,7 @@ class SlackRecipientListView(LoginRequiredMixin, ListView):
         return ctx
 
 
-class AddSlackRecipientView(LoginRequiredMixin, FormMixin, DetailView):
+class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
     form_class = AddSlackRecipientForm
     template_name = 'notifications/slackrecipient_form.html'
