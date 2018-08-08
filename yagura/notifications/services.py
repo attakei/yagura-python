@@ -4,7 +4,6 @@ from slackweb import Slack
 
 from yagura.monitors.models import StateHistory
 from yagura.notifications.models import SlackRecipient
-from yagura.sites.models import Site
 
 
 class SlackNotifier(object):
@@ -21,7 +20,6 @@ class SlackNotifier(object):
         site = self.recipient.site
         message = dedent(f"""\
             <!here> *Yagura notification: Site state is changed*
-            
             - URL: {site.url}
             - Status: {current_state.state}
             - History: {base_url}{site.get_absolute_url()}

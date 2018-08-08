@@ -1,9 +1,10 @@
 from django.urls import path
 
 from yagura.notifications.views import (
-    EmailActivateView, AddNotificationView, AddSlackRecipientView,
-    EmailDeactivateCompleteView, EmailDeactivateView, NotificationDeleteCompleteView,
-    NotificationDeleteView, EmailRecipientListView, SlackRecipientListView
+    AddNotificationView, AddSlackRecipientView, EmailActivateView,
+    EmailDeactivateCompleteView, EmailDeactivateView, EmailRecipientListView,
+    NotificationDeleteCompleteView, NotificationDeleteView,
+    SlackRecipientListView
 )
 
 app_name = 'notifications'

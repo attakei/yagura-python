@@ -47,7 +47,7 @@ class EmailDeactivation(models.Model):
 
 class SlackRecipient(models.Model):
     """Other notification recipient for Slack Incoming web-hook
-    """   
+    """
     site = models.ForeignKey(
         Site, on_delete=models.CASCADE, related_name='slack_recipients')
     url = models.URLField('Webhook URL')

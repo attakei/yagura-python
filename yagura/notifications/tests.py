@@ -2,8 +2,8 @@ from unittest import mock
 
 from django.contrib.auth import get_user_model
 from django.core import mail
-from django.urls import reverse_lazy
 from django.test import TestCase
+from django.urls import reverse_lazy
 
 from yagura.notifications.models import (
     EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
@@ -113,7 +113,7 @@ class SlackNotification_ModelTest(TestCase):
     fixtures = [
         'unittest_suite',
     ]
-    
+
     def test_notification(self):
         site = Site.objects.first()
         recipient = SlackRecipient.objects.create(
