@@ -4,7 +4,7 @@ from django.forms import widgets
 from yagura.notifications.models import EmailRecipient, SlackRecipient
 
 
-class AddNotificationForm(forms.ModelForm):
+class EmailRecipientCreateForm(forms.ModelForm):
     class Meta:
         model = EmailRecipient
         fields = ['site', 'email', ]
@@ -13,7 +13,7 @@ class AddNotificationForm(forms.ModelForm):
         }
 
 
-class AddSlackRecipientForm(forms.ModelForm):
+class SlackRecipientCreateForm(forms.ModelForm):
     class Meta:
         model = SlackRecipient
         fields = ['site', 'url', 'channel', ]

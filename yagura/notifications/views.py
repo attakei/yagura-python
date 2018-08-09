@@ -7,7 +7,7 @@ from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import (
-    AddNotificationForm, AddSlackRecipientForm
+    EmailRecipientCreateForm, SlackRecipientCreateForm
 )
 from yagura.notifications.models import (
     EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
@@ -18,8 +18,8 @@ from yagura.utils import get_base_url
 
 class EmailRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
-    form_class = AddNotificationForm
-    template_name = 'notifications/recipient_form.html'
+    form_class = EmailRecipientCreateForm
+    template_name = 'notifications/emailrecipient_form.html'
 
     def get_initial(self):
         initial = super().get_initial()
@@ -143,7 +143,7 @@ class SlackRecipientListView(LoginRequiredMixin, ListView):
 
 class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
-    form_class = AddSlackRecipientForm
+    form_class = SlackRecipientCreateForm
     template_name = 'notifications/slackrecipient_form.html'
 
     def get_initial(self):
