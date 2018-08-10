@@ -2,6 +2,16 @@
 Change logs
 ===========
 
+ver 0.4.1
+=========
+
+:Date: 2018-07-21
+
+Fixes
+-----
+
+* Can't delete notification email (#22)
+
 ver 0.4.0
 =========
 
