@@ -4,6 +4,7 @@ from yagura.notifications.views import (
     EmailActivateView, EmailDeactivateCompleteView, EmailDeactivateView,
     EmailRecipientCreateView, EmailRecipientDeleteCompleteView,
     EmailRecipientDeleteView, EmailRecipientListView, SlackRecipientCreateView,
+    SlackRecipientDeleteCompleteView, SlackRecipientDeleteView,
     SlackRecipientListView
 )
 
@@ -22,6 +23,14 @@ urlpatterns = (
         'sites/<uuid:pk>/slack/new',
         SlackRecipientCreateView.as_view(),
         name='add-slack-recipient'),
+    path(
+        'slack/<int:pk>/delete',
+        SlackRecipientDeleteView.as_view(),
+        name='delete-slack-recipient'),
+    path(
+        'slack/delete/complete',
+        SlackRecipientDeleteCompleteView.as_view(),
+        name='delete-slack-recipient-complete'),
     # Email recipient urlconf
     path(
         'sites/<uuid:pk>/email',

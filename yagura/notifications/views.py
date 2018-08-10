@@ -2,12 +2,13 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DeleteView, DetailView, ListView, TemplateView
 from django.views.generic.edit import FormMixin
 from templated_email import send_templated_mail
 
 from yagura.notifications.forms import (
-    EmailRecipientCreateForm, SlackRecipientCreateForm
+    EmailRecipientCreateForm, SlackRecipientCreateForm,
+    SlackRecipientDeleteForm
 )
 from yagura.notifications.models import (
     EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
@@ -166,3 +167,13 @@ class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     def get_success_url(self):
         return reverse_lazy(
             'sites:detail', args=(self.object.id,))
+
+
+class SlackRecipientDeleteView(LoginRequiredMixin, DeleteView):
+    model = SlackRecipient
+    form_class = SlackRecipientDeleteForm
+    success_url = reverse_lazy('notifications:delete-slack-recipient-complete')
+
+
+class SlackRecipientDeleteCompleteView(LoginRequiredMixin, TemplateView):
+    template_name = 'notifications/slackrecipient_complete_delete.html'

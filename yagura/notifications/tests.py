@@ -141,3 +141,31 @@ class SlackNotification_ModelTest(TestCase):
         assert notifier.slack.notify.called
         _, called_kwargs = notifier.slack.notify.call_args
         assert 'channel' in called_kwargs
+
+
+class SlackRecipientDelete_ViewTest(ViewTestCase):
+    fixtures = [
+        'initial',
+        'unittest_suite',
+    ]
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(get_user_model().objects.first())
+        self.site = Site.objects.first()
+        SlackRecipient.objects.create(
+            site=self.site, url='http://example.com')
+
+    def test_get(self):
+        resp = self.client.get(
+            reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
+        assert resp.status_code == 200
+        assert self.site.url in str(resp.content)
+
+    def test_post(self):
+        resp = self.client.post(
+            reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
+        assert resp.status_code == 302
+        assert SlackRecipient.objects.count() == 0
+        resp = self.client.get(resp['Location'])
+        assert resp.status_code == 200

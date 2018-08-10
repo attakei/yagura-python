@@ -20,3 +20,9 @@ class SlackRecipientCreateForm(forms.ModelForm):
         widgets = {
             'site': widgets.HiddenInput(),
         }
+
+
+class SlackRecipientDeleteForm(forms.ModelForm):
+    class Meta:
+        model = SlackRecipient
+        fields = ['id']
