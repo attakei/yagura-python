@@ -2,6 +2,25 @@
 Change logs
 ===========
 
+ver 0.5.0
+=========
+
+:Date: 2018-08-XX
+
+Features
+--------
+
+* Add slack recipient as notification target
+* Monitoring function checks HTTP status specified by register user
+* Link to target site URL in site detail page
+* Remove demo site sources in this project
+
+Fixes
+-----
+
+* Use user locale to render datetime
+
+
 ver 0.4.1
 =========
 
