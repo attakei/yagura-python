@@ -1,6 +1,7 @@
 from unittest import mock
 
 from django.contrib.auth import get_user_model
+from django.contrib.messages import get_messages
 from django.core import mail
 from django.test import TestCase
 from django.urls import reverse_lazy
@@ -167,5 +168,8 @@ class SlackRecipientDelete_ViewTest(ViewTestCase):
             reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
         assert resp.status_code == 302
         assert SlackRecipient.objects.count() == 0
-        resp = self.client.get(resp['Location'])
+        assert len(get_messages(resp.wsgi_request)) == 1
+        location = resp['Location']
+        assert location == self.site.get_absolute_url()
+        resp = self.client.get(location)
         assert resp.status_code == 200

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView, TemplateView
@@ -172,8 +173,13 @@ class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
 class SlackRecipientDeleteView(LoginRequiredMixin, DeleteView):
     model = SlackRecipient
     form_class = SlackRecipientDeleteForm
-    success_url = reverse_lazy('notifications:delete-slack-recipient-complete')
 
+    def delete(self, request, *args, **kwargs):
+        resp = super().delete(request, *args, **kwargs)
+        messages.add_message(
+            request, messages.INFO, f"Deleted slack-recipient")
+        return resp
 
-class SlackRecipientDeleteCompleteView(LoginRequiredMixin, TemplateView):
-    template_name = 'notifications/slackrecipient_complete_delete.html'
+    def get_success_url(self):
+        recipient = self.get_object()
+        return reverse_lazy('sites:detail', args=(recipient.site.id, ))
