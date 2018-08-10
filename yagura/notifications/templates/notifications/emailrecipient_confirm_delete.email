@@ -1,3 +1,4 @@
+{# TODO: Need transration #}
 {% block subject %}Deactivate to recieve notify of {{ site.url }}{% endblock %}
 
 {% block plain %}

@@ -10,6 +10,7 @@
       {% bootstrap_button 'Delete' 'link' href=url_to_sites_delete %}
     {% endif %}
   </div>
+  {# TODO: Refactor struct of site information #}
   <div>
     <p>{% trans 'Site URL' %}: {{ site.url }}</p>
     <p>{% trans 'Excepted HTTP status code' %}: {{ site.ok_http_status }}</p>

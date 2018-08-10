@@ -21,7 +21,8 @@
       <li class="list-group-item">
         {{ recipient.email }}
         {% if not recipient.enabled %}
-        (not yet enabled)
+          {# TODO: Need transration #}
+          (not yet enabled)
         {% endif %}
         <div class="btn-group float-right">
           {% url 'notifications:delete-email-recipient' recipient.id as link_ %}
