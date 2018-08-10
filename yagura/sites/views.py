@@ -20,6 +20,7 @@ class SiteDetailView(LoginRequiredMixin, DetailView):
     model = Site
 
 
+# TODO: Set message
 class SiteCreateView(LoginRequiredMixin, CreateView):
     model = Site
     form_class = SiteCreateForm
@@ -40,6 +41,7 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+# TODO: Set message
 class SiteDeleteView(LoginRequiredMixin, DeleteView):
     model = Site
     success_url = reverse_lazy('sites:list')

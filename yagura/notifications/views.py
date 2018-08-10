@@ -18,6 +18,7 @@ from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 
+# TODO: Set message
 class EmailRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
     form_class = EmailRecipientCreateForm
@@ -57,6 +58,7 @@ class EmailRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
             'sites:detail', args=(self.object.id, ))
 
 
+# TODO: Set message
 class EmailRecipientDeleteView(LoginRequiredMixin, DetailView):
     model = EmailRecipient
     template_name = 'notifications/emailrecipient_confirm_delete.html'
@@ -75,10 +77,12 @@ class EmailRecipientDeleteView(LoginRequiredMixin, DetailView):
                 'base_url': get_base_url(),
             }
         )
+        # TODO: Redirect to site-detail
         return HttpResponseRedirect(
             reverse_lazy('notifications:delete-email-complete'))
 
 
+# TODO: Not need, when redirect to site-detail
 class EmailRecipientDeleteCompleteView(LoginRequiredMixin, TemplateView):
     template_name = 'notifications/emailrecipient_complete_delete.html'
 
@@ -114,6 +118,7 @@ class EmailActivateView(DetailView):
         return ctx
 
 
+# TODO: Set message?
 class EmailDeactivateView(DetailView):
     model = EmailDeactivation
     slug_field = 'code'
@@ -122,10 +127,12 @@ class EmailDeactivateView(DetailView):
     def get(self, request, *args, **kwargs):
         deactivation = self.get_object()
         deactivation.recipient.delete()
+        # TODO: Set redirect for user state
         return HttpResponseRedirect(
             reverse_lazy('notifications:email-deactivate-complete'))
 
 
+# TODO: Not need, if redirection for user state
 class EmailDeactivateCompleteView(TemplateView):
     template_name = 'notifications/emaildeactivate_complete.html'
 
@@ -143,6 +150,7 @@ class SlackRecipientListView(LoginRequiredMixin, ListView):
         return ctx
 
 
+# TODO: Set message
 class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
     model = Site
     form_class = SlackRecipientCreateForm
@@ -176,6 +184,7 @@ class SlackRecipientDeleteView(LoginRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         resp = super().delete(request, *args, **kwargs)
+        # TODO: Need transration
         messages.add_message(
             request, messages.INFO, f"Deleted slack-recipient")
         return resp
