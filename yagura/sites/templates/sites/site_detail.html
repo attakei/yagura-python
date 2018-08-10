@@ -11,7 +11,7 @@
     {% endif %}
   </div>
   <div>
-    <p>{% trans 'Site URL' %}: {{ site.url }}</p>
+    <p>{% trans 'Site URL' %}: <a href="{{ site.url }}" target="_blank">{{ site.url }}</a></p>
     <p>{% trans 'Excepted HTTP status code' %}: {{ site.ok_http_status }}</p>
     {% if site.created_by == request.user %}
       <p>
