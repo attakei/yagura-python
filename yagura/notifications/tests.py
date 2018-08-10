@@ -1,8 +1,15 @@
+from unittest import mock
+
 from django.contrib.auth import get_user_model
+from django.contrib.messages import get_messages
 from django.core import mail
+from django.test import TestCase
 from django.urls import reverse_lazy
 
-from yagura.notifications.models import Activation, Deactivation, Recipient
+from yagura.notifications.models import (
+    EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
+)
+from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
@@ -44,16 +51,16 @@ class NotificationDelete_ViewTest(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.client.force_login(get_user_model().objects.first())
-        Recipient.objects.create(
+        EmailRecipient.objects.create(
             site=Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'),
             email='test@example.com', enabled=True)
 
     def test_post_not_delete(self):
         resp = self.client.post(
-            reverse_lazy('notifications:delete-recipient', args=(1,)))
+            reverse_lazy('notifications:delete-email-recipient', args=(1,)))
         assert resp.status_code == 302
-        assert Recipient.objects.count() == 1
-        assert Deactivation.objects.count() == 1
+        assert EmailRecipient.objects.count() == 1
+        assert EmailDeactivation.objects.count() == 1
         assert len(mail.outbox) == 1
 
 
@@ -63,16 +70,16 @@ class Activate_ViewTest(ViewTestCase):
     ]
 
     def test_activation_enabled(self):
-        recipient = Recipient.objects.create(
+        recipient = EmailRecipient.objects.create(
             site=Site.objects.first(), email='test@example.com')
-        Activation.objects.create(
+        EmailActivation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         url = reverse_lazy(
-            'notifications:activate',
+            'notifications:email-activate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 200
-        recipient = Recipient.objects.first()
+        recipient = EmailRecipient.objects.first()
         assert recipient.enabled is True
 
 
@@ -83,21 +90,86 @@ class Deactivate_ViewTest(ViewTestCase):
 
     def test_invalid_code(self):
         url = reverse_lazy(
-            'notifications:deactivate',
+            'notifications:email-deactivate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 404
 
     def test_deactivation_enabled(self):
-        recipient = Recipient.objects.create(
+        recipient = EmailRecipient.objects.create(
             site=Site.objects.first(), email='test@example.com', enabled=True)
-        Deactivation.objects.create(
+        EmailDeactivation.objects.create(
             recipient=recipient, code='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         url = reverse_lazy(
-            'notifications:deactivate',
+            'notifications:email-deactivate',
             kwargs={'code': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'})
         resp = self.client.get(url)
         assert resp.status_code == 302
-        assert Recipient.objects.count() == 0
+        assert EmailRecipient.objects.count() == 0
         resp = self.client.get(resp['Location'])
+        assert resp.status_code == 200
+
+
+class SlackNotification_ModelTest(TestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+
+    def test_notification(self):
+        site = Site.objects.first()
+        recipient = SlackRecipient.objects.create(
+            site=site, url='http://example.com')
+        current_state = mock.MagicMock(
+            site=site, state='NG', reason='Testing error')
+        notifier = SlackNotifier(recipient)
+        notifier.slack = mock.MagicMock()
+        notifier.send(current_state)
+        assert notifier.slack.notify.called
+        _, called_kwargs = notifier.slack.notify.call_args
+        message = called_kwargs['text']
+        assert site.url in message
+        assert current_state.state in message
+
+    def test_notification_with_channel(self):
+        site = Site.objects.first()
+        recipient = SlackRecipient.objects.create(
+            site=site, url='http://example.com', channel='dummy')
+        current_state = mock.MagicMock(
+            site=site, state='NG', reason='Testing error')
+        notifier = SlackNotifier(recipient)
+        notifier.slack = mock.MagicMock()
+        notifier.send(current_state)
+        assert notifier.slack.notify.called
+        _, called_kwargs = notifier.slack.notify.call_args
+        assert 'channel' in called_kwargs
+
+
+class SlackRecipientDelete_ViewTest(ViewTestCase):
+    fixtures = [
+        'initial',
+        'unittest_suite',
+    ]
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(get_user_model().objects.first())
+        self.site = Site.objects.first()
+        SlackRecipient.objects.create(
+            site=self.site, url='http://example.com')
+
+    def test_get(self):
+        resp = self.client.get(
+            reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
+        assert resp.status_code == 200
+        assert self.site.url in str(resp.content)
+
+    def test_post(self):
+        resp = self.client.post(
+            reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
+        assert resp.status_code == 302
+        assert SlackRecipient.objects.count() == 0
+        assert len(get_messages(resp.wsgi_request)) == 1
+        location = resp['Location']
+        assert location == self.site.get_absolute_url()
+        resp = self.client.get(location)
         assert resp.status_code == 200

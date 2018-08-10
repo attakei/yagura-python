@@ -5,8 +5,8 @@ from django.db import models
 from yagura.sites.models import Site
 
 
-class Recipient(models.Model):
-    """Other recipients not users
+class EmailRecipient(models.Model):
+    """Other email not users
 
     * Manage per recipient and target site
     """
@@ -21,10 +21,10 @@ class Recipient(models.Model):
         )
 
 
-class Activation(models.Model):
-    """Recipient activation code
+class EmailActivation(models.Model):
+    """Email-recipient activation code
     """
-    recipient = models.ForeignKey(Recipient, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(EmailRecipient, on_delete=models.CASCADE)
     code = models.UUIDField()
 
     @classmethod
@@ -33,13 +33,28 @@ class Activation(models.Model):
         return act
 
 
-class Deactivation(models.Model):
-    """Recipient deactivation code
+class EmailDeactivation(models.Model):
+    """Email-recipient deactivation code
     """
-    recipient = models.ForeignKey(Recipient, on_delete=models.CASCADE)
+    recipient = models.ForeignKey(EmailRecipient, on_delete=models.CASCADE)
     code = models.UUIDField()
 
     @classmethod
     def generate_code(cls, recipient):
         inst = cls.objects.create(recipient=recipient, code=uuid4())
         return inst
+
+
+class SlackRecipient(models.Model):
+    """Other notification recipient for Slack Incoming web-hook
+    """
+    site = models.ForeignKey(
+        Site, on_delete=models.CASCADE, related_name='slack_recipients')
+    url = models.URLField('Webhook URL')
+    channel = models.CharField(
+        'Channel name(optional)', max_length=22, null=True, blank=True)
+
+    class Meta:
+        unique_together = (
+            ('site', 'url', 'channel'),
+        )

@@ -1,36 +1,54 @@
 from django.urls import path
 
 from yagura.notifications.views import (
-    ActivateView, AddNotificationView, DeactivateCompleteView, DeactivateView,
-    NotificationDeleteCompleteView, NotificationDeleteView,
-    NotificationListView
+    EmailActivateView, EmailDeactivateCompleteView, EmailDeactivateView,
+    EmailRecipientCreateView, EmailRecipientDeleteCompleteView,
+    EmailRecipientDeleteView, EmailRecipientListView, SlackRecipientCreateView,
+    SlackRecipientDeleteView, SlackRecipientListView
 )
 
 app_name = 'notifications'
 urlpatterns = (
     path(
         'sites/<uuid:pk>/new',
-        AddNotificationView.as_view(),
+        EmailRecipientCreateView.as_view(),
         name='add-recipient'),
+    # Slack recipient urlconf
     path(
-        'sites/<uuid:pk>',
-        NotificationListView.as_view(),
-        name='list-recipient'),
+        'sites/<uuid:pk>/slack',
+        SlackRecipientListView.as_view(),
+        name='list-slack-recipient'),
     path(
-        '<int:pk>/delete',
-        NotificationDeleteView.as_view(),
-        name='delete-recipient'),
+        'sites/<uuid:pk>/slack/new',
+        SlackRecipientCreateView.as_view(),
+        name='add-slack-recipient'),
+    path(
+        'slack/<int:pk>/delete',
+        SlackRecipientDeleteView.as_view(),
+        name='delete-slack-recipient'),
+    # Email recipient urlconf
+    path(
+        'sites/<uuid:pk>/email',
+        EmailRecipientListView.as_view(),
+        name='list-email-recipient'),
+    path(
+        'email/<int:pk>/delete',
+        EmailRecipientDeleteView.as_view(),
+        name='delete-email-recipient'),
     path(
         'delete/complete',
-        NotificationDeleteCompleteView.as_view(),
-        name='delete-complete'),
-    path('activate/<uuid:code>', ActivateView.as_view(), name='activate'),
+        EmailRecipientDeleteCompleteView.as_view(),
+        name='delete-email-complete'),
     path(
-        'deactivate/<uuid:code>',
-        DeactivateView.as_view(),
-        name='deactivate'),
+        'emailactivate/<uuid:code>',
+        EmailActivateView.as_view(),
+        name='email-activate'),
     path(
-        'deactivate/complete',
-        DeactivateCompleteView.as_view(),
-        name='deactivate-complete'),
+        'emaildeactivate/<uuid:code>',
+        EmailDeactivateView.as_view(),
+        name='email-deactivate'),
+    path(
+        'emaildeactivate/complete',
+        EmailDeactivateCompleteView.as_view(),
+        name='email-deactivate-complete'),
 )

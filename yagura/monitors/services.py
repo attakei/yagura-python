@@ -6,6 +6,7 @@ from django.conf import settings
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
+from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
@@ -30,6 +31,9 @@ def handle_state(site, state, monitor_date, reason=''):
         current: StateHistory = StateHistory.objects.create(
             site=site, state=state, reason=reason)
         send_state_email(current, 'monitors/handle_state_first')
+        for slack_recipient in current.site.slack_recipients.all():
+            notifier = SlackNotifier(slack_recipient)
+            notifier.send(current, base_url=get_base_url())
         return
     if current.state == state:
         current.save()
@@ -39,6 +43,9 @@ def handle_state(site, state, monitor_date, reason=''):
     current = StateHistory.objects.create(
         site=site, state=state, begin_at=monitor_date, reason=reason)
     send_state_email(current, 'monitors/handle_state_changed')
+    for slack_recipient in current.site.slack_recipients.all():
+        notifier = SlackNotifier(slack_recipient)
+        notifier.send(current, base_url=get_base_url())
 
 
 def send_state_email(current, template_name):

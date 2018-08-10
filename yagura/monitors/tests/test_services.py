@@ -127,8 +127,8 @@ class SendStateEmail_Test(TestCase):
         (False, 1),
     ])
     def test_send_recipients(self, recipient_enabled, expect_mails):
-        from yagura.notifications.models import Recipient
-        Recipient.objects.create(
+        from yagura.notifications.models import EmailRecipient
+        EmailRecipient.objects.create(
             site=Site.objects.first(),
             email='test2@example.com', enabled=recipient_enabled)
         current = StateHistory.objects.create(
