@@ -5,7 +5,7 @@ Change logs
 ver 0.5.0
 =========
 
-:Date: 2018-08-XX
+:Date: 2018-08-12
 
 Features
 --------
