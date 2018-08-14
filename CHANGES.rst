@@ -2,6 +2,17 @@
 Change logs
 ===========
 
+ver 0.5.1
+=========
+
+:Date: 2018-08-14
+
+Fixes
+-----
+
+* When use ``yagura.settings.env`` , set default values as possible
+
+
 ver 0.5.0
 =========
 
