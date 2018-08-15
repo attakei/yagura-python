@@ -37,7 +37,9 @@ This template inherit from 'bootstrap4/bootstrap4.html' of django-bootstrap4
 <body>
 {% block bootstrap4_before_content %}{% endblock %}
 {% block bootstrap4_content %} CONTENT {% endblock %}
-{% block bootstrap4_after_content %}{% endblock %}
+{% block bootstrap4_after_content %}
+  {% include 'layouts/_footer.html' %}
+{% endblock %}
 {% if not 'javascript_in_head'|bootstrap_setting %}
     {% if 'include_jquery'|bootstrap_setting %}
         <!-- jQuery JavaScript if it is in body -->
