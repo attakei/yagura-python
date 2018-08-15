@@ -2,6 +2,16 @@
 Change logs
 ===========
 
+ver 0.5.2
+=========
+
+:Date: 2018-08-15
+
+Fixes
+-----
+
+* Include `.mo` files (compiled messages)
+
 ver 0.5.1
 =========
 
