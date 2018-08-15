@@ -60,6 +60,9 @@ build-pypi-packages:
   script:
     - bin/gen-pypirc
     - pip install -r requirements/packaging.txt -r requirements.txt
+    - apt-get update
+    - apt-get install -y gettext
+    - python manage.py compilemessages
     - python setup.py sdist bdist_wheel
     - twine upload dist/*
 
