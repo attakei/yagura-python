@@ -81,6 +81,7 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'yagura.core.context_processors.yagura_conf',
+                'yagura.core.context_processors.yagura_version',
             ],
             'builtins': [
                 'django.templatetags.i18n',
