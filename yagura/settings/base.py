@@ -191,7 +191,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
     'social_core.pipeline.social_auth.associate_by_email',
 )
-
+SOCIAL_AUTH_LOGIN_ERROR_URL = 'accounts:social-login-error'
 
 # --------------------------
 # Yagura core configuraitons
