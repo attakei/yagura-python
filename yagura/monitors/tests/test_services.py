@@ -3,15 +3,15 @@
 import os
 from unittest import mock
 
+import requests_mock
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase, override_settings
 from parameterized import parameterized
-import requests_mock
 
 from yagura.monitors.models import StateHistory
 from yagura.monitors.services import monitor_site, send_state_email
-from yagura.monitors.tests import mocked_urlopen, mocked_urlopen_urlerror
+from yagura.monitors.tests import mocked_urlopen_urlerror
 from yagura.sites.models import Site
 
 

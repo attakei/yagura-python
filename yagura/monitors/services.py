@@ -1,9 +1,8 @@
 import typing
 from urllib.error import HTTPError, URLError
-from urllib.request import urlopen
 
-from django.conf import settings
 import requests
+from django.conf import settings
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
