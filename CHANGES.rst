@@ -2,6 +2,23 @@
 Change logs
 ===========
 
+ver 0.5.3
+=========
+
+:Date: 2018-08-17
+
+Features
+--------
+
+* Add footer to display version
+
+Fixes
+-----
+
+* Monitoring request does not follow redirect
+
+
+
 ver 0.5.2
 =========
 
