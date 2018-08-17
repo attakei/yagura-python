@@ -1,5 +1,3 @@
-from unittest import mock
-
 import pytest
 import requests_mock
 from django.contrib.auth import get_user_model
@@ -8,7 +6,6 @@ from django.core.management.base import CommandError
 from django.test import TestCase
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.tests import mocked_urlopen
 from yagura.sites.models import Site
 from yagura.tests.utils import run_command
 
@@ -50,7 +47,7 @@ class MonitorSite_CommandTest(TestCase):
         site = Site.objects.get(pk=test_uuid)
         with requests_mock.mock() as m:
             m.get(site.url, status_code=200)
-            out, err = run_command('monitor_site', test_uuid)
+            run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'OK'
@@ -70,7 +67,7 @@ class MonitorSite_CommandTest(TestCase):
         site = Site.objects.get(pk=test_uuid)
         with requests_mock.mock() as m:
             m.get(site.url, status_code=404)
-            out, err = run_command('monitor_site', test_uuid)
+            run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'NG'
@@ -97,7 +94,7 @@ class MonitorSite_CommandTest(TestCase):
         before_updated = StateHistory.objects.first().updated_at
         with requests_mock.mock() as m:
             m.get(site.url, status_code=200)
-            out, err = run_command('monitor_site', test_uuid)
+            run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         after_updated = StateHistory.objects.first().updated_at
         assert before_updated != after_updated
@@ -108,7 +105,7 @@ class MonitorSite_CommandTest(TestCase):
         site = Site.objects.get(pk=test_uuid)
         with requests_mock.mock() as m:
             m.get(site.url, status_code=404)
-            out, err = run_command('monitor_site', test_uuid)
+            run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 2
         before = StateHistory.objects.first()
         after = StateHistory.objects.last()
@@ -134,7 +131,7 @@ class MonitorAll_CommandTest(TestCase):
         with requests_mock.mock() as m:
             for site in Site.objects.all():
                 m.get(site.url, status_code=site.ok_http_status)
-            out, err = run_command('monitor_all')
+            run_command('monitor_all')
         assert StateHistory.objects.count() == 2
 
     def test_states_not_changed(self):
@@ -142,7 +139,7 @@ class MonitorAll_CommandTest(TestCase):
         with requests_mock.mock() as m:
             for site in Site.objects.all():
                 m.get(site.url, status_code=site.ok_http_status)
-            out, err = run_command('monitor_all')
+            run_command('monitor_all')
         assert StateHistory.objects.count() == 2
 
     def test_states_changed(self):
@@ -152,5 +149,5 @@ class MonitorAll_CommandTest(TestCase):
                 m.get(site.url, status_code=200)
             site = Site.objects.first()
             m.get(site.url, status_code=404)
-            out, err = run_command('monitor_all')
+            run_command('monitor_all')
         assert StateHistory.objects.count() == 3
