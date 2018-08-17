@@ -55,6 +55,16 @@ class MonitorSite_CommandTest(TestCase):
         state = StateHistory.objects.first()
         assert state.state == 'OK'
 
+    def test_site_redirect(self):
+        test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'
+        site = Site.objects.get(pk=test_uuid)
+        site.url = 'https://httpstat.us/302'
+        site.save()
+        run_command('monitor_site', test_uuid)
+        assert StateHistory.objects.count() == 1
+        state = StateHistory.objects.first()
+        assert state.state == 'NG'
+
     @mock.patch(
         'yagura.monitors.services.urlopen',
         side_effect=mocked_urlopen
