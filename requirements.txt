@@ -6,4 +6,5 @@ django-crontab
 django-environ
 pyasn1
 social-auth-app-django
+requests
 slackweb
