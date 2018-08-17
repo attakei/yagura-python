@@ -3,6 +3,7 @@
 import os
 from unittest import mock
 
+import requests_mock
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase, override_settings
@@ -10,7 +11,7 @@ from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
 from yagura.monitors.services import monitor_site, send_state_email
-from yagura.monitors.tests import mocked_urlopen, mocked_urlopen_urlerror
+from yagura.monitors.tests import mocked_urlopen_urlerror
 from yagura.sites.models import Site
 
 
@@ -20,20 +21,17 @@ class MonitorSite_Test(TestCase):
         ('http://example.com/404', 404, 'OK'),
     ])
     def test_expected_request(self, url, status_code, exp_result):
-        with mock.patch(
-                'yagura.monitors.services.urlopen',
-                side_effect=mocked_urlopen):
+        with requests_mock.mock() as m:
+            m.get(url, status_code=status_code)
             site = mock.MagicMock(url=url, ok_http_status=status_code)
             result, reason = monitor_site(site)
             assert result == exp_result
             assert reason == ''
 
     def test_ng_response_with_reason(self):
-        with mock.patch(
-                'yagura.monitors.services.urlopen',
-                side_effect=mocked_urlopen):
-            site = mock.MagicMock(
-                url='http://example.com/200', ok_http_status=302)
+        site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+        with requests_mock.mock() as m:
+            m.get(site.url, status_code=200)
             result, reason = monitor_site(site)
             assert result == 'NG'
             assert reason == \
@@ -41,7 +39,7 @@ class MonitorSite_Test(TestCase):
 
     def test_urlerror(self):
         with mock.patch(
-                'yagura.monitors.services.urlopen',
+                'requests.get',
                 side_effect=mocked_urlopen_urlerror('Test error')):
             site = mock.MagicMock(
                 url='http://example.com/200', ok_http_status=302)
