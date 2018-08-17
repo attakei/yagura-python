@@ -3,6 +3,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
 
 from django.conf import settings
+import requests
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
@@ -13,13 +14,13 @@ from yagura.utils import get_base_url
 
 def monitor_site(site: Site) -> typing.Tuple[str, str]:
     try:
-        resp = urlopen(site.url)
+        resp = requests.get(site.url, allow_redirects=False)
     except HTTPError as err:
         resp = err
     except URLError as err:
         return 'NG', err.reason
-    result = 'OK' if resp.code == site.ok_http_status else 'NG'
-    reason = f"HTTP status code is {resp.code}" \
+    result = 'OK' if resp.status_code == site.ok_http_status else 'NG'
+    reason = f"HTTP status code is {resp.status_code}" \
         f" (expected: {site.ok_http_status})" \
         if result == 'NG' else ''
     return result, reason

@@ -1,3 +1,4 @@
 pytest
 pytest-django
 parameterized
+requests-mock
