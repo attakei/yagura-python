@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+from django.conf import settings
 from django.db import models
 
 from yagura.sites.models import Site
@@ -14,6 +15,8 @@ class EmailRecipient(models.Model):
         Site, on_delete=models.CASCADE, related_name='recipients')
     email = models.EmailField()
     enabled = models.BooleanField(default=False)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         unique_together = (
@@ -53,6 +56,8 @@ class SlackRecipient(models.Model):
     url = models.URLField('Webhook URL')
     channel = models.CharField(
         'Channel name(optional)', max_length=22, null=True, blank=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         unique_together = (
