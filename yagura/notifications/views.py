@@ -192,6 +192,9 @@ class SlackRecipientDeleteView(LoginRequiredMixin, DeleteView):
     form_class = SlackRecipientDeleteForm
 
     def delete(self, request, *args, **kwargs):
+        recipient = self.get_object()
+        if not recipient.can_delete(request.user):
+            return self.get(request, *args, **kwargs)
         resp = super().delete(request, *args, **kwargs)
         # TODO: Need transration
         messages.add_message(

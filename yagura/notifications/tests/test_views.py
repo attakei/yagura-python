@@ -197,24 +197,46 @@ class SlackRecipientDelete_ViewTest(ViewTestCase):
 
     def setUp(self):
         super().setUp()
-        self.client.force_login(get_user_model().objects.first())
         self.site = Site.objects.first()
         SlackRecipient.objects.create(
-            site=self.site, url='http://example.com')
+            site=self.site, url='http://example.com', created_by_id=2)
+        SlackRecipient.objects.create(
+            site=self.site, url='http://example.com', created_by_id=3)
 
-    def test_get(self):
+    @parameterized.expand([
+        (1, 2, True, 'Site owner can delete all recipient'),
+        (2, 2, True, 'Site owner can delete all recipient'),
+        (1, 3, False, 'Other user cannot delete recipient'),
+        (2, 3, True, 'Recipient owner can delete it'),
+    ])
+    def test_get(self, r_id, u_id, can_delete, desc):
+        user = get_user_model().objects.get(pk=u_id)
+        self.client.force_login(user)
         resp = self.client.get(
-            reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
+            reverse_lazy('notifications:delete-slack-recipient', args=(r_id,)))
         assert resp.status_code == 200
         assert self.site.url in str(resp.content)
+        if can_delete:
+            assert 'You do not have permission' not in str(resp.content)
+        else:
+            assert 'You do not have permission' in str(resp.content)
 
-    def test_post(self):
+    @parameterized.expand([
+        (1, 2, True, 'Site owner can delete all recipient'),
+        (2, 2, True, 'Site owner can delete all recipient'),
+        (1, 3, False, 'Other user cannot delete recipient'),
+        (2, 3, True, 'Recipient owner can delete it'),
+    ])
+    def test_post(self, r_id, u_id, can_delete, desc):
+        user = get_user_model().objects.get(pk=u_id)
+        self.client.force_login(user)
         resp = self.client.post(
-            reverse_lazy('notifications:delete-slack-recipient', args=(1,)))
-        assert resp.status_code == 302
-        assert SlackRecipient.objects.count() == 0
-        assert len(get_messages(resp.wsgi_request)) == 1
-        location = resp['Location']
-        assert location == self.site.get_absolute_url()
-        resp = self.client.get(location)
-        assert resp.status_code == 200
+            reverse_lazy('notifications:delete-slack-recipient', args=(r_id,)))
+        if can_delete:
+            assert resp.status_code == 302
+            assert SlackRecipient.objects.count() == 1
+            location = resp['Location']
+            assert location == self.site.get_absolute_url()
+        else:
+            assert resp.status_code == 200
+            assert SlackRecipient.objects.count() == 2
