@@ -23,6 +23,21 @@ class EmailRecipient(models.Model):
             ('site', 'email'),
         )
 
+    def can_delete(self, user) -> bool:
+        """Judge that ``user`` can delete this recipient.
+        Each user can delete it
+
+        * Creator of this recipient
+        * Creator of this site
+
+        :params user: Target user
+        """
+        if self.created_by == user:
+            return True
+        if self.site.created_by == user:
+            return True
+        return False
+
 
 class EmailActivation(models.Model):
     """Email-recipient activation code
@@ -63,3 +78,18 @@ class SlackRecipient(models.Model):
         unique_together = (
             ('site', 'url', 'channel'),
         )
+
+    def can_delete(self, user) -> bool:
+        """Judge that ``user`` can delete this recipient.
+        Each user can delete it
+
+        * Creator of this recipient
+        * Creator of this site
+
+        :params user: Target user
+        """
+        if self.created_by == user:
+            return True
+        if self.site.created_by == user:
+            return True
+        return False

@@ -1,16 +1,48 @@
 from unittest import mock
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
+from parameterized import parameterized
 
-from yagura.notifications.models import SlackRecipient
+from yagura.notifications.models import EmailRecipient, SlackRecipient
 from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
+
+
+class EmailRecipient_ModelTest(TestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+
+    @parameterized.expand([
+        (2, 2, True),
+        (3, 2, True),
+        (2, 3, False),
+    ])
+    def test_can_delete(self, created_by, access_by, expected):
+        site = Site.objects.first()
+        recipient = EmailRecipient(
+            site=site, created_by_id=created_by, email='dummy@example.com')
+        user = get_user_model().objects.get(pk=access_by)
+        assert recipient.can_delete(user) is expected
 
 
 class SlackNotification_ModelTest(TestCase):
     fixtures = [
         'unittest_suite',
     ]
+
+    @parameterized.expand([
+        (2, 2, True),
+        (3, 2, True),
+        (2, 3, False),
+    ])
+    def test_can_delete(self, created_by, access_by, expected):
+        site = Site.objects.first()
+        recipient = SlackRecipient(
+            site=site, created_by_id=created_by, url='http://example.com')
+        user = get_user_model().objects.get(pk=access_by)
+        assert recipient.can_delete(user) is expected
 
     def test_notification(self):
         site = Site.objects.first()
