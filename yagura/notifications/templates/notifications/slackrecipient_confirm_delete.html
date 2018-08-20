@@ -1,5 +1,6 @@
 {% extends 'layouts/two_pane.html' %}
 {% load bootstrap4 %}
+{% load yagura_notifications %}
 
 {% block content_main %}
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -11,10 +12,15 @@
     </p>
   </div>
   <div>
-    <form method="POST">
-      {% csrf_token %}
-      {% trans 'Confirm' as confirm_label %}
-      {% bootstrap_button confirm_label 'submit' %}
-    </form>
+    {% can_delete slackrecipient request.user as can_delete_ %}
+    {% if can_delete_ %}
+      <form method="POST">
+        {% csrf_token %}
+        {% trans 'Confirm' as confirm_label %}
+        {% bootstrap_button confirm_label 'submit' %}
+      </form>
+    {% else %}
+      <p>You do not have permission to delete this recipient</p>
+    {% endif %}
   </div>
 {% endblock %}

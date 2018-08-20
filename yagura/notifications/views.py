@@ -33,6 +33,9 @@ class EmailRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            recipient = form.instance
+            recipient.created_by = request.user
+            recipient.save()
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -65,6 +68,9 @@ class EmailRecipientDeleteView(LoginRequiredMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         recipient = self.get_object()
+        if not recipient.can_delete(request.user):
+            # TODO: Add error message
+            return self.get(request, *args, **kwargs)
         deactivation = EmailDeactivation.generate_code(recipient)
         send_templated_mail(
             template_name='notifications/emailrecipient_confirm_delete',
@@ -165,6 +171,9 @@ class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            recipient = form.instance
+            recipient.created_by = request.user
+            recipient.save()
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -183,6 +192,9 @@ class SlackRecipientDeleteView(LoginRequiredMixin, DeleteView):
     form_class = SlackRecipientDeleteForm
 
     def delete(self, request, *args, **kwargs):
+        recipient = self.get_object()
+        if not recipient.can_delete(request.user):
+            return self.get(request, *args, **kwargs)
         resp = super().delete(request, *args, **kwargs)
         # TODO: Need transration
         messages.add_message(
