@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
 from django.core import mail
 from django.urls import reverse_lazy
+from parameterized import parameterized
 
 from yagura.notifications.models import (
     EmailActivation, EmailDeactivation, EmailRecipient, SlackRecipient
@@ -10,9 +11,8 @@ from yagura.sites.models import Site
 from yagura.tests.base import ViewTestCase
 
 
-class AddNotification_ViewTest(ViewTestCase):
+class EmailRecipientCreate_ViewTest(ViewTestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
@@ -24,18 +24,30 @@ class AddNotification_ViewTest(ViewTestCase):
         resp = self.client.get(self.url)
         assert resp.status_code == 302
 
-    def test_logged_in(self):
-        self.client.force_login(get_user_model().objects.first())
+    @parameterized.expand([
+        (2, ),
+        (3, ),
+    ])
+    def test_logged_in(self, user_id):
+        self.client.force_login(get_user_model().objects.get(pk=user_id))
         resp = self.client.get(self.url)
         assert resp.status_code == 200
 
-    def test_post(self):
-        self.client.force_login(get_user_model().objects.first())
+    @parameterized.expand([
+        (2, ),
+        (3, ),
+    ])
+    def test_post_anyone(self, user_id):
+        user = get_user_model().objects.get(pk=user_id)
+        self.client.force_login(user)
         resp = self.client.post(self.url, {
             'site': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01',
             'email': 'dummy@example.com'})
         assert resp.status_code == 302
         assert len(mail.outbox) == 1
+        assert EmailRecipient.objects.count() == 1
+        recipient = EmailRecipient.objects.first()
+        assert recipient.created_by == user
 
 
 class NotificationDelete_ViewTest(ViewTestCase):
@@ -104,6 +116,44 @@ class Deactivate_ViewTest(ViewTestCase):
         assert EmailRecipient.objects.count() == 0
         resp = self.client.get(resp['Location'])
         assert resp.status_code == 200
+
+
+class SlackRecipientCreate_ViewTest(ViewTestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+
+    url = reverse_lazy(
+        'notifications:add-slack-recipient',
+        args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+
+    def test_login_required(self):
+        resp = self.client.get(self.url)
+        assert resp.status_code == 302
+
+    @parameterized.expand([
+        (2, ),
+        (3, ),
+    ])
+    def test_logged_in(self, user_id):
+        self.client.force_login(get_user_model().objects.get(pk=user_id))
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+
+    @parameterized.expand([
+        (2, ),
+        (3, ),
+    ])
+    def test_post_anyone(self, user_id, ):
+        user = get_user_model().objects.get(pk=user_id)
+        self.client.force_login(user)
+        resp = self.client.post(self.url, {
+            'site': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01',
+            'url': 'http://example.com'})
+        assert resp.status_code == 302
+        assert SlackRecipient.objects.count() == 1
+        recipient = SlackRecipient.objects.first()
+        assert recipient.created_by == user 
 
 
 class SlackRecipientDelete_ViewTest(ViewTestCase):

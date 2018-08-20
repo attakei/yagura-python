@@ -33,6 +33,9 @@ class EmailRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            recipient = form.instance
+            recipient.created_by = request.user
+            recipient.save()
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -165,6 +168,9 @@ class SlackRecipientCreateView(LoginRequiredMixin, FormMixin, DetailView):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            recipient = form.instance
+            recipient.created_by = request.user
+            recipient.save()
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
