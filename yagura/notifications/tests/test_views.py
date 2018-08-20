@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.contrib.messages import get_messages
 from django.core import mail
 from django.urls import reverse_lazy
 from parameterized import parameterized
@@ -61,9 +60,11 @@ class EmailRecipientDelete_ViewTest(ViewTestCase):
         self.client.force_login(get_user_model().objects.first())
         site = Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         EmailRecipient.objects.create(
-            site=site, email='test2@example.com', enabled=True, created_by_id=2)
+            site=site, email='test2@example.com',
+            enabled=True, created_by_id=2)
         EmailRecipient.objects.create(
-            site=site, email='test3@example.com', enabled=True, created_by_id=3)
+            site=site, email='test3@example.com',
+            enabled=True, created_by_id=3)
 
     @parameterized.expand([
         (1, 2, True, 'Site owner can delete all recipient'),
@@ -186,7 +187,7 @@ class SlackRecipientCreate_ViewTest(ViewTestCase):
         assert resp.status_code == 302
         assert SlackRecipient.objects.count() == 1
         recipient = SlackRecipient.objects.first()
-        assert recipient.created_by == user 
+        assert recipient.created_by == user
 
 
 class SlackRecipientDelete_ViewTest(ViewTestCase):
