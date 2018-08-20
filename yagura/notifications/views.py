@@ -68,6 +68,9 @@ class EmailRecipientDeleteView(LoginRequiredMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         recipient = self.get_object()
+        if not recipient.can_delete(request.user):
+            # TODO: Add error message
+            return self.get(request, *args, **kwargs)
         deactivation = EmailDeactivation.generate_code(recipient)
         send_templated_mail(
             template_name='notifications/emailrecipient_confirm_delete',

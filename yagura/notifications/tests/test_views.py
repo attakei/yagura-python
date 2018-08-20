@@ -50,7 +50,7 @@ class EmailRecipientCreate_ViewTest(ViewTestCase):
         assert recipient.created_by == user
 
 
-class NotificationDelete_ViewTest(ViewTestCase):
+class EmailRecipientDelete_ViewTest(ViewTestCase):
     fixtures = [
         'initial',
         'unittest_suite',
@@ -59,17 +59,50 @@ class NotificationDelete_ViewTest(ViewTestCase):
     def setUp(self):
         super().setUp()
         self.client.force_login(get_user_model().objects.first())
+        site = Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01')
         EmailRecipient.objects.create(
-            site=Site.objects.get(pk='aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'),
-            email='test@example.com', enabled=True)
+            site=site, email='test2@example.com', enabled=True, created_by_id=2)
+        EmailRecipient.objects.create(
+            site=site, email='test3@example.com', enabled=True, created_by_id=3)
 
-    def test_post_not_delete(self):
+    @parameterized.expand([
+        (1, 2, True, 'Site owner can delete all recipient'),
+        (2, 2, True, 'Site owner can delete all recipient'),
+        (1, 3, False, 'Other user cannot delete recipient'),
+        (2, 3, True, 'Recipient owner can delete it'),
+    ])
+    def test_get(self, r_id, u_id, can_delete, desc):
+        user = get_user_model().objects.get(pk=u_id)
+        self.client.force_login(user)
+        resp = self.client.get(
+            reverse_lazy('notifications:delete-email-recipient', args=(r_id,)))
+        assert resp.status_code == 200
+        if can_delete:
+            assert 'You do not have permission' not in str(resp.content)
+        else:
+            assert 'You do not have permission' in str(resp.content)
+
+    @parameterized.expand([
+        (1, 2, True, 'Site owner can delete all recipient'),
+        (2, 2, True, 'Site owner can delete all recipient'),
+        (1, 3, False, 'Other user cannot delete recipient'),
+        (2, 3, True, 'Recipient owner can delete it'),
+    ])
+    def test_post(self, r_id, u_id, can_delete, desc):
+        user = get_user_model().objects.get(pk=u_id)
+        self.client.force_login(user)
         resp = self.client.post(
-            reverse_lazy('notifications:delete-email-recipient', args=(1,)))
-        assert resp.status_code == 302
-        assert EmailRecipient.objects.count() == 1
-        assert EmailDeactivation.objects.count() == 1
-        assert len(mail.outbox) == 1
+            reverse_lazy('notifications:delete-email-recipient', args=(r_id,)))
+        if can_delete:
+            assert resp.status_code == 302
+            assert EmailRecipient.objects.count() == 2
+            assert EmailDeactivation.objects.count() == 1
+            assert len(mail.outbox) == 1
+        else:
+            assert resp.status_code == 200
+            assert EmailRecipient.objects.count() == 2
+            assert EmailDeactivation.objects.count() == 0
+            assert len(mail.outbox) == 0
 
 
 class Activate_ViewTest(ViewTestCase):
