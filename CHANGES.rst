@@ -2,6 +2,23 @@
 Change logs
 ===========
 
+ver 0.6.0
+=========
+
+:Date: 2018-08-23
+
+Features
+--------
+
+* Can registr notification recipient by any users
+
+Fixes
+-----
+
+* Define default login error URL
+* Fix layouts of navbar and footer
+
+
 ver 0.5.3
 =========
 
@@ -16,7 +33,6 @@ Fixes
 -----
 
 * Monitoring request does not follow redirect
-
 
 
 ver 0.5.2

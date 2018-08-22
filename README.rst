@@ -30,7 +30,7 @@ Features
 ========
 
 * Health-check report of websites
-* Notify state changing by email
+* Notify state changing by email and Slack webhook
 
 
 Try demo
@@ -41,6 +41,8 @@ See https://yagura-demo.attakei.net
 
 Initial user
 ============
+
+(Not work demo site)
 
 * Username: ``admin``
 * Password: ``Yagura!!``
