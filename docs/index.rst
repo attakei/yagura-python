@@ -13,6 +13,7 @@ Welcome to Yagura's documentation!
     contents/overview
     contents/installation
     contents/settings
+    contents/users/index
 
 
 Indices and tables
