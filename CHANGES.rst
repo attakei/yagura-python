@@ -2,6 +2,73 @@
 Change logs
 ===========
 
+ver 0.5.3
+=========
+
+:Date: 2018-08-17
+
+Features
+--------
+
+* Add footer to display version
+
+Fixes
+-----
+
+* Monitoring request does not follow redirect
+
+
+
+ver 0.5.2
+=========
+
+:Date: 2018-08-15
+
+Fixes
+-----
+
+* Include `.mo` files (compiled messages)
+
+ver 0.5.1
+=========
+
+:Date: 2018-08-14
+
+Fixes
+-----
+
+* When use ``yagura.settings.env`` , set default values as possible
+
+
+ver 0.5.0
+=========
+
+:Date: 2018-08-12
+
+Features
+--------
+
+* Add slack recipient as notification target
+* Monitoring function checks HTTP status specified by register user
+* Link to target site URL in site detail page
+* Remove demo site sources in this project
+
+Fixes
+-----
+
+* Use user locale to render datetime
+
+
+ver 0.4.1
+=========
+
+:Date: 2018-07-21
+
+Fixes
+-----
+
+* Can't delete notification email (#22)
+
 ver 0.4.0
 =========
 
