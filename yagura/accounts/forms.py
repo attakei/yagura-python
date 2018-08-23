@@ -4,6 +4,13 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.timezone import get_current_timezone_name
 from django.utils.translation import get_language
+from registration.forms import RegistrationForm
+
+
+class AccountRegistrationForm(RegistrationForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email']
 
 
 class ProfileEditForm(forms.ModelForm):

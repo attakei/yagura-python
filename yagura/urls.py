@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from registration.backends.hmac.views import RegistrationView
+
+from yagura.accounts.forms import AccountRegistrationForm
 
 urlpatterns = [
     path('', include('yagura.core.urls')),
@@ -28,8 +31,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-
 if settings.YAGURA_ENABLE_PASSWORD_REGISTRATION:
     urlpatterns += [
+        path(
+            'accounts/register/',
+            RegistrationView.as_view(form_class=AccountRegistrationForm),
+            name='registration_register'),
         path('accounts/', include('registration.backends.hmac.urls')),
     ]

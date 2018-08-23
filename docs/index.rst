@@ -12,6 +12,7 @@ Welcome to Yagura's documentation!
 
     contents/overview
     contents/installation
+    contents/upgrading
     contents/settings
     contents/users/index
 
