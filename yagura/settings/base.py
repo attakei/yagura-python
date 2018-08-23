@@ -156,6 +156,7 @@ STATICFILES_DIRS = [
 
 
 # Auth
+AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
     # Default backend
     'django.contrib.auth.backends.ModelBackend',
