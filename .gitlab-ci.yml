@@ -56,14 +56,12 @@ build-docker-image:
 build-public-docker-image:
   stage: build
   only:
-    # - tags
-    - 15-push-container-image-to-hub-docker-com
+    - tags
   image: docker:latest
   services:
     - docker:dind
   script:
-    # - IMAGE_TAG=${CI_COMMIT_REF_NAME/\//-}
-    - IMAGE_TAG=0.6.0
+    - IMAGE_TAG=${CI_COMMIT_REF_NAME/\//-}
     - docker build -t attakei/yagura:$IMAGE_TAG .
     - docker build -t attakei/yagura:$IMAGE_TAG-mysqlclient --build-arg USE_MYSQLCLIENT=1 .
     - echo $DOCKER_HUB_TOKEN | docker login -u attakei --password-stdin
