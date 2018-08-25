@@ -2,6 +2,19 @@
 Change logs
 ===========
 
+
+ver 0.7.0
+=========
+
+:Date: 2018-08-26
+
+Fixes
+-----
+
+* Change auth user model(breaking change)
+* Docker image contains only installed packages
+
+
 ver 0.6.0
 =========
 
