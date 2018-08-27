@@ -1,3 +1,4 @@
+import asyncio
 from uuid import UUID
 
 from django.core.management.base import BaseCommand, CommandError
@@ -5,6 +6,11 @@ from django.utils.timezone import now
 
 from yagura.monitors.services import handle_state, monitor_site
 from yagura.sites.models import Site
+
+
+async def _monitor_site(site, monitor_date):
+    state, reason = await monitor_site(site)
+    handle_state(site, state, monitor_date, reason=reason)
 
 
 class Command(BaseCommand):
@@ -26,5 +32,7 @@ class Command(BaseCommand):
             site = Site.objects.get(pk=site_id)
         except Site.DoesNotExist:
             raise CommandError(f"Site is not found")
-        state, reason = monitor_site(site)
-        handle_state(site, state, monitor_date, reason=reason)
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(_monitor_site(site, monitor_date))
+        loop.close()
