@@ -8,6 +8,8 @@ from yagura.monitors.services import handle_state, monitor_site
 from yagura.sites.models import Site
 
 
+# TODO: duplicated with \
+#   ``yagura.monitors.managements.commands.monitor_all._monitor_site``
 async def _monitor_site(site, monitor_date):
     state, reason = await monitor_site(site)
     handle_state(site, state, monitor_date, reason=reason)
