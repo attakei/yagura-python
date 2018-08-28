@@ -3,9 +3,8 @@ import typing
 
 import aiohttp
 from django.conf import settings
-from templated_email import send_templated_mail
-
 from django.utils.timezone import now
+from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
 from yagura.notifications.services import SlackNotifier
