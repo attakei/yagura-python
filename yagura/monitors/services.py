@@ -1,8 +1,11 @@
+import asyncio
 import typing
 
 import aiohttp
 from django.conf import settings
 from templated_email import send_templated_mail
+
+from django.utils.timezone import now
 
 from yagura.monitors.models import StateHistory
 from yagura.notifications.services import SlackNotifier
@@ -77,3 +80,30 @@ def send_state_email(current, template_name):
             recipient_list=[recipient.email],
             context=context,
         )
+
+
+class MonitoringJob(object):
+    """Monitoring and handler actions managemant job
+    """
+    def __init__(self):
+        self._tasks = []
+        self._loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self._loop)
+
+    def add_task_form_site(self, site):
+        """Set monitoring target site
+        """
+        self._tasks.append(self.monitor_task(site, now()))
+
+    def wait_complete(self):
+        """Wait to complete added all tasks
+        """
+        future = asyncio.gather(*self._tasks)
+        self._loop.run_until_complete(future)
+        self._loop.close()
+
+    async def monitor_task(self, site, monitor_date):
+        """Coroutine to monitor with handlers
+        """
+        state, reason = await monitor_site(site)
+        handle_state(site, state, monitor_date, reason=reason)

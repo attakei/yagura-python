@@ -1,18 +1,9 @@
-import asyncio
 from uuid import UUID
 
 from django.core.management.base import BaseCommand, CommandError
-from django.utils.timezone import now
 
-from yagura.monitors.services import handle_state, monitor_site
+from yagura.monitors.services import MonitoringJob
 from yagura.sites.models import Site
-
-
-# TODO: duplicated with \
-#   ``yagura.monitors.managements.commands.monitor_all._monitor_site``
-async def _monitor_site(site, monitor_date):
-    state, reason = await monitor_site(site)
-    handle_state(site, state, monitor_date, reason=reason)
 
 
 class Command(BaseCommand):
@@ -29,12 +20,10 @@ class Command(BaseCommand):
         except ValueError:
             raise CommandError(f"Argument must be UUID")
         # Main
-        monitor_date = now()
         try:
             site = Site.objects.get(pk=site_id)
         except Site.DoesNotExist:
             raise CommandError(f"Site is not found")
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(_monitor_site(site, monitor_date))
-        loop.close()
+        job = MonitoringJob()
+        job.add_task_form_site(site)
+        job.wait_complete()
