@@ -22,10 +22,12 @@
             {% url 'login' as url_login_ %}
             {% bootstrap_button 'Log in' href=url_login_ %}
           </li>
-          <li class="nav-item">
-            {% url 'registration_register' as url_register_ %}
-            {% bootstrap_button 'Register' href=url_register_ %}
-          </li>
+          {% if ENABLE_PASSWORD_REGISTRATION %}
+            <li class="nav-item">
+              {% url 'registration_register' as url_register_ %}
+              {% bootstrap_button 'Register' href=url_register_ %}
+            </li>
+          {% endif %}
         {% else %}
           <li class="nav-item dropbox">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
