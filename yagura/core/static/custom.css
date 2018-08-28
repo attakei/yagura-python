@@ -6,6 +6,9 @@ body {
     margin-bottom: 40px; /* Margin bottom by footer height */
 }
 
+.container-fluid > .row {
+    min-height: calc(100vh - 100px);
+}
 .navbar {
     margin-bottom: 0px;
 }
