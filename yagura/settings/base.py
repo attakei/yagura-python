@@ -34,6 +34,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Yagura core apps
+    'yagura.core',
+    'yagura.accounts',
+    'yagura.sites',
+    'yagura.monitors',
+    'yagura.notifications',
+    # Django contrib apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,12 +52,6 @@ INSTALLED_APPS = [
     'registration',
     'django_crontab',
     'social_django',
-    # Yagura core apps
-    'yagura.core',
-    'yagura.accounts',
-    'yagura.sites',
-    'yagura.monitors',
-    'yagura.notifications',
 ]
 
 MIDDLEWARE = [
