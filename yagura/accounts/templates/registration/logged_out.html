@@ -1,6 +1,6 @@
 {% extends 'layouts/single_page.html' %}
 
 {% block content_main %}
-<p>{% trans 'Logged out' %}.</p>
+<h2>{% trans 'Logged out' %}.</h2>
 <p><a href="{% url 'login' %}">{% trans 'Log in again' %}</a></p>
 {% endblock %}
