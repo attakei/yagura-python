@@ -9,7 +9,12 @@
 {% block bootstrap4_before_content %}
   {# Top navigation bar #}
   <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{% url 'sites:list' %}">Yagura</a>
+    {% if request.user.is_anonymous %}
+      {% url 'index' as url_index_ %}
+    {% else %}
+      {% url 'sites:list' as url_index_ %}
+    {% endif %}
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ url_index_ }}">Yagura</a>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
       <ul class="nav justify-content-end ml-auto">
         {% if request.user.is_anonymous %}
