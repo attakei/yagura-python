@@ -1,0 +1,54 @@
+{% extends 'layouts/bootstrap4.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block bootstrap4_extra_head %}
+  <title>Yagura {% block subtitle %}{% endblock %}</title>
+{% endblock %}
+
+{% block bootstrap4_before_content %}
+  {# Top navigation bar #}
+  <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
+    {% if request.user.is_anonymous %}
+      {% url 'index' as url_index_ %}
+    {% else %}
+      {% url 'sites:list' as url_index_ %}
+    {% endif %}
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ url_index_ }}">Yagura</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="nav justify-content-end ml-auto">
+        {% if request.user.is_anonymous %}
+          <li class="nav-item">
+            {% url 'login' as url_login_ %}
+            {% bootstrap_button 'Log in' href=url_login_ %}
+          </li>
+          {% if ENABLE_PASSWORD_REGISTRATION %}
+            <li class="nav-item">
+              {% url 'registration_register' as url_register_ %}
+              {% bootstrap_button 'Register' href=url_register_ %}
+            </li>
+          {% endif %}
+        {% else %}
+          <li class="nav-item dropbox">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ request.user.full_name|default:request.user }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item" type="button"><a href="{% url 'accounts:profile' %}">{% trans 'Profile' %}</a></button>
+              <button class="dropdown-item" type="button"><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></button>
+            </div>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+{% endblock %}
+
+{% block bootstrap4_after_content %}
+  {# Footer #}
+  <footer class="footer">
+    <div class="container">
+      <span class="text-muted">Powered by Yagura v{{ YAGURA_VERSION }}</span>
+    </div>
+  </footer>
+{% endblock %}
