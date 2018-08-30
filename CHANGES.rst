@@ -2,6 +2,22 @@
 Change logs
 ===========
 
+ver 0.7.1
+=========
+
+:Date: 2018-08-26
+
+Features
+--------
+
+* Monitor websites by async in running task
+
+Fixes
+-----
+
+* Adjust all layouts to render navbar always
+* Fix CI/CD pipeline
+* Fix typo in upgrade guide
 
 ver 0.7.0
 =========
