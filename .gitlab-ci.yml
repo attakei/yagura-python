@@ -26,6 +26,9 @@ migration-test:
     - pip install yagura
     - cp yagura/tests/migration_testing.py ./
     - ./manage.py migrate
+    - pip uninstall -y yagura
+    - pip install -e .
+    - ./manage.py migrate
 
 build-testpypi-packages:
   stage: build
