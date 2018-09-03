@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
+
 from yagura import __version__ as yagura_version
 
 parser = argparse.ArgumentParser()
@@ -43,17 +44,29 @@ def init(args):
     proj_module_dir.mkdir(parents=True)
     proj_template_dir = Path(__file__).parent / 'project_template'
     # Copy resources
-    shutil.copyfile(proj_template_dir / 'requirements.txt', proj_dir / 'requirements.txt')
-    shutil.copyfile(proj_template_dir / 'myproj/__init__.py', proj_module_dir / '__init__.py')
-    shutil.copyfile(proj_template_dir / 'myproj/urls.py', proj_module_dir / 'urls.py')
+    shutil.copyfile(
+        proj_template_dir / 'requirements.txt',
+        proj_dir / 'requirements.txt')
+    shutil.copyfile(
+        proj_template_dir / 'myproj/__init__.py',
+        proj_module_dir / '__init__.py')
+    shutil.copyfile(
+        proj_template_dir / 'myproj/urls.py',
+        proj_module_dir / 'urls.py')
     # Write resources with variables
     context = {
         'project_name': proj_dir.name,
         'secret_key': get_random_secret_key(),
     }
-    _render_resource(proj_template_dir / 'manage.py', proj_dir / 'manage.py', context)
-    _render_resource(proj_template_dir / 'myproj/settings.py', proj_module_dir / 'settings.py', context)
-    
+    _render_resource(
+        proj_template_dir / 'manage.py',
+        proj_dir / 'manage.py',
+        context)
+    _render_resource(
+        proj_template_dir / 'myproj/settings.py',
+        proj_module_dir / 'settings.py',
+        context)
+
 
 parser_init = subparsers.add_parser('init', help=init.__doc__)
 parser_init.add_argument('proj_dir')

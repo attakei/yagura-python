@@ -49,4 +49,3 @@ class InitCommandTests(object):
             main(['init', 'testapp'])
             app_dir = tempdir / 'testapp'
             assert (app_dir / 'requirements.txt').exists() is True
-
