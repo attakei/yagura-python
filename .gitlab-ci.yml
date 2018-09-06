@@ -19,8 +19,20 @@ pytest:
     - pip install -r requirements/dev.txt
     - pytest
 
-package-to-testpypi:
-  stage: build-package
+migration-test:
+  stage: test
+  variables:
+    DJANGO_SETTINGS_MODULE: migration_testing
+  script:
+    - pip install yagura
+    - cp yagura/tests/migration_testing.py ./
+    - ./manage.py migrate
+    - pip uninstall -y yagura
+    - pip install -e .
+    - ./manage.py migrate
+
+build-testpypi-packages:
+  stage: build
   only:
     - master
     - /^release\/.*$/

@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'yagura.sites',
     'yagura.monitors',
     'yagura.notifications',
+    # Third-party apps
+    'bootstrap4',
+    'registration',
+    'django_crontab',
+    'social_django',
     # Django contrib apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,11 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Third-party apps
-    'bootstrap4',
-    'registration',
-    'django_crontab',
-    'social_django',
 ]
 
 MIDDLEWARE = [
