@@ -49,3 +49,5 @@ class InitCommandTests(object):
             main(['init', 'testapp'])
             app_dir = tempdir / 'testapp'
             assert (app_dir / 'requirements.txt').exists() is True
+            assert (app_dir / 'manage.py').exists() is True
+            assert (app_dir / 'testapp').exists() is True
