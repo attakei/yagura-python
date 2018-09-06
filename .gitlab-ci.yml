@@ -32,7 +32,7 @@ migration-test:
     - ./manage.py migrate
 
 build-testpypi-packages:
-  stage: build
+  stage: build-package
   only:
     - master
     - /^release\/.*$/
