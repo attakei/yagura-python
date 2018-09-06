@@ -44,28 +44,39 @@ def init(args):
     proj_module_dir.mkdir(parents=True)
     proj_template_dir = Path(__file__).parent / 'project_template'
     # Copy resources
-    shutil.copyfile(
-        proj_template_dir / 'requirements.txt',
-        proj_dir / 'requirements.txt')
-    shutil.copyfile(
-        proj_template_dir / 'myproj/__init__.py',
-        proj_module_dir / '__init__.py')
-    shutil.copyfile(
-        proj_template_dir / 'myproj/urls.py',
-        proj_module_dir / 'urls.py')
+    resources = [
+        (  
+            proj_template_dir / 'requirements.txt',
+            proj_dir / 'requirements.txt',
+        ),
+        (
+            proj_template_dir / 'myproj' / '__init__.py',
+            proj_module_dir / '__init__.py',
+        ),
+        (
+            proj_template_dir / 'myproj' / 'urls.py',
+            proj_module_dir / 'urls.py',
+        ),
+    ]
+    for src, dst in resources:
+        shutil.copyfile(src, dst)
     # Write resources with variables
     context = {
         'project_name': proj_dir.name,
         'secret_key': get_random_secret_key(),
     }
-    _render_resource(
-        proj_template_dir / 'manage.py',
-        proj_dir / 'manage.py',
-        context)
-    _render_resource(
-        proj_template_dir / 'myproj/settings.py',
-        proj_module_dir / 'settings.py',
-        context)
+    resources = [
+        (
+            proj_template_dir / 'manage.py',
+            proj_dir / 'manage.py',
+        ),
+        (
+            proj_template_dir / 'myproj/settings.py',
+            proj_module_dir / 'settings.py',
+        ),
+    ]
+    for src, dst in resources:
+        _render_resource(src, dst, context)
 
 
 parser_init = subparsers.add_parser('init', help=init.__doc__)
