@@ -6,6 +6,6 @@ Welcome to Yagura.
 If you want to use features of this service, please complete activation by
 click this URL.
 
-{{ scheme }}://{{ site }}{% url 'registration_activate' activation_key %}
+{{ scheme }}://{{ site }}{% url 'django_registration_activate' activation_key %}
 
 {% endautoescape %}

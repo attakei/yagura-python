@@ -1,0 +1,42 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"django-bootstrap4" = "*"
+django-templated-email = "*"
+django-crontab = "*"
+django-environ = "*"
+"pyasn1" = "*"
+social-auth-app-django = "*"
+slackweb = "*"
+aiohttp = "*"
+Django = ">=2.0"
+"e1839a8" = {path = ".", editable = true}
+yagura = "*"
+django-registration = ">=3.0"
+requests = "*"
+
+[dev-packages]
+"django-bootstrap4" = "*"
+django-templated-email = "*"
+django-crontab = "*"
+django-environ = "*"
+"pyasn1" = "*"
+social-auth-app-django = "*"
+slackweb = "*"
+aiohttp = "*"
+"flake8" = "*"
+"flake8-isort" = "*"
+pytest = "*"
+pytest-django = "*"
+aioresponses = "*"
+parameterized = "*"
+django-debug-toolbar = "*"
+Django = ">=2.0"
+requests = "*"
+requests-mock = "*"
+
+[requires]
+python_version = "3.6"
