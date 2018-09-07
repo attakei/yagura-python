@@ -43,7 +43,7 @@ class Registration_ViewTest(TestCase):
         self._test_valid_post()
         mail_body = mail.outbox[0].body
         activate_url = reverse_lazy(
-            'registration_activate', args=['ACTIVATE', ])
+            'django_registration_activate', args=['ACTIVATE', ])
         activate_url = activate_url.replace('ACTIVATE/', '')
         assert str(activate_url) in mail_body
         from_email = mail.outbox[0].from_email
@@ -54,7 +54,7 @@ class Registration_ViewTest(TestCase):
         self._test_valid_post()
         mail_body = mail.outbox[0].body
         activate_url = reverse_lazy(
-            'registration_activate', args=['ACTIVATE', ])
+            'django_registration_activate', args=['ACTIVATE', ])
         activate_url = activate_url.replace('ACTIVATE/', '')
         assert str(activate_url) in mail_body
         from_email = mail.outbox[0].from_email
