@@ -29,6 +29,7 @@ migration-test:
     - pip uninstall -y yagura
     - pip install -e .
     - ./manage.py migrate
+  allow_failure: true
 
 build-testpypi-packages:
   stage: build
