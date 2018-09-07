@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'yagura.notifications',
     # Third-party apps
     'bootstrap4',
-    'registration',
+    'django_registration',
     'django_crontab',
     'social_django',
     # Django contrib apps
