@@ -2,6 +2,22 @@
 Change logs
 ===========
 
+ver 0.8
+=======
+
+:Date: 2018-09-08
+
+Features
+--------
+
+* Define CLI command
+
+Fixes
+-----
+
+* Lock version of ``django-registration`` (more than 3.0)
+
+
 ver 0.7.1
 =========
 
