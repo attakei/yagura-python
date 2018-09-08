@@ -1,14 +1,23 @@
-.. Yagura documentation master file, created by
-   sphinx-quickstart on Wed Jun  6 00:08:03 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+======
+Yagura
+======
 
-Welcome to Yagura's documentation!
-==================================
+**Yagura** is project of website monitoring simple and compact for small team.
+
+This project has these themes.
+
+* Can manage easy for even small members
+* Can monitor websites simply
+* Can display clearly status of monitorings
+* Can notify at various services
+* Can show statuses to all members in organization
+
+
+For members of monitorings
+==========================
 
 .. toctree::
     :maxdepth: 2
-    :caption: Contents:
 
     contents/overview
     contents/installation
