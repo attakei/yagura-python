@@ -36,7 +36,7 @@ Features
 Try demo
 ========
 
-See https://yagura-demo.attakei.net
+See https://yagura.herokuapp.com
 
 
 Initial user
