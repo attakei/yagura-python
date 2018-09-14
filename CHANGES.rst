@@ -5,6 +5,16 @@ Change logs
 ver 0.8
 =======
 
+:Date: 2018-09-14
+
+Fixes
+-----
+
+* Remove ``intial`` fixture and merge into ``unittest_suite``
+
+ver 0.8
+=======
+
 :Date: 2018-09-08
 
 Features
