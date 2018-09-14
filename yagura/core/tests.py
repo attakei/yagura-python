@@ -3,7 +3,9 @@ from django.test import Client, TestCase
 
 
 class FixtureTest(TestCase):
-    fixtures = ['initial', ]
+    fixtures = [
+        'unittest_suite',
+    ]
 
     def test_password(self):
         User = get_user_model()

@@ -51,7 +51,6 @@ class EmailRecipientCreate_ViewTest(ViewTestCase):
 
 class EmailRecipientDelete_ViewTest(ViewTestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
@@ -192,7 +191,6 @@ class SlackRecipientCreate_ViewTest(ViewTestCase):
 
 class SlackRecipientDelete_ViewTest(ViewTestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 

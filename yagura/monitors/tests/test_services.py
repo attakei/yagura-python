@@ -50,7 +50,6 @@ class MonitorSite_Test(TestCase):
 
 class SendStateEmail_Test(TestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 

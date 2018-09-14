@@ -6,7 +6,7 @@ from yagura.tests.base import ViewTestCase
 
 class Profile_ViewTest(ViewTestCase):
     fixtures = [
-        'initial',
+        'unittest_suite',
     ]
     url = '/accounts/profile/'
 
@@ -22,7 +22,7 @@ class Profile_ViewTest(ViewTestCase):
 
 class ProfileEdit_ViewTest(ViewTestCase):
     fixtures = [
-        'initial',
+        'unittest_suite',
     ]
     url = reverse_lazy('accounts:profile-edit')
 
