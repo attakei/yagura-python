@@ -22,7 +22,6 @@ class StateHistory_ModelTest(TestCase):
 
 class MonitorSite_CommandTest(TestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
@@ -119,7 +118,6 @@ class MonitorSite_CommandTest(TestCase):
 
 class MonitorAll_CommandTest(TestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
