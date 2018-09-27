@@ -4,6 +4,15 @@ from django.urls import reverse_lazy
 from yagura.tests.base import ViewTestCase
 
 
+class Registration_ViewTest(ViewTestCase):
+    fixtures = [
+        'unittest_suite',
+    ]
+
+    def test_get(self):
+        self.client.get(reverse_lazy('registration_register'))
+
+
 class Profile_ViewTest(ViewTestCase):
     fixtures = [
         'unittest_suite',
