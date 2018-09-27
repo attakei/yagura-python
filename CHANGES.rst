@@ -2,8 +2,18 @@
 Change logs
 ===========
 
-ver 0.8
-=======
+ver 0.8.2
+=========
+
+:Date: 2018-09-28
+
+Fixes
+-----
+
+* Fix templates for ``django-registration``
+
+ver 0.8.1
+=========
 
 :Date: 2018-09-14
 
