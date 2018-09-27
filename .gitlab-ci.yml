@@ -9,18 +9,24 @@ image: python:3.6-slim
 
 flake8:
   stage: lint
+  except:
+    - tags
   script:
     - pip install -r requirements/dev.txt
     - flake8
 
 pytest:
   stage: test
+  except:
+    - tags
   script:
     - pip install -r requirements/dev.txt
     - pytest
 
 migration-test:
   stage: test
+  except:
+    - tags
   variables:
     DJANGO_SETTINGS_MODULE: migration_testing
   script:
