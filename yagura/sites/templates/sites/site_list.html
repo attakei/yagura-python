@@ -10,7 +10,9 @@
   <div>
     <ul class="list-group">
       {% for site in site_list %}
-      {% include 'sites/_site_overview.html' with site=site history=site.states.last %}
+        <li class="list-group-item">
+          {% include 'sites/_site_overview.html' with site=site history=site.states.last %}
+        </li>
       {% endfor %}
     <ul>
   </div>

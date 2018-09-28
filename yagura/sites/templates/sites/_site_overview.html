@@ -1,5 +1,5 @@
 {# Site overview for sites:site-list (row of table) #}
-<li class="list-group-item">
+<div>
   {# Add badge for latest state #}
   {% if history.state == "OK" %}
   <span class="label label-success">OK</span>
@@ -14,4 +14,4 @@
   </a>
 
   <small>(from {{ history.begin_at }})</small>
-</li>
+</div>
