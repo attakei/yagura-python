@@ -168,7 +168,7 @@ FIXTURE_DIRS = [
 # django-bootstrap4
 BOOTSTRAP4 = {
     'include_jquery': 'full',
-    'theme_url': '/static/theme.css',
+    'theme_url': '/static/layout.css',
 }
 
 
