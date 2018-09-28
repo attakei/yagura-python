@@ -2,11 +2,11 @@
 <div>
   {# Add badge for latest state #}
   {% if history.state == "OK" %}
-  <span class="label label-success">OK</span>
+  <span class="badge badge-success">OK</span>
   {% elif history.state == "NG" %}
-  <span class="label label-danger">NG</span>
+  <span class="badge badge-danger">NG</span>
   {% else %}
-  <span class="label label-default">Unknown</span>
+  <span class="badge badge-default">Unknown</span>
   {% endif %}
 
   <a href="{% url 'sites:detail' site.id %}">
