@@ -10,6 +10,7 @@ from yagura.sites.models import Site
 
 class SiteListView(LoginRequiredMixin, ListView):
     model = Site
+    paginate_by = 10
 
 
 class SiteDetailView(LoginRequiredMixin, DetailView):
