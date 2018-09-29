@@ -18,7 +18,7 @@
       <li class="list-group-item">
         {{ site.created_by.email }} <strong>(owner)</strong>
       </li>
-      {% for recipient in recipient_list %}
+      {% for recipient in emailrecipient_list %}
       <li class="list-group-item">
         {{ recipient.email }}
         {% if not recipient.enabled %}
