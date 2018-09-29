@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 
@@ -26,3 +27,12 @@ class StateHistory(models.Model):
             ('site', 'begin_at', ),
         )
         ordering = ['begin_at']
+
+    def status_image_url(self) -> str:
+        if self.state == 'OK':
+            label_ = 'ok'
+        elif self.state == 'NG':
+            label_ = 'ng'
+        else:
+            label_ = 'unknown'
+        return f"{settings.STATIC_URL}monitors/results/{label_}.svg"

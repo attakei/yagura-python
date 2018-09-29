@@ -1,17 +1,17 @@
+{% load static %}
+{% load bootstrap4 %}
+
 {# Site overview for sites:site-list (row of table) #}
 <div>
-  {# Add badge for latest state #}
-  {% if history.state == "OK" %}
-  <span class="badge badge-success">OK</span>
-  {% elif history.state == "NG" %}
-  <span class="badge badge-danger">NG</span>
-  {% else %}
-  <span class="badge badge-default">Unknown</span>
-  {% endif %}
-
-  <a href="{% url 'sites:detail' site.id %}">
-    <strong>{{ site.url }}</strong>
-  </a>
-
-  <small>(from {{ history.begin_at }})</small>
+  <img 
+    src="{{ history.status_image_url }}"
+    class="img-responsive d-block float-left"
+    style="max-width: 80%; margin-right: 1em;">
+  <h4><strong>{{ site.url }}</strong></h4>
+  <p>
+    Current status from {{ history.begin_at }}
+    <a href="{% url 'sites:detail' site.id %}">
+      (show detail)
+    </a>
+  </p>
 </div>
