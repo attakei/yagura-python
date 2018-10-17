@@ -15,35 +15,43 @@ from yagura.monitors.services import monitor_site, send_state_email
 from yagura.sites.models import Site
 
 
-class MonitorSite_Test(TestCase):
-    @parameterized.expand([
-        ('http://example.com/200', 200, 'OK'),
-        ('http://example.com/404', 404, 'OK'),
-    ])
-    async def test_expected_request(
-            self, url, status_code, exp_result):
-        with aioresponses() as mocked:
-            mocked.get(url, status=status_code)
-            site = mock.MagicMock(url=url, ok_http_status=status_code)
-            result, reason = await monitor_site(site)
-            assert result == exp_result
-            assert reason == ''
+def _call_monitor_site(event_loop, site, mock_url, mock_status):
+    with aioresponses() as mocked:
+        mocked.get(mock_url, status=mock_status)
+        result, reason = event_loop.run_until_complete(monitor_site(site))
+    return result, reason
 
-    @aioresponses()
-    async def test_ng_response_with_reason(self, mocked):
-        site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
-        mocked.get(site.url, statusq=200)
-        result, reason = await monitor_site(site)
-        assert result == 'NG'
-        assert reason == \
-            'HTTP status code is 200 (expected: 302)'
 
-    @aioresponses()
-    async def test_urlerror(self, mocked):
-        site = mock.MagicMock(
-            url='http://example.com/200', ok_http_status=302)
+def test_monitor_site__expected_request_200(event_loop):
+    url = 'http://example.com/'
+    status_code = 200
+    site = mock.MagicMock(url=url, ok_http_status=status_code)
+    result, reason = _call_monitor_site(event_loop, site, url, status_code)
+    assert result == 'OK'
+    assert reason == ''
+
+
+def test_monitor_site__expected_request_404(event_loop):
+    url = 'http://example.com/'
+    status_code = 404
+    site = mock.MagicMock(url=url, ok_http_status=status_code)
+    result, reason = _call_monitor_site(event_loop, site, url, status_code)
+    assert result == 'OK'
+    assert reason == ''
+
+
+def test_monitor_site__ng_response_with_reason(event_loop):
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    result, reason = _call_monitor_site(event_loop, site, site.url, 200)
+    assert result == 'NG'
+    assert reason == 'HTTP status code is 200 (expected: 302)'
+
+
+def test_monitor_site__urlerror(event_loop):
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    with aioresponses() as mocked:
         mocked.get(site.url, exception=ClientError('Test error'))
-        result, reason = await monitor_site(site)
+        result, reason = event_loop.run_until_complete(monitor_site(site))
         assert result == 'NG'
         assert reason == 'Test error'
 
