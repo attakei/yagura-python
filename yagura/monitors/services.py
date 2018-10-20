@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import typing
 
 import aiohttp
@@ -11,12 +12,16 @@ from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
+Logger = logging.getLogger(__name__)
+
 
 # TODO: Test for more cases
 async def monitor_site(site: Site) -> typing.Tuple[str, str]:
+    Logger.debug(f"Start to check: {site.url}")
     async with aiohttp.ClientSession() as client:
         try:
             resp = await client.get(site.url, allow_redirects=False)
+            Logger.debug(f"Status {resp.status}: {site.url}")
             result = 'OK' if resp.status == site.ok_http_status else 'NG'
             reason = f"HTTP status code is {resp.status}" \
                 f" (expected: {site.ok_http_status})" \
@@ -24,6 +29,7 @@ async def monitor_site(site: Site) -> typing.Tuple[str, str]:
         except aiohttp.ClientError as err:
             result = 'NG'
             reason = str(err)
+    Logger.debug(f"Finish to check: {site.url}")
     return result, reason
 
 
