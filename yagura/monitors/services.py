@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import typing
 
 import aiohttp
@@ -11,19 +12,32 @@ from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
+Logger = logging.getLogger(__name__)
+
 
 # TODO: Test for more cases
-async def monitor_site(site: Site) -> typing.Tuple[str, str]:
+async def monitor_site(site: Site, max_retry: int=1) \
+        -> typing.Tuple[str, str]:
+    """Monitor target site.
+
+    if status unmatch for excepted, retry max argument request
+    """
+    Logger.debug(f"Start to check: {site.url}")
     async with aiohttp.ClientSession() as client:
-        try:
-            resp = await client.get(site.url, allow_redirects=False)
-            result = 'OK' if resp.status == site.ok_http_status else 'NG'
-            reason = f"HTTP status code is {resp.status}" \
-                f" (expected: {site.ok_http_status})" \
-                if result == 'NG' else ''
-        except aiohttp.ClientError as err:
-            result = 'NG'
-            reason = str(err)
+        for _ in range(max_retry):
+            try:
+                resp = await client.get(site.url, allow_redirects=False)
+                Logger.debug(f"Status {resp.status}: {site.url}")
+                result = 'OK' if resp.status == site.ok_http_status else 'NG'
+                reason = f"HTTP status code is {resp.status}" \
+                    f" (expected: {site.ok_http_status})" \
+                    if result == 'NG' else ''
+            except aiohttp.ClientError as err:
+                result = 'NG'
+                reason = str(err)
+            if result == 'OK':
+                break
+    Logger.debug(f"Finish to check: {site.url}")
     return result, reason
 
 
@@ -104,5 +118,6 @@ class MonitoringJob(object):
     async def monitor_task(self, site, monitor_date):
         """Coroutine to monitor with handlers
         """
-        state, reason = await monitor_site(site)
+        max_retry = settings.YAGURA_MAX_RETRY_IN_MONITOR
+        state, reason = await monitor_site(site, max_retry)
         handle_state(site, state, monitor_date, reason=reason)
