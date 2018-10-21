@@ -1,0 +1,8 @@
+{% extends 'layouts/single_page.html' %}
+
+{% block content_main %}
+<h2 class="text-center">{% trans 'Registration user' %}</h2>
+{# TODO: Translation after #}
+{# Original: https://github.com/yourcelf/django-registration-defaults/blob/master/registration_defaults/templates/registration/activation_complete.html #}
+<p>Thanks, activation complete!  You may now <a href='{% url 'login' %}'>login</a> using the username and password you set at registration.</p>
+{% endblock %}

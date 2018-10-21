@@ -4,8 +4,8 @@ Upgrading guide
 
 Upgrading for breaking changes
 
-ver 0.7
-=======
+Upgrate to ver 0.7
+==================
 
 This version use ``yagura.accounts.models.User`` as authentication user model.
 
@@ -19,7 +19,7 @@ Recommend to set ``auth.user`` and ``yagura.xxx`` apps(sites, monitoring and not
 
 .. code-block:: bash
 
-    $ python manage.py dumpdata auth.user sites monitoring notifications > dumpdata.json
+    $ python manage.py dumpdata auth.user sites monitors notifications > dumpdata.json
 
 
 2. Edit dumpdata to insert upgraded database

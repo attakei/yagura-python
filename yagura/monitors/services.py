@@ -1,8 +1,10 @@
+import asyncio
+import logging
 import typing
-from urllib.error import HTTPError, URLError
 
-import requests
+import aiohttp
 from django.conf import settings
+from django.utils.timezone import now
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
@@ -10,18 +12,32 @@ from yagura.notifications.services import SlackNotifier
 from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
+Logger = logging.getLogger(__name__)
 
-def monitor_site(site: Site) -> typing.Tuple[str, str]:
-    try:
-        resp = requests.get(site.url, allow_redirects=False)
-    except HTTPError as err:
-        resp = err
-    except URLError as err:
-        return 'NG', err.reason
-    result = 'OK' if resp.status_code == site.ok_http_status else 'NG'
-    reason = f"HTTP status code is {resp.status_code}" \
-        f" (expected: {site.ok_http_status})" \
-        if result == 'NG' else ''
+
+# TODO: Test for more cases
+async def monitor_site(site: Site, max_retry: int=1) \
+        -> typing.Tuple[str, str]:
+    """Monitor target site.
+
+    if status unmatch for excepted, retry max argument request
+    """
+    Logger.debug(f"Start to check: {site.url}")
+    async with aiohttp.ClientSession() as client:
+        for _ in range(max_retry):
+            try:
+                resp = await client.get(site.url, allow_redirects=False)
+                Logger.debug(f"Status {resp.status}: {site.url}")
+                result = 'OK' if resp.status == site.ok_http_status else 'NG'
+                reason = f"HTTP status code is {resp.status}" \
+                    f" (expected: {site.ok_http_status})" \
+                    if result == 'NG' else ''
+            except aiohttp.ClientError as err:
+                result = 'NG'
+                reason = str(err)
+            if result == 'OK':
+                break
+    Logger.debug(f"Finish to check: {site.url}")
     return result, reason
 
 
@@ -77,3 +93,31 @@ def send_state_email(current, template_name):
             recipient_list=[recipient.email],
             context=context,
         )
+
+
+class MonitoringJob(object):
+    """Monitoring and handler actions managemant job
+    """
+    def __init__(self):
+        self._tasks = []
+        self._loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self._loop)
+
+    def add_task_form_site(self, site):
+        """Set monitoring target site
+        """
+        self._tasks.append(self.monitor_task(site, now()))
+
+    def wait_complete(self):
+        """Wait to complete added all tasks
+        """
+        future = asyncio.gather(*self._tasks)
+        self._loop.run_until_complete(future)
+        self._loop.close()
+
+    async def monitor_task(self, site, monitor_date):
+        """Coroutine to monitor with handlers
+        """
+        max_retry = settings.YAGURA_MAX_RETRY_IN_MONITOR
+        state, reason = await monitor_site(site, max_retry)
+        handle_state(site, state, monitor_date, reason=reason)

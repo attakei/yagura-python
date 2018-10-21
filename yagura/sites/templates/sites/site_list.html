@@ -5,30 +5,20 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h2>{% trans 'List of web sites' %}</h2>
     {% trans 'Add new site' as site_create_label %}
-    {% bootstrap_button site_create_label 'link' href='/sites/new' %}
+    {% bootstrap_button site_create_label 'button' 'btn-outline-primary' href='/sites/new' %}
   </div>
   <div>
     <ul class="list-group">
       {% for site in site_list %}
-      {% with history=site.states.last %}
         <li class="list-group-item">
-          {# Add badge for latest state #}
-          {% if history.state == "OK" %}
-          <span class="label label-success">OK</span>
-          {% elif history.state == "NG" %}
-          <span class="label label-danger">NG</span>
-          {% else %}
-          <span class="label label-default">Unknown</span>
-          {% endif %}
-  
-          <a href="{% url 'sites:detail' site.id %}">
-            <strong>{{ site.url }}</strong>
-          </a>
-  
-          <small>(from {{ history.begin_at }})</small>
+          {% include 'sites/_site_overview.html' with site=site history=site.states.last %}
         </li>
-      {% endwith %}
       {% endfor %}
     <ul>
+  </div>
+  <hr>
+  <!-- TODO: I want to centering paginator -->
+  <div>
+      {% bootstrap_pagination page_obj size='small' %}
   </div>
 {% endblock %}

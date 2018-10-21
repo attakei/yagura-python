@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
-from django.utils.timezone import now
 
-from yagura.monitors.services import handle_state, monitor_site
+from yagura.monitors.services import MonitoringJob
 from yagura.sites.models import Site
 
 
@@ -10,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Main
+        job = MonitoringJob()
         for site in Site.objects.all():
-            monitor_date = now()
-            state, reason = monitor_site(site)
-            handle_state(site, state, monitor_date, reason)
+            job.add_task_form_site(site)
+        job.wait_complete()
