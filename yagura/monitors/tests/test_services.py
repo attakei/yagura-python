@@ -1,7 +1,7 @@
 """Test case for yagura.monitors.services
 """
-import os
 import logging
+import os
 from unittest import mock
 
 from aiohttp import ClientError
