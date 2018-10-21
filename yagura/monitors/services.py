@@ -118,5 +118,6 @@ class MonitoringJob(object):
     async def monitor_task(self, site, monitor_date):
         """Coroutine to monitor with handlers
         """
-        state, reason = await monitor_site(site)
+        max_retry = settings.YAGURA_MAX_RETRY_IN_MONITOR
+        state, reason = await monitor_site(site, max_retry)
         handle_state(site, state, monitor_date, reason=reason)
