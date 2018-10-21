@@ -67,8 +67,7 @@ def test_monitor_site__ng_multiple(event_loop, caplog):
         result, reason = event_loop.run_until_complete(monitor_site(site, 3))
         assert result == 'NG'
         assert reason == 'HTTP status code is 200 (expected: 302)'
-    logs = [l for l in caplog.records if l.msg.startswith('Status ')]
-    assert len(logs) == 3
+        assert len(mocked._responses) == 0
 
 
 def test_monitor_site__ok_once_retry(event_loop, caplog):
@@ -77,10 +76,10 @@ def test_monitor_site__ok_once_retry(event_loop, caplog):
     with aioresponses() as mocked:
         mocked.get(site.url, status=503)
         mocked.get(site.url, status=200)
+        mocked.get(site.url, status=200)
         result, reason = event_loop.run_until_complete(monitor_site(site, 3))
         assert result == 'OK'
-    logs = [l for l in caplog.records if l.msg.startswith('Status ')]
-    assert len(logs) == 2
+        assert len(mocked._responses) == 1
 
 
 def test_monitor_site__urlerror(event_loop):
