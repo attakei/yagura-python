@@ -30,7 +30,7 @@ setup(
     author='attakei',
     author_email='attakei@gmail.com',
     classifiers=[  # Optional
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3.6',

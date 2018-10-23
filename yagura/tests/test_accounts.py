@@ -9,7 +9,9 @@ User = get_user_model()
 
 
 class Login_ViewTest(TestCase):
-    fixtures = ['initial', ]
+    fixtures = [
+        'unittest_suite',
+    ]
     test_url = reverse_lazy('login')
 
     def test_get(self):

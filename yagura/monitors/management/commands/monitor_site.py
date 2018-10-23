@@ -1,9 +1,8 @@
 from uuid import UUID
 
 from django.core.management.base import BaseCommand, CommandError
-from django.utils.timezone import now
 
-from yagura.monitors.services import handle_state, monitor_site
+from yagura.monitors.services import MonitoringJob
 from yagura.sites.models import Site
 
 
@@ -21,10 +20,10 @@ class Command(BaseCommand):
         except ValueError:
             raise CommandError(f"Argument must be UUID")
         # Main
-        monitor_date = now()
         try:
             site = Site.objects.get(pk=site_id)
         except Site.DoesNotExist:
             raise CommandError(f"Site is not found")
-        state, reason = monitor_site(site)
-        handle_state(site, state, monitor_date, reason=reason)
+        job = MonitoringJob()
+        job.add_task_form_site(site)
+        job.wait_complete()

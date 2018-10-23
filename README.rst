@@ -36,7 +36,22 @@ Features
 Try demo
 ========
 
-See https://yagura-demo.attakei.net
+See https://yagura.herokuapp.com
+
+
+Latest changes
+==============
+
+:Date: 2018-09-30
+
+Fixes
+-----
+
+* In site-list, split template to site overview
+* Show email list in emailrecipient-list view
+* Change layout of site overview in site list
+* Remove ``theme.css`` (this is for bootstrap3 not 4)
+* Rename ``custom.css`` to ``layout.css``
 
 
 Initial user

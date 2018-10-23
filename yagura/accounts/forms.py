@@ -27,7 +27,7 @@ class ProfileEditForm(forms.ModelForm):
 class SetLanguageForm(forms.Form):
     next = forms.URLField(widget=forms.HiddenInput)
     language = forms.ChoiceField(
-        widget=forms.Select(attrs={'class': 'form-control-lg'}),
+        widget=forms.Select(attrs={'class': 'form-control-sm'}),
         choices=settings.LANGUAGES)
 
     def __init__(self, *args, **kwargs):
@@ -38,7 +38,7 @@ class SetLanguageForm(forms.Form):
 # TODO: Not test
 class SetTimezoneForm(forms.Form):
     timezone = forms.ChoiceField(
-        widget=forms.Select(attrs={'class': 'form-control-lg'}),
+        widget=forms.Select(attrs={'class': 'form-control-sm'}),
         choices=((tz, tz) for tz in pytz.common_timezones)
     )
 

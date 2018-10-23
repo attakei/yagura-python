@@ -2,6 +2,87 @@
 Change logs
 ===========
 
+ver 0.9.0
+=========
+
+:Date: 2018-10-23
+
+Features
+--------
+
+* Can retry in monitoring if failure (``settings``)
+
+Fixes
+-----
+
+* Enable testings for async functions
+
+ver 0.8.3
+=========
+
+:Date: 2018-09-30
+
+Fixes
+-----
+
+* In site-list, split template to site overview
+* Show email list in emailrecipient-list view
+* Change layout of site overview in site list
+* Remove ``theme.css`` (this is for bootstrap3 not 4)
+* Rename ``custom.css`` to ``layout.css``
+
+ver 0.8.2
+=========
+
+:Date: 2018-09-28
+
+Fixes
+-----
+
+* Fix templates for ``django-registration``
+
+ver 0.8.1
+=========
+
+:Date: 2018-09-14
+
+Fixes
+-----
+
+* Remove ``intial`` fixture and merge into ``unittest_suite``
+
+ver 0.8
+=======
+
+:Date: 2018-09-08
+
+Features
+--------
+
+* Define CLI command
+
+Fixes
+-----
+
+* Lock version of ``django-registration`` (more than 3.0)
+
+
+ver 0.7.1
+=========
+
+:Date: 2018-08-26
+
+Features
+--------
+
+* Monitor websites by async in running task
+
+Fixes
+-----
+
+* Adjust all layouts to render navbar always
+* Fix CI/CD pipeline
+* Fix typo in upgrade guide
 
 ver 0.7.0
 =========

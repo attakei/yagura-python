@@ -1,20 +1,14 @@
-{% extends 'layouts/bootstrap4.html' %}
+{% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block bootstrap4_extra_head %}
-  <title>Yagura {% block subtitle %}{% endblock %}</title>
-{% endblock %}
-
 {% block bootstrap4_content %}
-{% include 'layouts/_navbar.html' %}
-
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-    </nav>
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-      {% block content_main %}{% endblock %}
-    </main>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      </nav>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        {% block content_main %}{% endblock %}
+      </main>
+    </div>
   </div>
-</div>
 {% endblock %}

@@ -5,7 +5,6 @@ class ViewTestCase(TestCase):
     """Abstract of view action tests
     """
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 

@@ -1,5 +1,5 @@
 import pytest
-import requests_mock
+from aioresponses import aioresponses
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.management.base import CommandError
@@ -22,7 +22,6 @@ class StateHistory_ModelTest(TestCase):
 
 class MonitorSite_CommandTest(TestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
@@ -42,70 +41,71 @@ class MonitorSite_CommandTest(TestCase):
             run_command('monitor_site', test_uuid)
         assert 'not found' in str(err)
 
-    def test_site_found(self):
+    @aioresponses()
+    async def test_site_found(self, mocked):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'
         site = Site.objects.get(pk=test_uuid)
-        with requests_mock.mock() as m:
-            m.get(site.url, status_code=200)
-            run_command('monitor_site', test_uuid)
+        mocked.get(site.url, status=200)
+        await run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'OK'
 
-    def test_site_redirect(self):
+    @aioresponses()
+    async def test_site_redirect(self):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'
         site = Site.objects.get(pk=test_uuid)
         site.url = 'https://httpstat.us/302'
         site.save()
-        run_command('monitor_site', test_uuid)
+        await run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'NG'
 
-    def test_site_not_found(self):
+    @aioresponses()
+    async def test_site_not_found(self, mocked):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee02'
         site = Site.objects.get(pk=test_uuid)
-        with requests_mock.mock() as m:
-            m.get(site.url, status_code=404)
-            run_command('monitor_site', test_uuid)
+        mocked.get(site.url, status=404)
+        await run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'NG'
         assert len(mail.outbox) == 1
         assert '(expected: 200)' in state.reason
 
-    def test_site_expected_not_found(self):
+    @aioresponses()
+    async def test_site_expected_not_found(self, mocked):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee02'
         site = Site.objects.get(pk=test_uuid)
         site.ok_http_status = 404
         site.save()
-        with requests_mock.mock() as m:
-            m.get(site.url, status_code=404)
-            run_command('monitor_site', test_uuid)
+        mocked.get(site.url, status=404)
+        await run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         state = StateHistory.objects.first()
         assert state.state == 'OK'
         assert len(mail.outbox) == 1
 
-    def test_keep_state(self):
+    @aioresponses()
+    async def test_keep_state(self, mocked):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'
         site = Site.objects.get(pk=test_uuid)
         self.test_site_found()
         before_updated = StateHistory.objects.first().updated_at
-        with requests_mock.mock() as m:
-            m.get(site.url, status_code=200)
-            run_command('monitor_site', test_uuid)
+        mocked.get(site.url, status=200)
+        await run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 1
         after_updated = StateHistory.objects.first().updated_at
         assert before_updated != after_updated
 
-    def test_change_state(self):
+    @aioresponses()
+    async def test_change_state(self, mocked):
         test_uuid = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'
-        self.test_site_found()
+        await self.test_site_found()
         site = Site.objects.get(pk=test_uuid)
-        with requests_mock.mock() as m:
-            m.get(site.url, status_code=404)
-            run_command('monitor_site', test_uuid)
+        mocked.get(site.url, status=404)
+        await run_command('monitor_site', test_uuid)
         assert StateHistory.objects.count() == 2
         before = StateHistory.objects.first()
         after = StateHistory.objects.last()
@@ -118,7 +118,6 @@ class MonitorSite_CommandTest(TestCase):
 
 class MonitorAll_CommandTest(TestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
@@ -127,27 +126,27 @@ class MonitorAll_CommandTest(TestCase):
         owner = get_user_model().objects.first()
         Site.objects.update(created_by=owner)
 
-    def test_save_all_states(self):
-        with requests_mock.mock() as m:
-            for site in Site.objects.all():
-                m.get(site.url, status_code=site.ok_http_status)
-            run_command('monitor_all')
+    @aioresponses()
+    async def test_save_all_states(self, mocked):
+        for site in Site.objects.all():
+            mocked.get(site.url, status=site.ok_http_status)
+        await run_command('monitor_all')
         assert StateHistory.objects.count() == 2
 
-    def test_states_not_changed(self):
-        self.test_save_all_states()
-        with requests_mock.mock() as m:
-            for site in Site.objects.all():
-                m.get(site.url, status_code=site.ok_http_status)
-            run_command('monitor_all')
+    @aioresponses()
+    async def test_states_not_changed(self, mocked):
+        await self.test_save_all_states()
+        for site in Site.objects.all():
+            mocked.get(site.url, status=site.ok_http_status)
+        await run_command('monitor_all')
         assert StateHistory.objects.count() == 2
 
-    def test_states_changed(self):
-        self.test_save_all_states()
-        with requests_mock.mock() as m:
-            for site in Site.objects.all():
-                m.get(site.url, status_code=200)
-            site = Site.objects.first()
-            m.get(site.url, status_code=404)
-            run_command('monitor_all')
+    @aioresponses()
+    async def test_states_changed(self, mocked):
+        await self.test_save_all_states()
+        for site in Site.objects.all():
+            mocked.get(site.url, status=200)
+        site = Site.objects.first()
+        mocked.get(site.url, status=404)
+        await run_command('monitor_all')
         assert StateHistory.objects.count() == 3

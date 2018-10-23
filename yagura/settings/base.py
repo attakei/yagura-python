@@ -151,10 +151,6 @@ LANGUAGES = [
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'yagura', 'static'),
-]
-
 
 # Auth
 AUTH_USER_MODEL = 'accounts.User'
@@ -172,7 +168,7 @@ FIXTURE_DIRS = [
 # django-bootstrap4
 BOOTSTRAP4 = {
     'include_jquery': 'full',
-    'theme_url': '/static/theme.css',
+    'theme_url': '/static/layout.css',
 }
 
 
@@ -193,3 +189,4 @@ SOCIAL_AUTH_LOGIN_ERROR_URL = 'accounts:social-login-error'
 
 YAGURA_SITES_LIMIT = 1
 YAGURA_ENABLE_PASSWORD_REGISTRATION = True
+YAGURA_MAX_TRY_IN_MONITOR = 1

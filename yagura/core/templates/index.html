@@ -2,35 +2,21 @@
 
 {% block subtitle %}- {% trans 'Simple website monitoring' %}{% endblock %}
 
-{% block content_section %}
-  <section class="jumbotron text-center">
-    <div class="container">
-      <h1 class="jumbotron-heading">Yagura</h1>
-      <p class="lead text-muted">{% trans 'Simple website monitoring' %}</p> 
-      {% if ENABLE_PASSWORD_REGISTRATION %}
-      <p>
-        <a href="{% url 'login' %}" class="btn btn-primary my-2">{% trans 'Log in' %}</a>
-        {% trans 'or' %}
-        <a href="{% url 'registration_register' %}" class="my-2">{% trans 'Registration user' %}</a>
-      </p>
-      {% else %}
-      <p>
-        <a href="{% url 'login' %}" class="btn btn-primary my-2">
-            {% trans 'Log in' %}/{% trans 'Registration user' %}</a>
-      </p>
-      {% endif %}
-    </div>
+{% block content_main %}
+  <section class="text-center">
+    <h1>Yagura</h1>
+    <p class="lead text-muted">{% trans 'Simple website monitoring' %}</p> 
+    {% if ENABLE_PASSWORD_REGISTRATION %}
+    <p>
+      <a href="{% url 'login' %}" class="btn btn-primary my-2">{% trans 'Log in' %}</a>
+      {% trans 'or' %}
+      <a href="{% url 'registration_register' %}" class="my-2">{% trans 'Registration user' %}</a>
+    </p>
+    {% else %}
+    <p>
+      <a href="{% url 'login' %}" class="btn btn-primary my-2">
+          {% trans 'Log in' %}/{% trans 'Registration user' %}</a>
+    </p>
+    {% endif %}
   </section>
 {% endblock %}
-
-{% block content %}
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-8">
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-

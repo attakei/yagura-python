@@ -1,9 +1,11 @@
 """Test case for yagura.monitors.services
 """
+import logging
 import os
 from unittest import mock
 
-import requests_mock
+from aiohttp import ClientError
+from aioresponses import aioresponses
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase, override_settings
@@ -11,46 +13,86 @@ from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
 from yagura.monitors.services import monitor_site, send_state_email
-from yagura.monitors.tests import mocked_urlopen_urlerror
 from yagura.sites.models import Site
 
 
-class MonitorSite_Test(TestCase):
-    @parameterized.expand([
-        ('http://example.com/200', 200, 'OK'),
-        ('http://example.com/404', 404, 'OK'),
-    ])
-    def test_expected_request(self, url, status_code, exp_result):
-        with requests_mock.mock() as m:
-            m.get(url, status_code=status_code)
-            site = mock.MagicMock(url=url, ok_http_status=status_code)
-            result, reason = monitor_site(site)
-            assert result == exp_result
-            assert reason == ''
+def _call_monitor_site(event_loop, site, mock_url, mock_status):
+    with aioresponses() as mocked:
+        mocked.get(mock_url, status=mock_status)
+        result, reason = event_loop.run_until_complete(monitor_site(site))
+    return result, reason
 
-    def test_ng_response_with_reason(self):
-        site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
-        with requests_mock.mock() as m:
-            m.get(site.url, status_code=200)
-            result, reason = monitor_site(site)
-            assert result == 'NG'
-            assert reason == \
-                'HTTP status code is 200 (expected: 302)'
 
-    def test_urlerror(self):
-        with mock.patch(
-                'requests.get',
-                side_effect=mocked_urlopen_urlerror('Test error')):
-            site = mock.MagicMock(
-                url='http://example.com/200', ok_http_status=302)
-            result, reason = monitor_site(site)
-            assert result == 'NG'
-            assert reason == 'Test error'
+def test_monitor_site__expected_request_200(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    url = 'http://example.com/'
+    status_code = 200
+    site = mock.MagicMock(url=url, ok_http_status=status_code)
+    result, reason = _call_monitor_site(event_loop, site, url, status_code)
+    assert result == 'OK'
+    assert reason == ''
+    assert caplog.records[0].msg == 'Start to check: http://example.com/'
+    assert len(caplog.records) == 3
+
+
+def test_monitor_site__expected_request_404(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    url = 'http://example.com/'
+    status_code = 404
+    site = mock.MagicMock(url=url, ok_http_status=status_code)
+    result, reason = _call_monitor_site(event_loop, site, url, status_code)
+    assert result == 'OK'
+    assert reason == ''
+    assert caplog.records[0].msg == 'Start to check: http://example.com/'
+    assert len(caplog.records) == 3
+
+
+def test_monitor_site__ng_response_with_reason(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    result, reason = _call_monitor_site(event_loop, site, site.url, 200)
+    assert result == 'NG'
+    assert reason == 'HTTP status code is 200 (expected: 302)'
+    assert caplog.records[0].msg == 'Start to check: http://example.com/'
+    assert len(caplog.records) == 3
+
+
+def test_monitor_site__ng_multiple(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    with aioresponses() as mocked:
+        mocked.get(site.url, status=200)
+        mocked.get(site.url, status=200)
+        mocked.get(site.url, status=200)
+        result, reason = event_loop.run_until_complete(monitor_site(site, 3))
+        assert result == 'NG'
+        assert reason == 'HTTP status code is 200 (expected: 302)'
+        assert len(mocked._responses) == 0
+
+
+def test_monitor_site__ok_once_retry(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=200)
+    with aioresponses() as mocked:
+        mocked.get(site.url, status=503)
+        mocked.get(site.url, status=200)
+        mocked.get(site.url, status=200)
+        result, reason = event_loop.run_until_complete(monitor_site(site, 3))
+        assert result == 'OK'
+        assert len(mocked._responses) == 1
+
+
+def test_monitor_site__urlerror(event_loop):
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    with aioresponses() as mocked:
+        mocked.get(site.url, exception=ClientError('Test error'))
+        result, reason = event_loop.run_until_complete(monitor_site(site))
+        assert result == 'NG'
+        assert reason == 'Test error'
 
 
 class SendStateEmail_Test(TestCase):
     fixtures = [
-        'initial',
         'unittest_suite',
     ]
 
