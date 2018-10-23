@@ -2,6 +2,21 @@
 Change logs
 ===========
 
+ver 0.9.0
+=========
+
+:Date: 2018-10-23
+
+Features
+--------
+
+* Can retry in monitoring if failure (``settings``)
+
+Fixes
+-----
+
+* Enable testings for async functions
+
 ver 0.8.3
 =========
 
