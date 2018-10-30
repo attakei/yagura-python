@@ -12,6 +12,12 @@ class SiteListView(LoginRequiredMixin, ListView):
     model = Site
     paginate_by = 10
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'all' not in self.request.GET:
+            qs = qs.filter(enabled=True)
+        return qs
+
 
 class SiteDetailView(LoginRequiredMixin, DetailView):
     """Site detail view

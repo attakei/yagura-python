@@ -35,6 +35,26 @@ class SiteList_ViewTest(ViewTestCase):
         resp = self.client.get(self.url)
         assert resp.status_code == 200
 
+    def test_hidden_disabled_sites(self):
+        site: Site = Site.objects.first()
+        site.enabled = False
+        site.save()
+        user = get_user_model().objects.first()
+        self.client.force_login(user)
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+        assert len(resp.context['site_list']) == 1
+
+    def test_show_all_force(self):
+        site: Site = Site.objects.first()
+        site.enabled = False
+        site.save()
+        user = get_user_model().objects.first()
+        self.client.force_login(user)
+        resp = self.client.get(f'{self.url}?all=1')
+        assert resp.status_code == 200
+        assert len(resp.context['site_list']) == 2
+
 
 class SiteCreate_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:create')
