@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from yagura.sites.forms import SiteCreateForm
@@ -45,6 +45,27 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
         site = form.instance
         site.created_by = self.request.user
         site.save()
+        return super().form_valid(form)
+
+
+# TODO: Set message
+class SiteDisableView(LoginRequiredMixin, UpdateView):
+    model = Site
+    fields = ['enabled']
+    success_url = reverse_lazy('sites:list')
+
+    def get_template_names(self):
+        if self.object.created_by == self.request.user:
+            return ['sites/site_confirm_disable.html']
+        return ['sites/site_disable_ng.html']
+
+    def post(self, request, *args, **kwargs):
+        site = self.get_object()
+        if site.created_by == request.user:
+            return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
         return super().form_valid(form)
 
 
