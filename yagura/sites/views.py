@@ -6,6 +6,7 @@ from django.views.generic.list import ListView
 
 from yagura.sites.forms import SiteCreateForm
 from yagura.sites.models import Site
+from yagura.monitors.services import post_disabled_monitoring
 
 
 class SiteListView(LoginRequiredMixin, ListView):
@@ -66,7 +67,10 @@ class SiteDisableView(LoginRequiredMixin, UpdateView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        resp = super().form_valid(form)
+        site = self.get_object()
+        post_disabled_monitoring(site)
+        return resp
 
 
 # TODO: Set message

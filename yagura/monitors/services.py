@@ -41,6 +41,16 @@ async def monitor_site(site: Site, max_retry: int=1) \
     return result, reason
 
 
+# TODO: Consider coding testcase
+def post_disabled_monitoring(site: Site):
+    """Post proc in disable request
+    """
+    if site.enabled:
+        Logger.debug('Passed enabled site')
+        return
+    handle_state(site, 'DISABLED', now(), 'Disabled manually')
+
+
 def handle_state(site, state, monitor_date, reason=''):
     current: StateHistory = StateHistory.objects.filter(site=site).last()
     if current is None:

@@ -7,6 +7,7 @@ from yagura.sites.models import Site
 WEBSITE_STATE_CHOICES = (
     ('OK', 'OK'),
     ('NG', 'NG'),
+    ('DISABLED', 'DISABLED'),
 )
 
 
@@ -33,6 +34,8 @@ class StateHistory(models.Model):
             label_ = 'ok'
         elif self.state == 'NG':
             label_ = 'ng'
+        elif self.state == 'DISABLED':
+            label_ = 'disabled'
         else:
             label_ = 'unknown'
         return f"{settings.STATIC_URL}monitors/results/{label_}.svg"

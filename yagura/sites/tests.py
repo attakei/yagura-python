@@ -150,6 +150,7 @@ class SiteDetail_ViewTest(ViewTestCase):
         resp = self.client.get(url)
         assert resp.status_code == 404
 
+
 class SiteDisable_ViewTest(ViewTestCase):
     url = reverse_lazy(
         'sites:disable',
@@ -195,6 +196,13 @@ class SiteDisable_ViewTest(ViewTestCase):
         self.client.force_login(user)
         resp = self.client.post(self.url)
         assert resp.status_code == 200
+
+    def test_after_disabled_new_monitor_log(self):
+        from yagura.monitors.models import StateHistory
+        before_ = StateHistory.objects.count()
+        self.test_confirmed()
+        after_ = StateHistory.objects.count()
+        assert before_ + 1 == after_
 
 
 class SiteDelete_ViewTest(ViewTestCase):
