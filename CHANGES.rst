@@ -2,6 +2,21 @@
 Change logs
 ===========
 
+ver 0.9.1
+=========
+
+:Date: 2018-11-07
+
+Features
+--------
+
+* Render class name into reason when raised aiohttp.ClientError
+
+Fixes
+-----
+
+* Adjust new version of aioresponses
+
 ver 0.9.0
 =========
 
