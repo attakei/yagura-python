@@ -88,7 +88,27 @@ def test_monitor_site__urlerror(event_loop):
         mocked.get(site.url, exception=ClientError('Test error'))
         result, reason = event_loop.run_until_complete(monitor_site(site))
         assert result == 'NG'
-        assert reason == 'Test error'
+        assert reason == 'ClientError occurred: Test error'
+
+
+def test_monitor_site__no_message_error(event_loop):
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    with aioresponses() as mocked:
+        mocked.get(site.url, exception=ClientError(None))
+        result, reason = event_loop.run_until_complete(monitor_site(site))
+        assert result == 'NG'
+        assert reason == 'ClientError occurred:'
+
+
+def test_monitor_site__error_name(event_loop):
+    class CustomError(ClientError):
+        pass
+    site = mock.MagicMock(url='http://example.com/', ok_http_status=302)
+    with aioresponses() as mocked:
+        mocked.get(site.url, exception=CustomError('test'))
+        result, reason = event_loop.run_until_complete(monitor_site(site))
+        assert result == 'NG'
+        assert reason == 'CustomError occurred: test'
 
 
 class SendStateEmail_Test(TestCase):
