@@ -14,7 +14,7 @@ class SlackNotifier(object):
     def send(
         self,
         current_state: StateHistory,
-        base_url: str=None,
+        base_url: str = None,
     ):
         # Build message
         site = self.recipient.site

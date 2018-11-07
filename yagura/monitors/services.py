@@ -16,7 +16,7 @@ Logger = logging.getLogger(__name__)
 
 
 # TODO: Test for more cases
-async def monitor_site(site: Site, max_retry: int=1) \
+async def monitor_site(site: Site, max_retry: int = 1) \
         -> typing.Tuple[str, str]:
     """Monitor target site.
 
@@ -34,7 +34,9 @@ async def monitor_site(site: Site, max_retry: int=1) \
                     if result == 'NG' else ''
             except aiohttp.ClientError as err:
                 result = 'NG'
-                reason = str(err)
+                reason = f"{err.__class__.__name__} occurred:"
+                if str(err) != 'None':
+                    reason += f" {err}"
             if result == 'OK':
                 break
     Logger.debug(f"Finish to check: {site.url}")
