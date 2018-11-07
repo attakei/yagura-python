@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'yagura.monitors',
     'yagura.notifications',
     # Third-party apps
+    'bulma',
     'bootstrap4',
     'django_registration',
     'django_crontab',
