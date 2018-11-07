@@ -1,17 +1,14 @@
 {% extends 'layouts/two_pane.html' %}
-{% load bootstrap4 %}
+{% load bulma_tags %}
 
 {% block content_main %}
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>{% trans 'Register new site' %}</h2>
-  </div>
-  <div>
-    <form method="POST">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      {% trans 'Register' as register_label %}
-      {% bootstrap_button register_label 'submit' %}
-    </form>
-  </div>
+  <h1 class="title">{% trans 'Register new site' %}</h1>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form|bulma }}
+    <div class="field">
+      <button type="submit" class="button is-primary">{% trans 'Register' %}</button>
+    </div>
+  </form>
 {% endblock %}
 
