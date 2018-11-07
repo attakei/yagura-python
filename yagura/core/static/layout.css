@@ -3,6 +3,10 @@ html {
     min-height: 100%;
 }
 
+main {
+    margin-top: 1rem;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
