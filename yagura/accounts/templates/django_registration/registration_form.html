@@ -1,22 +1,25 @@
 {% extends 'layouts/single_page.html' %}
-{% load bootstrap4 %}
+{% load bulma_tags %}
 
 {% block content_main %}
-  <h2 class="text-center">{% trans 'Registration user' %}</h2>
-  <div class="row">
-    <div class="col">
+  <h1 class="title">{% trans 'Registration user' %}</h1>
+  <div class="columns">
+    {% if ENABLE_PASSWORD_REGISTRATION %}
+    <div class="column">
       {% trans 'username/password' as trans_username_password %}
-      <h3>{% blocktrans with by_name=trans_username_password %}Register by {{ by_name }}{% endblocktrans %}</h3>
+      <h2 class="subtitle">{% blocktrans with by_name=trans_username_password %}Register by {{ by_name }}{% endblocktrans %}</h2>
       <form method="POST">
         {% csrf_token %}
-        {% bootstrap_form form %}
-        {% trans 'Register' as register_label %}
-        {% bootstrap_button register_label 'submit' %}
+        {{ form|bulma }}
+        <div class="field">
+          <button type="submit" class="button is-primary">{% trans 'Log in' %}</button>
+        </div>
       </form>
     </div>
-    <div class="col">
+    {% endif %}
+    <div class="column">
       {% trans 'social accounts' as trans_social_accounts %}
-      <h3>{% blocktrans with by_name=trans_social_accounts %}Register by {{ by_name }}{% endblocktrans %}</h3>
+      <h2 class="subtitle">{% blocktrans with by_name=trans_social_accounts %}Auth by {{ by_name }}{% endblocktrans %}</h2>
       {% include 'registration/_snippets/social-auth.html' %}
     </div>
   </div>
