@@ -2,6 +2,16 @@
 Change logs
 ===========
 
+ver 0.9.2
+=========
+
+:Date: 2018-11-07
+
+Features
+--------
+
+* Set delay in retry
+
 ver 0.9.1
 =========
 

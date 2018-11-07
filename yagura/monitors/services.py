@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import random
+import time
 import typing
 
 import aiohttp
@@ -24,7 +26,10 @@ async def monitor_site(site: Site, max_retry: int = 1) \
     """
     Logger.debug(f"Start to check: {site.url}")
     async with aiohttp.ClientSession() as client:
-        for _ in range(max_retry):
+        for try_idx in range(max_retry):
+            # FIXME:
+            if try_idx != 0:
+                time.sleep(random.random() + 1)
             try:
                 resp = await client.get(site.url, allow_redirects=False)
                 Logger.debug(f"Status {resp.status}: {site.url}")
