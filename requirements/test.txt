@@ -1,5 +1,5 @@
 pytest
 pytest-asyncio
 pytest-django
-aioresponses
+aioresponses==0.5.0
 parameterized

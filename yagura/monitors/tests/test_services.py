@@ -67,7 +67,7 @@ def test_monitor_site__ng_multiple(event_loop, caplog):
         result, reason = event_loop.run_until_complete(monitor_site(site, 3))
         assert result == 'NG'
         assert reason == 'HTTP status code is 200 (expected: 302)'
-        assert len(mocked._responses) == 0
+        assert len(mocked._responses) == 3
 
 
 def test_monitor_site__ok_once_retry(event_loop, caplog):
@@ -79,7 +79,7 @@ def test_monitor_site__ok_once_retry(event_loop, caplog):
         mocked.get(site.url, status=200)
         result, reason = event_loop.run_until_complete(monitor_site(site, 3))
         assert result == 'OK'
-        assert len(mocked._responses) == 1
+        assert len(mocked._responses) == 2
 
 
 def test_monitor_site__urlerror(event_loop):
