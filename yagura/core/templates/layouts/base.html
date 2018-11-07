@@ -1,54 +1,77 @@
-{% extends 'layouts/bootstrap4.html' %}
 {% load static %}
-{% load bootstrap4 %}
 
-{% block bootstrap4_extra_head %}
-  <title>Yagura {% block subtitle %}{% endblock %}</title>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block bootstrap4_before_content %}
-  {# Top navigation bar #}
-  <nav class="navbar navbar-dark sticky-top bg-dark navbar-expand-lg">
-    {% if request.user.is_anonymous %}
-      {% url 'index' as url_index_ %}
-    {% else %}
-      {% url 'sites:list' as url_index_ %}
-    {% endif %}
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ url_index_ }}">Yagura</a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <ul class="nav justify-content-end ml-auto">
-        {% if request.user.is_anonymous %}
-          <li class="nav-item">
-            {% url 'login' as url_login_ %}
-            {% bootstrap_button 'Log in' 'button' href=url_login_ %}
-          </li>
-          {% if ENABLE_PASSWORD_REGISTRATION %}
-            <li class="nav-item">
-              {% url 'registration_register' as url_register_ %}
-              {% bootstrap_button 'Register' 'button' href=url_register_ %}
-            </li>
+    <title>Yagura {% block subtitle %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <link rel="stylesheet" href="{% static 'layout.css' %}">
+  </head>
+
+  <body>
+    <header class="nav">
+      <nav class="navbar is-fixed-top is-dark">
+        <div class="navbar-brand">
+          {% if request.user.is_anonymous %}
+            {% url 'index' as url_brand_ %}
+          {% else %}
+            {% url 'sites:list' as url_brand_ %}
           {% endif %}
-        {% else %}
-          <li class="nav-item dropbox">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ request.user.full_name|default:request.user }}
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item" type="button"><a href="{% url 'accounts:profile' %}">{% trans 'Profile' %}</a></button>
-              <button class="dropdown-item" type="button"><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></button>
+          <a class="navbar-item" href="{{ url_brand_ }}">
+            <strong>Yagura</strong>
+          </a>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-start">
+            <!-- navbar items -->
+          </div>
+        
+          <div class="navbar-end">
+            {% if request.user.is_anonymous %}
+              {% url 'login' as url_login_ %}
+              <div class="buttons has-addons">
+                <a class="button" href="{{ url_login_ }}">Log in</a>
+                {% if ENABLE_PASSWORD_REGISTRATION %}
+                  {% url 'registration_register' as url_register_ %}
+                  <a class="button" href="{{ url_register_ }}">Register</a>
+                {% endif %}
+              </div>
+            {% else %}
+              <!-- navbar items -->
+              <div class="navbar-item has-dropdown">
+                <a class="navbar-link">
+                  {{ request.user.full_name|default:request.user }}
+                </a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="{% url 'accounts:profile' %}">{% trans 'Profile' %}</a>
+                    <a class="navbar-item" href="{% url 'logout' %}">{% trans 'Log out' %}</a>
+                </div>
             </div>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-{% endblock %}
+            {% endif %} 
+          </div>
+        </div>
+      </nav>
 
-{% block bootstrap4_after_content %}
-  {# Footer #}
-  <footer class="footer">
-    <div class="container">
-      <span class="text-muted">Powered by Yagura v{{ YAGURA_VERSION }}</span>
-    </div>
-  </footer>
-{% endblock %}
+    </header>
+
+    <main class="section">
+      <div class="container">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-right">
+        <p>
+          Powered by <strong>Yagura v{{ YAGURA_VERSION }}</strong>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
