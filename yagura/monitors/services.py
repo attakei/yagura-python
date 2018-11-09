@@ -5,8 +5,10 @@ import time
 import typing
 
 import aiohttp
+import requests
 from django.conf import settings
 from django.utils.timezone import now
+from requests.exceptions import RequestException
 from templated_email import send_templated_mail
 
 from yagura.monitors.models import StateHistory
@@ -15,6 +17,32 @@ from yagura.sites.models import Site
 from yagura.utils import get_base_url
 
 Logger = logging.getLogger(__name__)
+
+
+async def monitor_site_requests(site: Site, max_retry: int = 1) \
+        -> typing.Tuple[str, str]:
+    """Monitor target site.
+
+    if status unmatch for excepted, retry max argument request
+    """
+    Logger.debug(f"Start to check: {site.url}")
+    for try_idx in range(max_retry):
+        try:
+            resp = requests.get(site.url, allow_redirects=False)
+            Logger.debug(f"Status {resp.status_code}: {site.url}")
+            result = 'OK' if resp.status_code == site.ok_http_status else 'NG'
+            reason = f"HTTP status code is {resp.status_code}" \
+                f" (expected: {site.ok_http_status})" \
+                if result == 'NG' else ''
+        except RequestException as err:
+            result = 'NG'
+            reason = f"{err.__class__.__name__} occurred:"
+            if str(err) != 'None':
+                reason += f" {err}"
+        if result == 'OK':
+            break
+    Logger.debug(f"Finish to check: {site.url}")
+    return result, reason
 
 
 # TODO: Test for more cases
