@@ -2,6 +2,18 @@
 Change logs
 ===========
 
+ver 0.10.0
+==========
+
+:Date: 2018-11-09
+
+Features
+--------
+
+* Selectable monitoring site architecture
+
+  * ``requests`` base or ``aiohttp`` base
+
 ver 0.9.2
 =========
 
