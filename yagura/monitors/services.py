@@ -18,7 +18,7 @@ Logger = logging.getLogger(__name__)
 
 
 # TODO: Test for more cases
-async def monitor_site(site: Site, max_retry: int = 1) \
+async def monitor_site_aiohttp(site: Site, max_retry: int = 1) \
         -> typing.Tuple[str, str]:
     """Monitor target site.
 
@@ -126,5 +126,5 @@ class MonitoringJob(object):
         """Coroutine to monitor with handlers
         """
         max_retry = settings.YAGURA_MAX_TRY_IN_MONITOR
-        state, reason = await monitor_site(site, max_retry)
+        state, reason = await monitor_site_aiohttp(site, max_retry)
         handle_state(site, state, monitor_date, reason=reason)
