@@ -1,4 +1,5 @@
 import asyncio
+import importlib
 import logging
 import random
 import time
@@ -154,5 +155,8 @@ class MonitoringJob(object):
         """Coroutine to monitor with handlers
         """
         max_retry = settings.YAGURA_MAX_TRY_IN_MONITOR
-        state, reason = await monitor_site_aiohttp(site, max_retry)
+        func_name = settings.YAGURA_MONITOR_FUNC.split('.')
+        package_ = importlib.import_module('.'.join(func_name[:-1]))
+        func_ = getattr(package_, func_name[-1])
+        state, reason = await func_(site, max_retry)
         handle_state(site, state, monitor_date, reason=reason)
