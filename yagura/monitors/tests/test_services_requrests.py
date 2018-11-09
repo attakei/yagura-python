@@ -69,7 +69,11 @@ def test_monitor_site_requests__ok_once_retry(event_loop, caplog):
     with Mocker() as mocked:
         mocked.register_uri(
             'GET', site.url,
-            [{'status_code': 503}, {'status_code': 200}, {'status_code': 200}, ]
+            [
+                {'status_code': 503},
+                {'status_code': 200},
+                {'status_code': 200},
+            ]
         )
         result, reason = event_loop.run_until_complete(
             monitor_site_requests(site, 3))
