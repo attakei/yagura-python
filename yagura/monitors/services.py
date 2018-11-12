@@ -23,6 +23,8 @@ async def monitor_site(site: Site, max_retry: int=1) \
     if status unmatch for excepted, retry max argument request
     """
     Logger.debug(f"Start to check: {site.url}")
+    if not site.enabled:
+        return 'DISABLED', ''
     async with aiohttp.ClientSession() as client:
         for _ in range(max_retry):
             try:
@@ -130,4 +132,5 @@ class MonitoringJob(object):
         """
         max_retry = settings.YAGURA_MAX_TRY_IN_MONITOR
         state, reason = await monitor_site(site, max_retry)
-        handle_state(site, state, monitor_date, reason=reason)
+        if state != 'DISABLED':
+            handle_state(site, state, monitor_date, reason=reason)

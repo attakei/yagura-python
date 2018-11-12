@@ -12,7 +12,7 @@ from django.test import TestCase, override_settings
 from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.services import monitor_site, send_state_email
+from yagura.monitors.services import monitor_site, send_state_email, MonitoringJob
 from yagura.sites.models import Site
 
 
@@ -89,6 +89,29 @@ def test_monitor_site__urlerror(event_loop):
         result, reason = event_loop.run_until_complete(monitor_site(site))
         assert result == 'NG'
         assert reason == 'Test error'
+
+
+def test_monitor_site__disabled(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    site = mock.MagicMock(
+        url='http://example.com/', ok_http_status=200, enabled=False)
+    with aioresponses() as mocked:
+        mocked.get(site.url, status=200)
+        result, reason = event_loop.run_until_complete(monitor_site(site, 3))
+        assert result == 'DISABLED'
+        assert len(mocked._responses) == 1
+
+
+def test_monitoringjob__disabled(event_loop, caplog):
+    caplog.set_level(logging.DEBUG, logger='yagura.monitors.services')
+    site = mock.MagicMock(
+        url='http://example.com/', ok_http_status=200, enabled=False)
+    with aioresponses() as mocked:
+        mocked.get(site.url, status=200)
+        job = MonitoringJob()
+        job.add_task_form_site(site)
+        job.wait_complete()
+        assert len(mail.outbox) == 0
 
 
 class SendStateEmail_Test(TestCase):
