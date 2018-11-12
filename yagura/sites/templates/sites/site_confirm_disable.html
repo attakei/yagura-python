@@ -3,18 +3,13 @@
 
 {% block content_main %}
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>{% trans 'Confirm of deleteing site' %}</h2>
+    <h2>{% trans 'Confirm of disable monitoring site' %}</h2>
   </div>
   <div>
     <p>
-      {% blocktrans with url=site.url %}Deleting for <strong>{{ url }}</strong>{% endblocktrans %}
+      {% blocktrans with url=site.url %}Disable monitoring for <strong>{{ url }}</strong>{% endblocktrans %}
     </p>
-    <ul>
-        <!-- TODO: Localize -->
-        <li>{% trans 'Delete monitoring histories together' %}</li>
-        <li>{% trans 'After delete, you cannot recovery all data' %}</li>
-      </ul>
-    </div>
+  </div>
   <div>
     <form method="POST">
       {% csrf_token %}

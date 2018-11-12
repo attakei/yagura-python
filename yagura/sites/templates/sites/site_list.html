@@ -7,6 +7,23 @@
     {% trans 'Add new site' as site_create_label %}
     {% bootstrap_button site_create_label 'button' 'btn-outline-primary' href='/sites/new' %}
   </div>
+  <div class="input-group">
+    {% if request.GET.all == '1' %}
+      <input id="chk-site-list-all" type="checkbox" class="form-control" aria-label="Show all" checked>
+    {% else %}
+      <input id="chk-site-list-all" type="checkbox" class="form-control" aria-label="Show all">
+    {% endif %}
+    <label>Show all</label>
+    <script>
+      document.getElementById('chk-site-list-all').addEventListener('click', function(e) {
+        if (e.target.checked) {
+          location.href = '?all=1'
+        } else {
+          location.href = '?'
+        }
+      })
+    </script>
+  </div>
   <div>
     <ul class="list-group">
       {% for site in site_list %}
@@ -19,6 +36,10 @@
   <hr>
   <!-- TODO: I want to centering paginator -->
   <div>
-      {% bootstrap_pagination page_obj size='small' %}
+      {% if request.GET.all == '1' %}
+        {% bootstrap_pagination page_obj size='small' url='?all=1' %}
+      {% else %}
+        {% bootstrap_pagination page_obj size='small' %}
+      {% endif %}
   </div>
 {% endblock %}

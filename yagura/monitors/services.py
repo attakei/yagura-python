@@ -54,6 +54,8 @@ async def monitor_site_aiohttp(site: Site, max_retry: int = 1) \
     if status unmatch for excepted, retry max argument request
     """
     Logger.debug(f"Start to check: {site.url}")
+    if not site.enabled:
+        return 'DISABLED', ''
     async with aiohttp.ClientSession() as client:
         for try_idx in range(max_retry):
             # FIXME:
@@ -75,6 +77,16 @@ async def monitor_site_aiohttp(site: Site, max_retry: int = 1) \
                 break
     Logger.debug(f"Finish to check: {site.url}")
     return result, reason
+
+
+# TODO: Consider coding testcase
+def post_disabled_monitoring(site: Site):
+    """Post proc in disable request
+    """
+    if site.enabled:
+        Logger.debug('Passed enabled site')
+        return
+    handle_state(site, 'DISABLED', now(), 'Disabled manually')
 
 
 def handle_state(site, state, monitor_date, reason=''):
@@ -159,4 +171,5 @@ class MonitoringJob(object):
         package_ = importlib.import_module('.'.join(func_name[:-1]))
         func_ = getattr(package_, func_name[-1])
         state, reason = await func_(site, max_retry)
-        handle_state(site, state, monitor_date, reason=reason)
+        if state != 'DISABLED':
+            handle_state(site, state, monitor_date, reason=reason)
