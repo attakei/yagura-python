@@ -12,7 +12,9 @@ from django.test import TestCase, override_settings
 from parameterized import parameterized
 
 from yagura.monitors.models import StateHistory
-from yagura.monitors.services import monitor_site, send_state_email, MonitoringJob
+from yagura.monitors.services import (
+    MonitoringJob, monitor_site, send_state_email
+)
 from yagura.sites.models import Site
 
 

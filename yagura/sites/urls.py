@@ -1,8 +1,8 @@
 from django.urls import path
 
 from yagura.sites.views import (
-    SiteCreateView, SiteDeleteView, SiteDetailView,
-    SiteDisableView, SiteListView
+    SiteCreateView, SiteDeleteView, SiteDetailView, SiteDisableView,
+    SiteListView
 )
 
 app_name = 'sites'

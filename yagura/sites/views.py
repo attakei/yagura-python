@@ -4,9 +4,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
+from yagura.monitors.services import post_disabled_monitoring
 from yagura.sites.forms import SiteCreateForm
 from yagura.sites.models import Site
-from yagura.monitors.services import post_disabled_monitoring
 
 
 class SiteListView(LoginRequiredMixin, ListView):
