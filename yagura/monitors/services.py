@@ -16,7 +16,7 @@ Logger = logging.getLogger(__name__)
 
 
 # TODO: Test for more cases
-async def monitor_site(site: Site, max_retry: int=1) \
+async def monitor_site(site: Site, max_retry: int = 1) \
         -> typing.Tuple[str, str]:
     """Monitor target site.
 
