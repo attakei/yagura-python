@@ -81,13 +81,13 @@ class SiteDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_template_names(self):
         if self.object.created_by == self.request.user \
-            and settings.YAGURA_ENABLE_DELETING_SITES:
+                and settings.YAGURA_ENABLE_DELETING_SITES:
             return ['sites/site_confirm_delete.html']
         return ['sites/site_delete_ng.html']
 
     def post(self, request, *args, **kwargs):
         site = self.get_object()
         if site.created_by == request.user \
-            and settings.YAGURA_ENABLE_DELETING_SITES:
+                and settings.YAGURA_ENABLE_DELETING_SITES:
             return super().post(request, *args, **kwargs)
         return super().get(request, *args, **kwargs)
