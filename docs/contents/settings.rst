@@ -40,3 +40,23 @@ When it is more than, repeat until rearch value, return last reason with NG.
 Number of sites that user can add in site.
 
 If it is set 0, user can add sites unlimitedly.
+
+
+``YAGURA_MONITOR_FUNC``
+-----------------------
+
+:Default: yagura.monitors.services.monitor_site_requests
+
+In monitoring task, call implemented request function.
+
+Currently, accept these methods
+
+* ``yagura.monitors.services.monitor_site_requests``
+
+  * ``requests`` based HTTP call **(recommended)**
+  * Is stable, but process time increase monotonically by num of monitoring websites
+
+* ``yagura.monitors.services.monitor_site_aiohttp``
+
+  * ``aiohttp`` based HTTP call
+  * Process time is shorter tendency than ``requests`` , but unstable.
