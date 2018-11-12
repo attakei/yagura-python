@@ -9,8 +9,10 @@
       <div class="btn-group" role="group">
         {% url 'sites:disable' site.id as url_to_sites_disable %}
         {% bootstrap_button 'Disable' 'link' href=url_to_sites_disable %}
-        {% url 'sites:delete' site.id as url_to_sites_delete %}
-        {% bootstrap_button 'Delete' 'link' href=url_to_sites_delete %}
+        {% if yagura_conf.ENABLE_DELETING_SITES %}
+          {% url 'sites:delete' site.id as url_to_sites_delete %}
+          {% bootstrap_button 'Delete' 'link' href=url_to_sites_delete %}
+        {% endif%}
       </div>
     {% endif %}
   </div>

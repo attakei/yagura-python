@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
@@ -79,12 +80,14 @@ class SiteDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('sites:list')
 
     def get_template_names(self):
-        if self.object.created_by == self.request.user:
+        if self.object.created_by == self.request.user \
+            and settings.YAGURA_ENABLE_DELETING_SITES:
             return ['sites/site_confirm_delete.html']
         return ['sites/site_delete_ng.html']
 
     def post(self, request, *args, **kwargs):
         site = self.get_object()
-        if site.created_by == request.user:
+        if site.created_by == request.user \
+            and settings.YAGURA_ENABLE_DELETING_SITES:
             return super().post(request, *args, **kwargs)
         return super().get(request, *args, **kwargs)

@@ -250,3 +250,20 @@ class SiteDelete_ViewTest(ViewTestCase):
         self.client.force_login(user)
         resp = self.client.post(self.url)
         assert resp.status_code == 200
+
+    @override_settings(YAGURA_ENABLE_DELETING_SITES=False)
+    def test_guard_by_settings(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+        assert 'sites/site_delete_ng.html' in resp.template_name
+        assert 'Disabled deleting sites by administrator' in str(resp.content)
+
+    @override_settings(YAGURA_ENABLE_DELETING_SITES=False)
+    def test_guard_by_settings_post(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.post(self.url)
+        assert resp.status_code == 200
+        assert 'sites/site_delete_ng.html' in resp.template_name
+        assert 'Disabled deleting sites by administrator' in str(resp.content)
+        assert Site.objects.count() == 2

@@ -6,6 +6,10 @@
     <h2>{% trans 'Deleteing site' %}</h2>
   </div>
   <div>
-    <p>{% blocktrans with url=site.url %}Site owner only can delete {{ url }}{% endblocktrans %}</p>
+    {% if not yagura_conf.ENABLE_DELETING_SITES %}
+    <p>{% trans 'Disabled deleting sites by administrator' %}</p>
+    {% else %}
+      <p>{% blocktrans with url=site.url %}Site owner only can delete {{ url }}{% endblocktrans %}</p>
+    {% endif %}
   </div>
 {% endblock %}
