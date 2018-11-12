@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-31 14:03+0000\n"
+"POT-Creation-Date: 2018-11-12 16:43+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -26,11 +26,11 @@ msgstr "監視可能なサイト数の上限に到達しています"
 msgid "Site ID in project"
 msgstr "サイトID"
 
-#: yagura/sites/models.py:16 yagura/sites/templates/sites/site_detail.html:19
+#: yagura/sites/models.py:16 yagura/sites/templates/sites/site_detail.html:21
 msgid "Site URL"
 msgstr "サイトのURL"
 
-#: yagura/sites/models.py:18 yagura/sites/templates/sites/site_detail.html:20
+#: yagura/sites/models.py:18 yagura/sites/templates/sites/site_detail.html:22
 msgid "Excepted HTTP status code"
 msgstr "期待しているHTTPステータスコード"
 
@@ -47,7 +47,15 @@ msgstr "サイト削除の確認"
 msgid "Deleting for <strong>%(url)s</strong>"
 msgstr "<strong>%(url)s</strong> を削除します"
 
-#: yagura/sites/templates/sites/site_confirm_delete.html:16
+#: yagura/sites/templates/sites/site_confirm_delete.html:14
+msgid "Delete monitoring histories together"
+msgstr "サイトを削除すると、過去の監視履歴もすべて消去します"
+
+#: yagura/sites/templates/sites/site_confirm_delete.html:15
+msgid "After delete, you cannot recovery all data"
+msgstr "一度削除すると、もとに戻すことはできません"
+
+#: yagura/sites/templates/sites/site_confirm_delete.html:21
 #: yagura/sites/templates/sites/site_confirm_disable.html:16
 msgid "Confirm"
 msgstr "確認"
@@ -65,7 +73,11 @@ msgstr "<strong>%(url)s</strong> の監視を停止します"
 msgid "Deleteing site"
 msgstr "サイトの削除"
 
-#: yagura/sites/templates/sites/site_delete_ng.html:9
+#: yagura/sites/templates/sites/site_delete_ng.html:10
+msgid "Disabled deleting sites by administrator"
+msgstr "管理者によって、サイトの削除が無効化されています"
+
+#: yagura/sites/templates/sites/site_delete_ng.html:12
 #, python-format
 msgid "Site owner only can delete %(url)s"
 msgstr "%(url)s の登録者のみが削除できます"
@@ -74,15 +86,15 @@ msgstr "%(url)s の登録者のみが削除できます"
 msgid "Site detail"
 msgstr "サイト情報"
 
-#: yagura/sites/templates/sites/site_detail.html:46
+#: yagura/sites/templates/sites/site_detail.html:48
 msgid "State"
 msgstr "状態"
 
-#: yagura/sites/templates/sites/site_detail.html:46
+#: yagura/sites/templates/sites/site_detail.html:48
 msgid "Range"
 msgstr "期間"
 
-#: yagura/sites/templates/sites/site_detail.html:46
+#: yagura/sites/templates/sites/site_detail.html:48
 msgid "Reason"
 msgstr "理由"
 
