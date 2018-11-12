@@ -10,6 +10,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Main
         job = MonitoringJob()
-        for site in Site.objects.all():
+        for site in Site.objects.filter(enabled=True).all():
             job.add_task_form_site(site)
         job.wait_complete()
