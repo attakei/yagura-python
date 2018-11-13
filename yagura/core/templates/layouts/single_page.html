@@ -1,12 +1,10 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block bootstrap4_content %}
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <main role="main" class="col-6 pt-3 px-4">
-        {% block content_main %}{% endblock %}
-      </main>
+{% block content %}
+  <div class="columns">
+    <div class="column">
+      {% block content_main %}{% endblock %}
     </div>
   </div>
 {% endblock %}

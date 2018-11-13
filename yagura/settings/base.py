@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'yagura.monitors',
     'yagura.notifications',
     # Third-party apps
-    'bootstrap4',
+    'bulma',
     'django_registration',
     'django_crontab',
     'social_django',
@@ -164,12 +164,6 @@ LOGIN_REDIRECT_URL = 'sites:list'
 FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'yagura', 'fixtures'),
 ]
-
-# django-bootstrap4
-BOOTSTRAP4 = {
-    'include_jquery': 'full',
-    'theme_url': '/static/layout.css',
-}
 
 
 # django-registration

@@ -1,15 +1,13 @@
 {% extends 'layouts/two_pane_single.html' %}
 {% load i18n %}
-{% load bootstrap4 %}
+{% load bulma_tags %}
 
 {% block content_main %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>{% trans 'Profile' %}</h2>
-</div>
-<div class="container">
-  <div class="row">
-    <h3>{% trans 'Basic information' %}</h3>
-    <table class="table table-bordered">
+  <h1 class="title">{% trans 'Profile' %}</h1>
+
+  <h2 class="sutitle">{% trans 'Basic information' %}</h2>
+  <div class="content">
+    <table>
       <tbody>
         <tr><th>ID</th><td>{{ request.user.id }}</td></tr>
         <tr><th>{% trans 'Username' %}</th><td>{{ request.user.username }}</td></tr>
@@ -17,33 +15,31 @@
         <tr><th>{% trans 'Full name' %}</th><td>{{ request.user.get_full_name }}</td></tr>
       </tbody>
     </table>
+    <a class="button" href="{% url 'accounts:profile-edit' %}">
+        {% trans 'Edit profile' %}
+    </a>
   </div>
-  <div class="row">
-    {% trans 'Edit profile' as profile_edit_label %}
-    {% url 'accounts:profile-edit' as profile_edit_url %}
-    {% bootstrap_button profile_edit_label href=profile_edit_url %}
-  </div>
-  <h3>{% trans 'Set language' %}</h3>
-  <div class="row">
+
+  <h2 class="subtitle">{% trans 'Set language' %}</h2>
+  <div class="content">
     <div>
       <form class="form-inline" action="{% url 'set_language' %}" method="post">
         {% csrf_token %}
-        {% bootstrap_form language_form layout='inline' %}
-        {% trans 'Apply' as apply_label %}
-        {% bootstrap_button apply_label 'submit' %}
+        {{ language_form|bulma_inline }}
+        <button class="button" type="submit">{% trans 'Apply' %}</button>
       </form>
     </div>
   </div>
-  <h3>{% trans 'Set timezone' %}</h3>
-  <div class="row">
+
+  <h2 class="subtitle">{% trans 'Set timezone' %}</h2>
+  <div class="content">
     <div>
       <form class="form-inline" action="{% url 'accounts:set-timezone' %}" method="post">
         {% csrf_token %}
-        {% bootstrap_form timezone_form layout='inline' %}
-        {% trans 'Apply' as apply_label %}
-        {% bootstrap_button apply_label 'submit' %}
+        {{ timezone_form|bulma_inline }}
+        <button class="button" type="submit">{% trans 'Apply' %}</button>
+      </form>
       </form>
     </div>
   </div>
-</div>
 {% endblock %}

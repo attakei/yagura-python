@@ -1,16 +1,16 @@
 {% extends 'layouts/two_pane.html' %}
-{% load bootstrap4 %}
+{% load bulma_tags %}
 {# TODO: Need transration #}
 
 {% block content_main %}
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>Add new notification recipient of Slack for {{ site.url }}</h2>
-  </div>
-  <div class="container">
+  <h1 class="title">Add new notification recipient of Slack for {{ site.url }}</h1>
+  <div class="content">
     <form method="POST">
       {% csrf_token %}
-      {% bootstrap_form form %}
-      {% bootstrap_button 'Register' 'submit' %}
+      {{ form|bulma }}
+      <div class="field">
+        <button type="submit" class="button is-primary">{% trans 'Register' %}</button>
+      </div>
     </form>
   </div>
 {% endblock %}

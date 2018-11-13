@@ -1,17 +1,21 @@
 {% load static %}
-{% load bootstrap4 %}
 
 {# Site overview for sites:site-list (row of table) #}
-<div>
-  <img 
-    src="{{ history.status_image_url }}"
-    class="img-responsive d-block float-left"
-    style="max-width: 80%; margin-right: 1em;">
-  <h4><strong>{{ site.url }}</strong></h4>
-  <p>
-    Current status from {{ history.begin_at }}
-    <a href="{% url 'sites:detail' site.id %}">
-      (show detail)
-    </a>
-  </p>
+<div class="box" style="max-height: 150px;">
+  <article class="media">
+    <div class="media-left">
+      <img src="{{ history.status_image_url }}">    
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <h2 class="subtitle">{{ site.url }}</h2>
+        <p>
+          Current status from {{ history.begin_at }}
+          <a href="{% url 'sites:detail' site.id %}">
+            (show detail)
+          </a>
+        </p>
+      </div>
+    </div>
+  </article>
 </div>
