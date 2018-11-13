@@ -5,7 +5,14 @@
 {% block content_main %}
   <div class="level">
     <h1 class="title">{% trans 'Site detail' %}</h1>
-    <a class="button is-danger is-small is-pulled-right" href="{% url 'sites:delete' site.id %}">Delete</a>
+    {% if site.created_by == request.user %}
+    <div class="btn-group" role="group">
+      <a class="button is-danger is-small is-pulled-right" href="{% url 'sites:disable' site.id %}">Disable</a>
+      {% if yagura_conf.ENABLE_DELETING_SITES %}
+        <a class="button is-danger is-small is-pulled-right" href="{% url 'sites:delete' site.id %}">Delete</a>
+      {% endif%}
+    </div>
+    {% endif %}
   </div>
 
   {# TODO: Refactor struct of site information #}

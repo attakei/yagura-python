@@ -9,3 +9,4 @@ pyasn1
 social-auth-app-django
 slackweb
 aiohttp
+requests

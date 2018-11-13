@@ -5,6 +5,23 @@
     <h1 class="title">{% trans 'List of web sites' %}</h1>
     <a class="button is-link is-pulled-right" href="/sites/new">{% trans 'Add new site' %}</a>
   </div>
+  <div class="input-group">
+    {% if request.GET.all == '1' %}
+      <input id="chk-site-list-all" type="checkbox" class="form-control" aria-label="Show all" checked>
+    {% else %}
+      <input id="chk-site-list-all" type="checkbox" class="form-control" aria-label="Show all">
+    {% endif %}
+    <label>Show all</label>
+    <script>
+      document.getElementById('chk-site-list-all').addEventListener('click', function(e) {
+        if (e.target.checked) {
+          location.href = '?all=1'
+        } else {
+          location.href = '?'
+        }
+      })
+    </script>
+  </div>
   <div class="tile is-vertical">
     {% for site in site_list %}
       {% include 'sites/_site_overview.html' with site=site history=site.states.last %}
@@ -13,6 +30,10 @@
   <hr>
   <!-- TODO: I want to centering paginator -->
   <div>
-    {% include 'pagination.html' %}
+    {% if request.GET.all == '1' %}
+      {% include 'pagination.html' with getvars='&all=1' %}
+    {% else %}
+      {% include 'pagination.html' %}
+    {% endif %}
   </div>
 {% endblock %}

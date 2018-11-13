@@ -2,6 +2,43 @@
 Change logs
 ===========
 
+ver 0.10.0
+==========
+
+:Date: 2018-11-09
+
+Features
+--------
+
+* Selectable monitoring site architecture
+
+  * ``requests`` base or ``aiohttp`` base
+
+ver 0.9.2
+=========
+
+:Date: 2018-11-07
+
+Features
+--------
+
+* Set delay in retry
+
+ver 0.9.1
+=========
+
+:Date: 2018-11-07
+
+Features
+--------
+
+* Render class name into reason when raised aiohttp.ClientError
+
+Fixes
+-----
+
+* Adjust new version of aioresponses
+
 ver 0.9.0
 =========
 

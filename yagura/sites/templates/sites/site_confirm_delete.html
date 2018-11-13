@@ -6,6 +6,11 @@
   <p>
     {% blocktrans with url=site.url %}Deleting for <strong>{{ url }}</strong>{% endblocktrans %}
   </p>
+  <ul>
+    <!-- TODO: Localize -->
+    <li>{% trans 'Delete monitoring histories together' %}</li>
+    <li>{% trans 'After delete, you cannot recovery all data' %}</li>
+  </ul>
   <form method="POST">
     {% csrf_token %}
     <div class="field">

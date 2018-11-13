@@ -16,6 +16,8 @@ class Site(models.Model):
     url = models.URLField(_('Site URL'))
     ok_http_status = models.PositiveSmallIntegerField(
         _('Excepted HTTP status code'), default=200, choices=ALL_HTTP_STATUS)
+    enabled = models.BooleanField(
+        _('Run monitoring?'), default=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
