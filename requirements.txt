@@ -1,6 +1,5 @@
 Django>=2.0
 django-bulma
-django-bootstrap4
 django-registration>=3.0
 django-templated-email
 django-crontab
