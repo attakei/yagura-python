@@ -1,14 +1,16 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
-{% block bootstrap4_content %}
-  <div class="container-fluid">
-    <div class="row">
-      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      </nav>
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        {% block content_main %}{% endblock %}
-      </main>
+{% block content %}
+  <div class="columns">
+    <div class="column is-one-fifth">
+      <aside class="menu">
+      </aside>
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+         </nav>
+       </div>
+    <div class="column">
+      {% block content_main %}{% endblock %}
     </div>
   </div>
 {% endblock %}

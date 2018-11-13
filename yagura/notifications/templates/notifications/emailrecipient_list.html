@@ -1,39 +1,42 @@
 {% extends 'layouts/two_pane.html' %}
-{% load bootstrap4 %}
 {% load yagura_notifications %}
 
 {% block content_main %}
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>
-      {% trans 'List of notifications' %}
-      <small><a href="{% url 'sites:detail' site.id %}">&lt;&lt; back to site detail</a></small>
-    </h2>
+  <div class="level">
+    <h1 class="title">{% trans 'List of notifications' %}</h1>
+    <small><a href="{% url 'sites:detail' site.id %}">&lt;&lt; back to site detail</a></small>
+    <a href="{% url 'notifications:add-recipient' site.id %}">
+      Add notification
+    </a>
   </div>
-  <div>
-    <p>
-      {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
-      {% bootstrap_button 'Add notification' 'link' href=url_to_add_notification size='xs' %}
-    </p>
-    <ul class="list-group">
-      <li class="list-group-item">
-        {{ site.created_by.email }} <strong>(owner)</strong>
-      </li>
+  <div class="content">
+    <table>
+      <tr>
+        <td>
+          {{ site.created_by.email }} <strong>(owner)</strong>
+        </td>
+        <td></td>
+      </tr>
       {% for recipient in emailrecipient_list %}
-      <li class="list-group-item">
-        {{ recipient.email }}
-        {% if not recipient.enabled %}
-          {# TODO: Need transration #}
-          (not yet enabled)
-        {% endif %}
-        <div class="btn-group float-right">
+      <tr>
+        <td>
+          {{ recipient.email }}
+          {% if not recipient.enabled %}
+            {# TODO: Need transration #}
+            (not yet enabled)
+          {% endif %}
+        </td>
+        <td>
           {% can_delete recipient request.user as can_delete_ %}
           {% if can_delete_ %}
-            {% url 'notifications:delete-email-recipient' recipient.id as link_ %}
-            {% bootstrap_button 'Delete' 'button' 'btn-danger' href=link_ size='sm' %}
+            <a class="button is-danger is-small" href="{% url 'notifications:delete-email-recipient' recipient.id %}">
+              Delete
+            </a>
           {% endif %}
-        </div>
-      </li>
+        </td>
+      </tr>
       {% endfor %}
-    <ul>
+    </table>
   </div>
+
 {% endblock %}
