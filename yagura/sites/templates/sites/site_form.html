@@ -3,12 +3,14 @@
 
 {% block content_main %}
   <h1 class="title">{% trans 'Register new site' %}</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form|bulma }}
-    <div class="field">
-      <button type="submit" class="button is-primary">{% trans 'Register' %}</button>
-    </div>
-  </form>
+  <div class="content">
+    <form method="POST">
+      {% csrf_token %}
+      {{ form|bulma }}
+      <div class="field">
+        <button type="submit" class="button is-primary">{% trans 'Register' %}</button>
+      </div>
+    </form>
+  </div>
 {% endblock %}
 

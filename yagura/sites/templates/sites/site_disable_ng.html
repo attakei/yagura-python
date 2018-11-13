@@ -1,11 +1,8 @@
 {% extends 'layouts/two_pane.html' %}
-{% load bootstrap4 %}
 
 {% block content_main %}
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>{% trans 'Disable monitring site' %}</h2>
-  </div>
-  <div>
+  <h1 class="title">{% trans 'Disable monitring site' %}</h1>
+  <div class="content">
     <p>{% blocktrans with url=site.url %}Site owner only can disable {{ url }}{% endblocktrans %}</p>
   </div>
 {% endblock %}

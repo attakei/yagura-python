@@ -1,20 +1,19 @@
 {% extends 'layouts/two_pane.html' %}
-{% load bootstrap4 %}
 
 {% block content_main %}
   <h1 class="title">{% trans 'Confirm of deleteing site' %}</h1>
-  <p>
-    {% blocktrans with url=site.url %}Deleting for <strong>{{ url }}</strong>{% endblocktrans %}
-  </p>
-  <ul>
-    <!-- TODO: Localize -->
-    <li>{% trans 'Delete monitoring histories together' %}</li>
-    <li>{% trans 'After delete, you cannot recovery all data' %}</li>
-  </ul>
-  <form method="POST">
-    {% csrf_token %}
-    <div class="field">
+  <div class="content">
+    <p>
+      {% blocktrans with url=site.url %}Deleting for <strong>{{ url }}</strong>{% endblocktrans %}
+    </p>
+    <ul>
+      <!-- TODO: Localize -->
+      <li>{% trans 'Delete monitoring histories together' %}</li>
+      <li>{% trans 'After delete, you cannot recovery all data' %}</li>
+    </ul>
+    <form method="POST">
+      {% csrf_token %}
       <button type="submit" class="button is-danger">{% trans 'Confirm' %}</button>
-    </div>
-  </form>
+    </form>
+  </div>
 {% endblock %}
