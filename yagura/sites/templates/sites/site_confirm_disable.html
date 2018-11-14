@@ -1,0 +1,14 @@
+{% extends 'layouts/two_pane.html' %}
+
+{% block content_main %}
+  <h1 class="title">{% trans 'Confirm of disable monitoring site' %}</h1>
+  <div class="content">
+    <p>
+      {% blocktrans with url=site.url %}Disable monitoring for <strong>{{ url }}</strong>{% endblocktrans %}
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="button is-danger">{% trans 'Confirm' %}</button>
+    </form>
+  </div>
+{% endblock %}

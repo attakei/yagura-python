@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-18 16:22+0000\n"
+"POT-Creation-Date: 2018-11-14 02:23+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -18,31 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/core/templates/index.html:3 yagura/core/templates/index.html:9
+#: yagura/core/templates/index.html:3 yagura/core/templates/index.html:7
 msgid "Simple website monitoring"
 msgstr "シンプルなWebサイト監視"
 
-#: yagura/core/templates/index.html:12 yagura/core/templates/index.html:19
+#: yagura/core/templates/index.html:10 yagura/core/templates/index.html:17
 msgid "Log in"
 msgstr "ログイン"
 
-#: yagura/core/templates/index.html:13
+#: yagura/core/templates/index.html:11
 msgid "or"
 msgstr "または"
 
-#: yagura/core/templates/index.html:14 yagura/core/templates/index.html:19
+#: yagura/core/templates/index.html:12 yagura/core/templates/index.html:17
 msgid "Registration user"
 msgstr "ユーザー登録"
 
-#: yagura/core/templates/layouts/_navbar.html:10
+#: yagura/core/templates/layouts/base.html:52
 msgid "Profile"
 msgstr "プロフィール"
 
-#: yagura/core/templates/layouts/_navbar.html:11
-#: yagura/core/templates/layouts/two_pane.html:22
+#: yagura/core/templates/layouts/base.html:53
+#: yagura/core/templates/layouts/two_pane.html:16
 msgid "Log out"
 msgstr "ログアウト"
 
-#: yagura/core/templates/layouts/two_pane.html:18
+#: yagura/core/templates/layouts/two_pane.html:11
 msgid "List of web sites"
 msgstr "Webサイト一覧"

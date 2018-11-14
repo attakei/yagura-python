@@ -13,4 +13,6 @@ def yagura_conf(request):
     return {
         'ENABLE_PASSWORD_REGISTRATION':
             settings.YAGURA_ENABLE_PASSWORD_REGISTRATION,
+        'ENABLE_DELETING_SITES':
+            settings.YAGURA_ENABLE_DELETING_SITES,
     }

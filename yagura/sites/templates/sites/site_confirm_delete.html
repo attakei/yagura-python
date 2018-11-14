@@ -1,20 +1,19 @@
 {% extends 'layouts/two_pane.html' %}
-{% load bootstrap4 %}
 
 {% block content_main %}
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>{% trans 'Confirm of deleteing site' %}</h2>
-  </div>
-  <div>
+  <h1 class="title">{% trans 'Confirm of deleteing site' %}</h1>
+  <div class="content">
     <p>
       {% blocktrans with url=site.url %}Deleting for <strong>{{ url }}</strong>{% endblocktrans %}
     </p>
-  </div>
-  <div>
+    <ul>
+      <!-- TODO: Localize -->
+      <li>{% trans 'Delete monitoring histories together' %}</li>
+      <li>{% trans 'After delete, you cannot recovery all data' %}</li>
+    </ul>
     <form method="POST">
       {% csrf_token %}
-      {% trans 'Confirm' as confirm_label %}
-      {% bootstrap_button confirm_label 'submit' %}
+      <button type="submit" class="button is-danger">{% trans 'Confirm' %}</button>
     </form>
   </div>
 {% endblock %}

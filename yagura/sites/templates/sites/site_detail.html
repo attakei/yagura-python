@@ -1,46 +1,61 @@
 {% extends 'layouts/two_pane.html' %}
 {% load i18n %}
-{% load bootstrap4 %}
+{% load bulma_tags %}
 
 {% block content_main %}
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-    <h2>{% trans 'Site detail' %}</h2>
+  <div class="level">
+    <h1 class="title">{% trans 'Site detail' %}</h1>
     {% if site.created_by == request.user %}
-      {% url 'sites:delete' site.id as url_to_sites_delete %}
-      {% bootstrap_button 'Delete' 'link' href=url_to_sites_delete %}
+    <div class="btn-group" role="group">
+      <a class="button is-danger is-small is-pulled-right" href="{% url 'sites:disable' site.id %}">Disable</a>
+      {% if yagura_conf.ENABLE_DELETING_SITES %}
+        <a class="button is-danger is-small is-pulled-right" href="{% url 'sites:delete' site.id %}">Delete</a>
+      {% endif%}
+    </div>
     {% endif %}
   </div>
-  {# TODO: Refactor struct of site information #}
-  <div>
-    <p>{% trans 'Site URL' %}: <a href="{{ site.url }}" target="_blank">{{ site.url }}</a></p>
-    <p>{% trans 'Excepted HTTP status code' %}: {{ site.ok_http_status }}</p>
-    <p>
-      Menu:
-      <ul>
-        <li>Email notifications:
-          {% url 'notifications:list-email-recipient' site.id as url_to_list_notifications %}
-          {% bootstrap_button 'Show' 'button' href=url_to_list_notifications button_class='btn-info' size='sm' %}
-          {% url 'notifications:add-recipient' site.id as url_to_add_notification %}
-          {% bootstrap_button 'Add' 'button' href=url_to_add_notification button_class='btn-secondary' size='sm' %}
-        </li>
-      </ul>
-      <ul>
-        <li>Slack notifications:
-          {% url 'notifications:list-slack-recipient' site.id as url_to_add_notification %}
-          {% bootstrap_button 'Show' 'button' href=url_to_add_notification button_class='btn-info' size='sm' %}
-          {% url 'notifications:add-slack-recipient' site.id as url_to_add_notification %}
-          {% bootstrap_button 'Add' 'button' href=url_to_add_notification button_class='btn-secondary' size='sm'  %}
-        </li>
-      </ul>
-    </p>
-  </div>
-  <div>
-    <h3>History</h3>
-    <table class="table keyvalue_table">
+
+  <h2 class="subtitle">Overview</h2>
+  <div class="content">
+    {# TODO: Refactor struct of site information #}
+    <table class="table">
       <tbody>
+        <tr>
+          <th>{% trans 'Site URL' %}:</th>
+          <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+        </tr>
+        <tr>
+          <th>{% trans 'Excepted HTTP status code' %}:</th>
+          <td>{{ site.ok_http_status }}</td>
+        </tr>
+        <tr>
+          <th>Email notifications:</th>
+          <td>
+            <span class="buttons has-addons are-small">
+              <a class="button" href="{% url 'notifications:list-email-recipient' site.id %}">Show</a>
+              <a class="button" href="{% url 'notifications:add-recipient' site.id %}">Add</a>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Slack notifications:</th>
+          <td class="buttons has-addons are-small">
+            <a class="button" href="{% url 'notifications:list-slack-recipient' site.id %}">Show</a>
+            <a class="button" href="{% url 'notifications:add-slack-recipient' site.id %}">Add</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 class="subtitle">History</h2>
+  <div class="content">
+    <table class="table is-striped is-fullwidth">
+      <thead>
         <tr>
           <th>{% trans 'State' %}</th><td>{% trans 'Range' %}</td><td>{% trans 'Reason' %}</td>
         </tr>
+      </thead>
+      <tbody>
         {% for history in site.states.all reversed %}
         <tr>
           <td>{{ history.state }}</td>

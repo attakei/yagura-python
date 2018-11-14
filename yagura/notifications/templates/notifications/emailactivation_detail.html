@@ -1,15 +1,10 @@
-{% extends 'layouts/single_page.html' %}
+{% extends 'layouts/two_pane_single.html' %}
 {# TODO: Need transration #}
 
-{% block content_section %}
-  <section class="jumbotron text-center">
-    <div class="container">
-      <h2 class="jumbotron-heading">Activation</h2>
-    </div>
-  </section>
-{% endblock %}
-
 {% block content_main %}
-  <p>Thank you for activation.</p>
-  <p>If {{ site.url }} state is changed, send notify for {{ recipient.email }}</p>
+  <h1 class="title">Activation</h1>
+  <div class="content">
+    <p>Thank you for activation.</p>
+    <p>If {{ site.url }} state is changed, send notify for {{ recipient.email }}</p>
+  </div>
 {% endblock %}

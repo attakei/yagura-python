@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'yagura.monitors',
     'yagura.notifications',
     # Third-party apps
-    'bootstrap4',
+    'bulma',
     'django_registration',
     'django_crontab',
     'social_django',
@@ -165,12 +165,6 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, 'yagura', 'fixtures'),
 ]
 
-# django-bootstrap4
-BOOTSTRAP4 = {
-    'include_jquery': 'full',
-    'theme_url': '/static/layout.css',
-}
-
 
 # django-registration
 ACCOUNT_ACTIVATION_DAYS = 7
@@ -191,3 +185,4 @@ YAGURA_SITES_LIMIT = 1
 YAGURA_ENABLE_PASSWORD_REGISTRATION = True
 YAGURA_MAX_TRY_IN_MONITOR = 1
 YAGURA_MONITOR_FUNC = 'yagura.monitors.services.monitor_site_requests'
+YAGURA_ENABLE_DELETING_SITES = True

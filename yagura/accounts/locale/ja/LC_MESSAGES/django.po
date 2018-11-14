@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 15:27+0000\n"
+"POT-Creation-Date: 2018-11-14 02:23+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -18,54 +18,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/accounts/templates/accounts/profile.html:7
+#: yagura/accounts/templates/accounts/profile.html:6
 msgid "Profile"
 msgstr "プロフィール"
 
-#: yagura/accounts/templates/accounts/profile.html:11
+#: yagura/accounts/templates/accounts/profile.html:8
 msgid "Basic information"
 msgstr "基本情報"
 
-#: yagura/accounts/templates/accounts/profile.html:15
+#: yagura/accounts/templates/accounts/profile.html:13
 msgid "Username"
 msgstr "ユーザー名"
 
-#: yagura/accounts/templates/accounts/profile.html:16
+#: yagura/accounts/templates/accounts/profile.html:14
 msgid "Email address"
 msgstr "メールアドレス"
 
-#: yagura/accounts/templates/accounts/profile.html:17
+#: yagura/accounts/templates/accounts/profile.html:15
 msgid "Full name"
 msgstr "フルネーム"
 
-#: yagura/accounts/templates/accounts/profile.html:22
-#: yagura/accounts/templates/accounts/profile_edit.html:7
+#: yagura/accounts/templates/accounts/profile.html:19
+#: yagura/accounts/templates/accounts/profile_edit.html:6
 msgid "Edit profile"
 msgstr "プロフィールを編集する"
 
-#: yagura/accounts/templates/accounts/profile.html:26
+#: yagura/accounts/templates/accounts/profile.html:23
 msgid "Set language"
 msgstr "表示言語を設定"
 
-#: yagura/accounts/templates/accounts/profile.html:32
-#: yagura/accounts/templates/accounts/profile.html:43
+#: yagura/accounts/templates/accounts/profile.html:29
+#: yagura/accounts/templates/accounts/profile.html:40
 msgid "Apply"
 msgstr "適用する"
 
-#: yagura/accounts/templates/accounts/profile.html:37
+#: yagura/accounts/templates/accounts/profile.html:34
 msgid "Set timezone"
 msgstr "タイムゾーンを設定"
 
-#: yagura/accounts/templates/accounts/profile_edit.html:13
+#: yagura/accounts/templates/accounts/profile_edit.html:12
 msgid "Submit"
 msgstr "送信"
 
-#: yagura/accounts/templates/registration/activate.html:6
-#: yagura/accounts/templates/registration/activation_complete.html:6
-#: yagura/accounts/templates/registration/registration_complete.html:6
-#: yagura/accounts/templates/registration/registration_form.html:7
+#: yagura/accounts/templates/accounts/social_error.html:3
+msgid "Simple website monitoring"
+msgstr "シンプルなWebサイト監視"
+
+#: yagura/accounts/templates/django_registration/activation_complete.html:4
+#: yagura/accounts/templates/django_registration/activation_failed.html:4
+#: yagura/accounts/templates/django_registration/registration_complete.html:4
+#: yagura/accounts/templates/django_registration/registration_form.html:5
 msgid "Registration user"
 msgstr "ユーザー登録"
+
+#: yagura/accounts/templates/django_registration/registration_complete.html:5
+msgid "Thank you for registration. Please activate from email."
+msgstr ""
+"登録ありがとうございました。送信されるメールから、アクティベーションを行って"
+"ください"
+
+#: yagura/accounts/templates/django_registration/registration_form.html:9
+#: yagura/accounts/templates/registration/login.html:9
+msgid "username/password"
+msgstr "ユーザー名/パスワード"
+
+#: yagura/accounts/templates/django_registration/registration_form.html:10
+#, python-format
+msgid "Register by %(by_name)s"
+msgstr "%(by_name)sで登録"
+
+#: yagura/accounts/templates/django_registration/registration_form.html:15
+msgid "Register"
+msgstr "登録"
+
+#: yagura/accounts/templates/django_registration/registration_form.html:21
+#: yagura/accounts/templates/registration/login.html:21
+msgid "social accounts"
+msgstr "ソーシャルアカウント"
+
+#: yagura/accounts/templates/django_registration/registration_form.html:22
+#: yagura/accounts/templates/registration/login.html:10
+#: yagura/accounts/templates/registration/login.html:22
+#, python-format
+msgid "Auth by %(by_name)s"
+msgstr "%(by_name)sで認証"
 
 #: yagura/accounts/templates/registration/logged_out.html:4
 msgid "Logged out"
@@ -75,42 +111,10 @@ msgstr "ログアウトしました"
 msgid "Log in again"
 msgstr "再度ログインする"
 
-#: yagura/accounts/templates/registration/login.html:7
-#: yagura/accounts/templates/registration/login.html:21
+#: yagura/accounts/templates/registration/login.html:5
+#: yagura/accounts/templates/registration/login.html:15
 msgid "Log in"
 msgstr "ログイン"
-
-#: yagura/accounts/templates/registration/login.html:16
-#: yagura/accounts/templates/registration/registration_form.html:15
-msgid "username/password"
-msgstr "ユーザー名/パスワード"
-
-#: yagura/accounts/templates/registration/login.html:17
-#: yagura/accounts/templates/registration/login.html:28
-#, python-format
-msgid "Auth by %(by_name)s"
-msgstr "%(by_name)sで認証"
-
-#: yagura/accounts/templates/registration/login.html:27
-#: yagura/accounts/templates/registration/registration_form.html:25
-msgid "social accounts"
-msgstr "ソーシャルアカウント"
-
-#: yagura/accounts/templates/registration/registration_complete.html:12
-msgid "Thank you for registration. Please activate from email."
-msgstr ""
-"登録ありがとうございました。送信されるメールから、アクティベーションを行って"
-"ください"
-
-#: yagura/accounts/templates/registration/registration_form.html:16
-#: yagura/accounts/templates/registration/registration_form.html:26
-#, python-format
-msgid "Register by %(by_name)s"
-msgstr "%(by_name)sで登録"
-
-#: yagura/accounts/templates/registration/registration_form.html:20
-msgid "Register"
-msgstr "登録"
 
 #: yagura/accounts/templatetags/social_labels.py:8
 msgid "Google account"

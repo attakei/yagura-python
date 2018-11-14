@@ -30,7 +30,7 @@ migration-test:
   variables:
     DJANGO_SETTINGS_MODULE: migration_testing
   script:
-    - pip install yagura
+    - pip install yagura django-bulma  # TODO: Remove django-bulma after merged
     - cp yagura/tests/migration_testing.py ./
     - ./manage.py migrate
     - pip uninstall -y yagura
