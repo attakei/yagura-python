@@ -2,6 +2,18 @@
 Change logs
 ===========
 
+ver 0.11.0
+==========
+
+:Date: 2018-11-14
+
+Features
+--------
+
+* Change base CSS framework from Bootstrap4 to Bulma (imcompatible from old version)
+* Add enable/disable flag to sites for monitoring and showing
+
+
 ver 0.10.0
 ==========
 

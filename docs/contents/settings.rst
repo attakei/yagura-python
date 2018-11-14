@@ -60,3 +60,13 @@ Currently, accept these methods
 
   * ``aiohttp`` based HTTP call
   * Process time is shorter tendency than ``requests`` , but unstable.
+
+
+``YAGURA_ENABLE_DELETING_SITES``
+--------------------------------
+
+:Default: True
+
+Enable delete site by user registered.
+
+If you want to disable monitoring but not want to delete logs. Set ``False``
