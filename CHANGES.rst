@@ -2,6 +2,17 @@
 Change logs
 ===========
 
+ver 0.11.1
+==========
+
+:Date: 2018-12-04
+
+Fixes
+-----
+
+* Add hunburger menu
+* Fix broken card in site list (/sites/)
+
 ver 0.11.0
 ==========
 
