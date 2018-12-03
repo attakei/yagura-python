@@ -4,11 +4,13 @@
 <div class="box" style="max-height: 150px;">
   <article class="media">
     <div class="media-left">
-      <img src="{{ history.status_image_url }}">    
+      <img src="{{ history.status_image_url }}">
     </div>
     <div class="media-content">
       <div class="content">
-        <h2 class="subtitle">{{ site.url }}</h2>
+        <p>
+          <strong>{{ site.url }}</strong>
+        </p>
         <p>
           Current status from {{ history.begin_at }}
           <a href="{% url 'sites:detail' site.id %}">
