@@ -1,4 +1,5 @@
 {% load static %}
+{% load url_filter %}
 
 {# Site overview for sites:site-list (row of table) #}
 <div class="box" style="max-height: 150px;">
@@ -9,7 +10,7 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{ site.url }}</strong>
+          <strong>{{ site.url|guard_basic_auth }}</strong>
         </p>
         <p>
           Current status from {{ history.begin_at }}

@@ -1,4 +1,6 @@
-{% block subject %}State is {{ history.state }}: {{ site.url }}{% endblock %}
+{% load url_filter %}
+
+{% block subject %}State is {{ history.state }}: {{ site.url|guard_basic_auth }}{% endblock %}
 
 {% block plain %}
 Hi {{ owner.get_full_name }},
@@ -6,7 +8,7 @@ Hi {{ owner.get_full_name }},
 
 Yagura has detected new state "{{ history.state }}" from your monitoring website.
 
-* Website URL: {{ site.url }}
+* Website URL: {{ site.url|guard_basic_auth }}
 
 * Website state: {{ history.state }}
 

@@ -1,5 +1,7 @@
+{% load url_filter %}
+
 {# TODO: Need transration #}
-{% block subject %}Activate to recieve notify of {{ site.url }}{% endblock %}
+{% block subject %}Activate to recieve notify of {{ site.url|guard_basic_auth }}{% endblock %}
 
 {% block plain %}
 Hi {{ recipient.email }},
@@ -7,7 +9,7 @@ Hi {{ recipient.email }},
 Your email address has been registered as notify recipient of site state by Yagura user.
 If you want to confirm this registration, please click this "Activate URL".
 
-* Website URL: {{ site.url }}
+* Website URL: {{ site.url|guard_basic_auth }}
 
 * Activate URL: {{ base_url }}{% url 'notifications:email-activate' activation.code %}
 {% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'layouts/two_pane.html' %}
 {% load i18n %}
 {% load bulma_tags %}
+{% load url_filter %}
 
 {% block content_main %}
   <div class="level">
@@ -22,7 +23,7 @@
       <tbody>
         <tr>
           <th>{% trans 'Site URL' %}:</th>
-          <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+          <td><a href="{{ site.url }}" target="_blank">{{ site.url|guard_basic_auth }}</a></td>
         </tr>
         <tr>
           <th>{% trans 'Excepted HTTP status code' %}:</th>
