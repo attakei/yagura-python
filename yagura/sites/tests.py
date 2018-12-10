@@ -22,6 +22,10 @@ class Site_ModelTest(TestCase):
         site = Site(id=site_id)
         assert site.get_absolute_url() == site_url
 
+    def test_save_basich_auth_url(self):
+        site = Site(url='http://user:pass@example.com')
+        site.save()
+
 
 class SiteList_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:list')
