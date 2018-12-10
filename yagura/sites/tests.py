@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from parameterized import parameterized
 
 from yagura.sites.models import Site
-from yagura.sites.templatetags import safe_url
+from yagura.sites.templatetags import url_filter
 from yagura.tests.base import ViewTestCase
 
 
@@ -277,10 +277,10 @@ class SiteDelete_ViewTest(ViewTestCase):
 class SafeUrl_Tests(TestCase):
     def test_no_filtered(self):
         before = 'http://example.com'
-        after = safe_url.safe_url(before)
+        after = url_filter.guard_basic_auth(before)
         assert before == after
 
     def test_basic_filtered(self):
         before = 'http://user:pass@example.com'
-        after = safe_url.safe_url(before)
-        assert after == 'http://????:????@example.com'
+        after = url_filter.guard_basic_auth(before)
+        assert after == 'http://<basic-auth>@example.com'

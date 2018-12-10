@@ -11,10 +11,10 @@ URL_REGEXP = re.compile(
 
 
 @register.filter
-def safe_url(value):
+def guard_basic_auth(value):
     """Mask user and password from URL with Basic Authentication
     """
     m = URL_REGEXP.match(value)
     if not m:
         return value
-    return f'{m.group("scheme")}://????:????@{m.group("url")}'
+    return f'{m.group("scheme")}://<basic-auth>@{m.group("url")}'
