@@ -9,6 +9,11 @@ class SiteCreateForm(forms.ModelForm):
     class Meta:
         model = Site
         fields = ['url', 'ok_http_status', ]
+        widgets = {
+            'url': forms.URLInput(attrs={
+                'placeholder': 'If you want use basic auth, set as URL'
+            })
+        }
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
