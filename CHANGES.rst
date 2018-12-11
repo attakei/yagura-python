@@ -2,6 +2,17 @@
 Change logs
 ===========
 
+ver 0.11.2
+==========
+
+:Date: 2018-12-11
+
+Fixes
+-----
+
+* Filter basic auth url
+
+
 ver 0.11.1
 ==========
 
