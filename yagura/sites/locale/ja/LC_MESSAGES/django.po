@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-14 02:23+0000\n"
+"POT-Creation-Date: 2018-12-11 01:49+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -18,7 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: yagura/sites/forms.py:28
+#: yagura/sites/forms.py:14
+msgid "If you want use basic auth, set as URL"
+msgstr "監視対象がBasic認証を施している場合は、URLに埋め込んでください"
+
+#: yagura/sites/forms.py:33
 msgid "You are reached limits for nums of monitoring sites."
 msgstr "監視可能なサイト数の上限に到達しています"
 
@@ -26,11 +30,11 @@ msgstr "監視可能なサイト数の上限に到達しています"
 msgid "Site ID in project"
 msgstr "サイトID"
 
-#: yagura/sites/models.py:16 yagura/sites/templates/sites/site_detail.html:24
+#: yagura/sites/models.py:16 yagura/sites/templates/sites/site_detail.html:25
 msgid "Site URL"
 msgstr "サイトのURL"
 
-#: yagura/sites/models.py:18 yagura/sites/templates/sites/site_detail.html:28
+#: yagura/sites/models.py:18 yagura/sites/templates/sites/site_detail.html:29
 msgid "Excepted HTTP status code"
 msgstr "期待しているHTTPステータスコード"
 
@@ -38,71 +42,71 @@ msgstr "期待しているHTTPステータスコード"
 msgid "Run monitoring?"
 msgstr "モニタリングをするか"
 
-#: yagura/sites/templates/sites/site_confirm_delete.html:4
+#: yagura/sites/templates/sites/site_confirm_delete.html:5
 msgid "Confirm of deleteing site"
 msgstr "サイト削除の確認"
 
-#: yagura/sites/templates/sites/site_confirm_delete.html:7
+#: yagura/sites/templates/sites/site_confirm_delete.html:8
 #, python-format
 msgid "Deleting for <strong>%(url)s</strong>"
 msgstr "<strong>%(url)s</strong> を削除します"
 
-#: yagura/sites/templates/sites/site_confirm_delete.html:11
+#: yagura/sites/templates/sites/site_confirm_delete.html:12
 msgid "Delete monitoring histories together"
 msgstr "サイトを削除すると、過去の監視履歴もすべて消去します"
 
-#: yagura/sites/templates/sites/site_confirm_delete.html:12
+#: yagura/sites/templates/sites/site_confirm_delete.html:13
 msgid "After delete, you cannot recovery all data"
 msgstr "一度削除すると、もとに戻すことはできません"
 
-#: yagura/sites/templates/sites/site_confirm_delete.html:16
-#: yagura/sites/templates/sites/site_confirm_disable.html:11
+#: yagura/sites/templates/sites/site_confirm_delete.html:17
+#: yagura/sites/templates/sites/site_confirm_disable.html:12
 msgid "Confirm"
 msgstr "確認"
 
-#: yagura/sites/templates/sites/site_confirm_disable.html:4
+#: yagura/sites/templates/sites/site_confirm_disable.html:5
 msgid "Confirm of disable monitoring site"
 msgstr "サイト監視停止の確認"
 
-#: yagura/sites/templates/sites/site_confirm_disable.html:7
+#: yagura/sites/templates/sites/site_confirm_disable.html:8
 #, python-format
 msgid "Disable monitoring for <strong>%(url)s</strong>"
 msgstr "<strong>%(url)s</strong> の監視を停止します"
 
-#: yagura/sites/templates/sites/site_delete_ng.html:4
+#: yagura/sites/templates/sites/site_delete_ng.html:5
 msgid "Deleteing site"
 msgstr "サイトの削除"
 
-#: yagura/sites/templates/sites/site_delete_ng.html:7
+#: yagura/sites/templates/sites/site_delete_ng.html:8
 msgid "Disabled deleting sites by administrator"
 msgstr "管理者によって、サイトの削除が無効化されています"
 
-#: yagura/sites/templates/sites/site_delete_ng.html:9
+#: yagura/sites/templates/sites/site_delete_ng.html:10
 #, python-format
 msgid "Site owner only can delete %(url)s"
 msgstr "%(url)s の登録者のみが削除できます"
 
-#: yagura/sites/templates/sites/site_detail.html:7
+#: yagura/sites/templates/sites/site_detail.html:8
 msgid "Site detail"
 msgstr "サイト情報"
 
-#: yagura/sites/templates/sites/site_detail.html:55
+#: yagura/sites/templates/sites/site_detail.html:56
 msgid "State"
 msgstr "状態"
 
-#: yagura/sites/templates/sites/site_detail.html:55
+#: yagura/sites/templates/sites/site_detail.html:56
 msgid "Range"
 msgstr "期間"
 
-#: yagura/sites/templates/sites/site_detail.html:55
+#: yagura/sites/templates/sites/site_detail.html:56
 msgid "Reason"
 msgstr "理由"
 
-#: yagura/sites/templates/sites/site_disable_ng.html:4
+#: yagura/sites/templates/sites/site_disable_ng.html:5
 msgid "Disable monitring site"
 msgstr "サイトの監視停止"
 
-#: yagura/sites/templates/sites/site_disable_ng.html:6
+#: yagura/sites/templates/sites/site_disable_ng.html:7
 #, python-format
 msgid "Site owner only can disable %(url)s"
 msgstr "%(url)s の登録者のみが監視を停止できます"
@@ -115,10 +119,10 @@ msgstr "新しくサイトを監視する"
 msgid "Register"
 msgstr "登録"
 
-#: yagura/sites/templates/sites/site_list.html:5
+#: yagura/sites/templates/sites/site_list.html:7
 msgid "List of web sites"
 msgstr "監視対象一覧"
 
-#: yagura/sites/templates/sites/site_list.html:6
+#: yagura/sites/templates/sites/site_list.html:8
 msgid "Add new site"
 msgstr "監視サイトを追加する"

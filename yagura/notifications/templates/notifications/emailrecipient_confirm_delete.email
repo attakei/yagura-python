@@ -1,5 +1,7 @@
+{% load url_filter %}
+
 {# TODO: Need transration #}
-{% block subject %}Deactivate to recieve notify of {{ site.url }}{% endblock %}
+{% block subject %}Deactivate to recieve notify of {{ site.url|guard_basic_auth }}{% endblock %}
 
 {% block plain %}
 Hi {{ recipient.email }},
@@ -7,7 +9,7 @@ Hi {{ recipient.email }},
 Your email address has been deleted from notify recipient of site state by Yagura user.
 If you want to confirm this deactivate, please click this "Deactivate URL".
 
-* Website URL: {{ site.url }}
+* Website URL: {{ site.url|guard_basic_auth }}
 
 * Deactivate URL: {{ base_url }}{% url 'notifications:email-deactivate' deactivation.code %}
 {% endblock %}

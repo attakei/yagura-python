@@ -1,9 +1,10 @@
 {% extends 'layouts/two_pane.html' %}
 {% load bulma_tags %}
+{% load url_filter %}
 {# TODO: Need transration #}
 
 {% block content_main %}
-  <h1 class="title">Add new notification for {{ site.url }}</h1>
+  <h1 class="title">Add new notification for {{ site.url|guard_basic_auth }}</h1>
   <div class="content">
     <form method="POST">
       {% csrf_token %}
