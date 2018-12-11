@@ -11,7 +11,7 @@ class SiteCreateForm(forms.ModelForm):
         fields = ['url', 'ok_http_status', ]
         widgets = {
             'url': forms.URLInput(attrs={
-                'placeholder': 'If you want use basic auth, set as URL'
+                'placeholder': _('If you want use basic auth, set as URL')
             })
         }
 
