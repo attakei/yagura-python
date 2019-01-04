@@ -26,6 +26,14 @@ class Site_ModelTest(TestCase):
         site = Site(url='http://user:pass@example.com')
         site.save()
 
+    @parameterized.expand([
+        ('http://example.com', None, 'http://example.com'),
+        ('http://example.com', 'example', 'example'),
+    ])
+    def test_display_name(self, url, title, expect):
+        site = Site(url=url, title=title)
+        assert site.display_name == expect
+
 
 class SiteList_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:list')
