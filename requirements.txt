@@ -7,5 +7,5 @@ django-environ
 pyasn1
 social-auth-app-django
 slackweb
-aiohttp
+aiohttp<3.5.0
 requests
