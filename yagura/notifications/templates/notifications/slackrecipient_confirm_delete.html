@@ -6,7 +6,7 @@
   <h1 class="title">{% trans 'Confirm of deleteing recipient' %}</h1>
   <div class="content">
     <p>
-      {% blocktrans with url=slackrecipient.site.url|guard_basic_auth %}Deleting notification for <strong>{{ url }}</strong>{% endblocktrans %}
+      {% blocktrans with name=slackrecipient.site.display_name|guard_basic_auth %}Deleting notification for <strong>{{ name }}</strong>{% endblocktrans %}
     </p>
     {% can_delete slackrecipient request.user as can_delete_ %}
     {% if can_delete_ %}

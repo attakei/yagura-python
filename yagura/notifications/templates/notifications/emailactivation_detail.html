@@ -6,6 +6,6 @@
   <h1 class="title">Activation</h1>
   <div class="content">
     <p>Thank you for activation.</p>
-    <p>If {{ site.url|guard_basic_auth }} state is changed, send notify for {{ recipient.email }}</p>
+    <p>If {{ site.display_name|guard_basic_auth }} state is changed, send notify for {{ recipient.email }}</p>
   </div>
 {% endblock %}

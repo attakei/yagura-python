@@ -34,6 +34,7 @@ class SendStateEmail_Test(TestCase):
         assert len(mail.outbox) == 1
         mail_body = mail.outbox[0].body
         assert 'http://localhost' in mail_body
+        assert 'examplecom' in mail_body
 
     @parameterized.expand([
         ('monitors/handle_state_changed', ),
