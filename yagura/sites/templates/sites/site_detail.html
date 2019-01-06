@@ -5,7 +5,7 @@
 
 {% block content_main %}
   <div class="level">
-    <h1 class="title">{% trans 'Site detail' %}</h1>
+    <h1 class="title">{% trans 'Site detail' %}: {{ site.title|default:'' }}</h1>
     {% if site.created_by == request.user %}
     <div class="btn-group" role="group">
       <a class="button is-danger is-small is-pulled-right" href="{% url 'sites:disable' site.id %}">Disable</a>
@@ -24,6 +24,10 @@
         <tr>
           <th>{% trans 'Site URL' %}:</th>
           <td><a href="{{ site.url }}" target="_blank">{{ site.url|guard_basic_auth }}</a></td>
+        </tr>
+        <tr>
+          <th>{% trans 'Site name' %}:</th>
+          <td>{{ site.title|default:'' }}</td>
         </tr>
         <tr>
           <th>{% trans 'Excepted HTTP status code' %}:</th>

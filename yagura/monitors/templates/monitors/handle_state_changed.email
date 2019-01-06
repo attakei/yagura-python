@@ -1,6 +1,6 @@
 {% load url_filter %}
 
-{% block subject %}State has changed to {{ history.state }}: {{ site.url|guard_basic_auth }}{% endblock %}
+{% block subject %}State has changed to {{ history.state }}: {{ site.display_name|guard_basic_auth }}{% endblock %}
 
 {% block plain %}
 Hi {{ owner.get_full_name }},
@@ -8,10 +8,13 @@ Hi {{ owner.get_full_name }},
 
 Yagura has detected changing states from your monitoring website.
 
-* Website URL: {{ site.url|guard_basic_auth }}
+{% if site.title %}
+* Website: {{ site.title }}
+{% endif %}
 
-* Website state: {{ history.state }}
+* URL: {{ site.url|guard_basic_auth }}
 
+* state: {{ history.state }}
 
 To see history, jump to {{ base_url }}{{ site.get_absolute_url }}
 {% endblock %}

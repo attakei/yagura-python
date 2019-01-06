@@ -4,7 +4,7 @@
 {# TODO: Need transration #}
 
 {% block content_main %}
-  <h1 class="title">Add new notification for {{ site.url|guard_basic_auth }}</h1>
+  <h1 class="title">Add new notification for {{ site.display_name|guard_basic_auth }}</h1>
   <div class="content">
     <form method="POST">
       {% csrf_token %}

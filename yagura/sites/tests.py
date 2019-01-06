@@ -26,6 +26,14 @@ class Site_ModelTest(TestCase):
         site = Site(url='http://user:pass@example.com')
         site.save()
 
+    @parameterized.expand([
+        ('http://example.com', None, 'http://example.com'),
+        ('http://example.com', 'example', 'example'),
+    ])
+    def test_display_name(self, url, title, expect):
+        site = Site(url=url, title=title)
+        assert site.display_name == expect
+
 
 class SiteList_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:list')
@@ -59,6 +67,14 @@ class SiteList_ViewTest(ViewTestCase):
         resp = self.client.get(f'{self.url}?all=1')
         assert resp.status_code == 200
         assert len(resp.context['site_list']) == 2
+
+    def test_show_title_or_url(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        # have title
+        assert 'examplecom' in str(resp.content)
+        # not have title
+        assert 'http://example.com/404' in str(resp.content)
 
 
 class SiteCreate_ViewTest(ViewTestCase):
@@ -146,6 +162,7 @@ class SiteDetail_ViewTest(ViewTestCase):
         self.client.force_login(get_user_model().objects.first())
         resp = self.client.get(self.url)
         assert resp.status_code == 200
+        assert 'examplecom' in str(resp.content)
 
     def test_not_found(self):
         self.client.force_login(get_user_model().objects.first())

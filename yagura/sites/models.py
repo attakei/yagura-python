@@ -14,6 +14,8 @@ class Site(models.Model):
     id = models.UUIDField(
         _('Site ID in project'), primary_key=True, default=uuid4)
     url = models.URLField(_('Site URL'))
+    title = models.CharField(
+        _('Site name'), max_length=50, null=True, blank=True)
     ok_http_status = models.PositiveSmallIntegerField(
         _('Excepted HTTP status code'), default=200, choices=ALL_HTTP_STATUS)
     enabled = models.BooleanField(
@@ -28,3 +30,9 @@ class Site(models.Model):
 
     def get_absolute_url(self):
         return f"/sites/{self.id}"
+
+    @property
+    def display_name(self):
+        if self.title:
+            return self.title
+        return self.url

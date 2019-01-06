@@ -4,6 +4,6 @@
 {% block content_main %}
   <h1 class="title">{% trans 'Disable monitring site' %}</h1>
   <div class="content">
-    <p>{% blocktrans with url=site.url|guard_basic_auth %}Site owner only can disable {{ url }}{% endblocktrans %}</p>
+    <p>{% blocktrans with name=site.display_name|guard_basic_auth %}Site owner only can disable {{ name }}{% endblocktrans %}</p>
   </div>
 {% endblock %}

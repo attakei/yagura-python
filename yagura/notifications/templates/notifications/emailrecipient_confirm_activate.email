@@ -1,7 +1,7 @@
 {% load url_filter %}
 
 {# TODO: Need transration #}
-{% block subject %}Activate to recieve notify of {{ site.url|guard_basic_auth }}{% endblock %}
+{% block subject %}Activate to recieve notify of {{ site.display_name|guard_basic_auth }}{% endblock %}
 
 {% block plain %}
 Hi {{ recipient.email }},

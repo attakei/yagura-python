@@ -7,7 +7,7 @@
     {% if not yagura_conf.ENABLE_DELETING_SITES %}
       <p>{% trans 'Disabled deleting sites by administrator' %}</p>
     {% else %}
-      <p>{% blocktrans with url=site.url|guard_basic_auth %}Site owner only can delete {{ url }}{% endblocktrans %}</p>
+      <p>{% blocktrans with name=site.display_name|guard_basic_auth %}Site owner only can delete {{ name }}{% endblocktrans %}</p>
     {% endif %}
   </div>
 {% endblock %}
