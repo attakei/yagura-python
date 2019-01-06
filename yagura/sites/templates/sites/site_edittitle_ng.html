@@ -1,0 +1,9 @@
+{% extends 'layouts/two_pane.html' %}
+{% load url_filter %}
+
+{% block content_main %}
+  <h1 class="title">{% trans 'Disable monitring site' %}</h1>
+  <div class="content">
+    <p>{% blocktrans with name=site.display_name|guard_basic_auth %}Site owner only can edit title of {{ name }}{% endblocktrans %}</p>
+  </div>
+{% endblock %}

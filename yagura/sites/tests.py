@@ -173,6 +173,63 @@ class SiteDetail_ViewTest(ViewTestCase):
         assert resp.status_code == 404
 
 
+class SiteEditTitle_ViewTest(ViewTestCase):
+    url = reverse_lazy(
+        'sites:edit-title',
+        args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+
+    def setUp(self):
+        super().setUp()
+        owner = get_user_model().objects.first()
+        Site.objects.update(created_by=owner)
+
+    def test_login_required(self):
+        resp = self.client.get(self.url)
+        assert resp.status_code == 302
+
+    def test_logined_user(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+
+    def test_not_found(self):
+        self.client.force_login(get_user_model().objects.first())
+        url = reverse_lazy(
+            'sites:edit-title',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
+        resp = self.client.get(url)
+        assert resp.status_code == 404
+
+    def test_post(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.post(self.url, {
+            'id': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01',
+            'title': 'testsite'
+        })
+        assert resp.status_code == 302
+        assert resp['Location'] == reverse_lazy('sites:list')
+        assert Site.objects.first().title == 'testsite'
+
+    def test_only_owner__get(self):
+        user = get_user_model().objects.create_user('not-owner')
+        self.client.force_login(user)
+        resp = self.client.get(self.url)
+        assert 'sites/site_edittitle_ng.html' in resp.template_name
+
+    def test_only_owner__post(self):
+        user = get_user_model().objects.create_user('not-owner')
+        self.client.force_login(user)
+        resp = self.client.post(self.url)
+        assert resp.status_code == 200
+
+    # def test_after_disabled_new_monitor_log(self):
+    #     from yagura.monitors.models import StateHistory
+    #     before_ = StateHistory.objects.count()
+    #     self.test_confirmed()
+    #     after_ = StateHistory.objects.count()
+    #     assert before_ + 1 == after_
+
+
 class SiteDisable_ViewTest(ViewTestCase):
     url = reverse_lazy(
         'sites:disable',
