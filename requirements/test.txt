@@ -1,4 +1,4 @@
-pytest
+pytest<4.1.0
 pytest-asyncio
 pytest-django
 aioresponses==0.5.0
