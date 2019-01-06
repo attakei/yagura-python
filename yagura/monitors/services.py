@@ -1,7 +1,6 @@
 import asyncio
 import importlib
 import logging
-import random
 import time
 import typing
 
@@ -36,7 +35,7 @@ async def monitor_site_requests(site: Site, max_retry: int = 1) \
     if status unmatch for excepted, retry max argument request
     """
     Logger.debug(f"Start to check: {site.url}")
-    delay= fib()
+    delay = fib()
     for try_idx in range(max_retry):
         # FIXME:
         if try_idx != 0:
@@ -70,7 +69,7 @@ async def monitor_site_aiohttp(site: Site, max_retry: int = 1) \
     if not site.enabled:
         return 'DISABLED', ''
     async with aiohttp.ClientSession() as client:
-        delay= fib()
+        delay = fib()
         for try_idx in range(max_retry):
             # FIXME:
             if try_idx != 0:
