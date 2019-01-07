@@ -54,11 +54,14 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
 class SiteEditTitleView(LoginRequiredMixin, UpdateView):
     model = Site
     fields = ['title']
-    success_url = reverse_lazy('sites:list')
+
+    def get_success_url(self):
+        site = self.get_object()
+        return reverse_lazy('sites:detail', args=(site.id, ))
 
     def get_template_names(self):
         if self.object.created_by == self.request.user:
-            return ['sites/site_form.html']
+            return ['sites/site_edittitle_form.html']
         return ['sites/site_edittitle_ng.html']
 
     def post(self, request, *args, **kwargs):

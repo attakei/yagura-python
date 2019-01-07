@@ -24,14 +24,19 @@
         <tr>
           <th>{% trans 'Site URL' %}:</th>
           <td><a href="{{ site.url }}" target="_blank">{{ site.url|guard_basic_auth }}</a></td>
+          <td></td>
         </tr>
         <tr>
           <th>{% trans 'Site name' %}:</th>
           <td>{{ site.title|default:'' }}</td>
+          <td>
+            <a class="button is-small" href="{% url 'sites:edit-title' site.id %}">Edit</a>
+          </td>
         </tr>
         <tr>
           <th>{% trans 'Excepted HTTP status code' %}:</th>
           <td>{{ site.ok_http_status }}</td>
+          <td></td>
         </tr>
         <tr>
           <th>Email notifications:</th>
@@ -41,6 +46,7 @@
               <a class="button" href="{% url 'notifications:add-recipient' site.id %}">Add</a>
             </span>
           </td>
+          <td></td>
         </tr>
         <tr>
           <th>Slack notifications:</th>
@@ -48,6 +54,7 @@
             <a class="button" href="{% url 'notifications:list-slack-recipient' site.id %}">Show</a>
             <a class="button" href="{% url 'notifications:add-slack-recipient' site.id %}">Add</a>
           </td>
+          <td></td>
         </tr>
       </tbody>
     </table>

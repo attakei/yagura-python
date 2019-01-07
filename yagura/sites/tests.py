@@ -206,8 +206,11 @@ class SiteEditTitle_ViewTest(ViewTestCase):
             'id': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01',
             'title': 'testsite'
         })
+        redirect_to = reverse_lazy(
+            'sites:detail',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
         assert resp.status_code == 302
-        assert resp['Location'] == reverse_lazy('sites:list')
+        assert resp['Location'] == redirect_to
         assert Site.objects.first().title == 'testsite'
 
     def test_only_owner__get(self):
@@ -221,13 +224,6 @@ class SiteEditTitle_ViewTest(ViewTestCase):
         self.client.force_login(user)
         resp = self.client.post(self.url)
         assert resp.status_code == 200
-
-    # def test_after_disabled_new_monitor_log(self):
-    #     from yagura.monitors.models import StateHistory
-    #     before_ = StateHistory.objects.count()
-    #     self.test_confirmed()
-    #     after_ = StateHistory.objects.count()
-    #     assert before_ + 1 == after_
 
 
 class SiteDisable_ViewTest(ViewTestCase):
