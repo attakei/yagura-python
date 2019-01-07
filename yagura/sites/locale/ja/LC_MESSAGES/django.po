@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-07 02:20+0000\n"
+"POT-Creation-Date: 2019-01-07 08:20+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -51,6 +51,7 @@ msgid "Confirm of deleteing site"
 msgstr "サイト削除の確認"
 
 #: yagura/sites/templates/sites/site_confirm_delete.html:8
+#, python-format
 msgid "Deleting for <strong>%(name)s</strong>"
 msgstr "<strong>%(name)s</strong> を削除します"
 
@@ -72,6 +73,7 @@ msgid "Confirm of disable monitoring site"
 msgstr "サイト監視停止の確認"
 
 #: yagura/sites/templates/sites/site_confirm_disable.html:8
+#, python-format
 msgid "Disable monitoring for <strong>%(name)s</strong>"
 msgstr "<strong>%(name)s</strong> の監視を停止します"
 
@@ -84,6 +86,7 @@ msgid "Disabled deleting sites by administrator"
 msgstr "管理者によって、サイトの削除が無効化されています"
 
 #: yagura/sites/templates/sites/site_delete_ng.html:10
+#, python-format
 msgid "Site owner only can delete %(name)s"
 msgstr "%(name)s の登録者のみが削除できます"
 
@@ -104,15 +107,16 @@ msgid "Reason"
 msgstr "理由"
 
 #: yagura/sites/templates/sites/site_disable_ng.html:5
-#: yagura/sites/templates/sites/site_edittitle_ng.html:5
 msgid "Disable monitring site"
 msgstr "サイトの監視停止"
 
 #: yagura/sites/templates/sites/site_disable_ng.html:7
+#, python-format
 msgid "Site owner only can disable %(name)s"
 msgstr "%(name)s の登録者のみが監視を停止できます"
 
 #: yagura/sites/templates/sites/site_edittitle_form.html:5
+#: yagura/sites/templates/sites/site_edittitle_ng.html:5
 msgid "Edit title of site"
 msgstr "サイト名の編集"
 
@@ -121,6 +125,7 @@ msgid "Update"
 msgstr "更新"
 
 #: yagura/sites/templates/sites/site_edittitle_ng.html:7
+#, python-format
 msgid "Site owner only can edit title of %(name)s"
 msgstr "%(name)s の登録者のみが監視を停止できます"
 
