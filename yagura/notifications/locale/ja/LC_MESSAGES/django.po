@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-14 02:23+0000\n"
+"POT-Creation-Date: 2019-01-07 02:20+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: yagura/notifications/templates/notifications/emailrecipient_confirm_delete.html:5
-#: yagura/notifications/templates/notifications/slackrecipient_confirm_delete.html:5
+#: yagura/notifications/templates/notifications/slackrecipient_confirm_delete.html:6
 msgid "Confirm of deleteing recipient"
 msgstr "通知先削除の確認"
 
@@ -29,12 +29,12 @@ msgid "Deleting notification for <strong>%(recipient)s</strong>"
 msgstr "通知先 <strong>%(recipient)s</strong> を削除します"
 
 #: yagura/notifications/templates/notifications/emailrecipient_confirm_delete.html:14
-#: yagura/notifications/templates/notifications/slackrecipient_confirm_delete.html:14
+#: yagura/notifications/templates/notifications/slackrecipient_confirm_delete.html:15
 msgid "Confirm"
 msgstr "確認"
 
-#: yagura/notifications/templates/notifications/emailrecipient_form.html:12
-#: yagura/notifications/templates/notifications/slackrecipient_form.html:12
+#: yagura/notifications/templates/notifications/emailrecipient_form.html:13
+#: yagura/notifications/templates/notifications/slackrecipient_form.html:13
 msgid "Register"
 msgstr ""
 
@@ -42,10 +42,8 @@ msgstr ""
 msgid "List of notifications"
 msgstr "通知先の一覧"
 
-#: yagura/notifications/templates/notifications/slackrecipient_confirm_delete.html:8
-#, fuzzy, python-format
-#| msgid "Deleting notification for <strong>%(recipient)s</strong>"
-msgid "Deleting notification for <strong>%(url)s</strong>"
+#: yagura/notifications/templates/notifications/slackrecipient_confirm_delete.html:9
+msgid "Deleting notification for <strong>%(name)s</strong>"
 msgstr "通知先 <strong>%(recipient)s</strong> を削除します"
 
 #: yagura/notifications/templates/notifications/slackrecipient_list.html:7

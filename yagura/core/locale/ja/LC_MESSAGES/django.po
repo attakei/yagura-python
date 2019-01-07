@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-14 02:23+0000\n"
+"POT-Creation-Date: 2019-01-07 02:20+0000\n"
 "PO-Revision-Date: 2018-07-19 01:00+0900\n"
 "Last-Translator: Kazuya Takei <attakei@gmail.com>\n"
 "Language-Team: Kazuya Takei <attakei@gmail.com>\n"
@@ -34,11 +34,11 @@ msgstr "または"
 msgid "Registration user"
 msgstr "ユーザー登録"
 
-#: yagura/core/templates/layouts/base.html:52
+#: yagura/core/templates/layouts/base.html:56
 msgid "Profile"
 msgstr "プロフィール"
 
-#: yagura/core/templates/layouts/base.html:53
+#: yagura/core/templates/layouts/base.html:57
 #: yagura/core/templates/layouts/two_pane.html:16
 msgid "Log out"
 msgstr "ログアウト"
