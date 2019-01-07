@@ -26,6 +26,14 @@ class Site_ModelTest(TestCase):
         site = Site(url='http://user:pass@example.com')
         site.save()
 
+    @parameterized.expand([
+        ('http://example.com', None, 'http://example.com'),
+        ('http://example.com', 'example', 'example'),
+    ])
+    def test_display_name(self, url, title, expect):
+        site = Site(url=url, title=title)
+        assert site.display_name == expect
+
 
 class SiteList_ViewTest(ViewTestCase):
     url = reverse_lazy('sites:list')
@@ -59,6 +67,14 @@ class SiteList_ViewTest(ViewTestCase):
         resp = self.client.get(f'{self.url}?all=1')
         assert resp.status_code == 200
         assert len(resp.context['site_list']) == 2
+
+    def test_show_title_or_url(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        # have title
+        assert 'examplecom' in str(resp.content)
+        # not have title
+        assert 'http://example.com/404' in str(resp.content)
 
 
 class SiteCreate_ViewTest(ViewTestCase):
@@ -146,6 +162,7 @@ class SiteDetail_ViewTest(ViewTestCase):
         self.client.force_login(get_user_model().objects.first())
         resp = self.client.get(self.url)
         assert resp.status_code == 200
+        assert 'examplecom' in str(resp.content)
 
     def test_not_found(self):
         self.client.force_login(get_user_model().objects.first())
@@ -154,6 +171,59 @@ class SiteDetail_ViewTest(ViewTestCase):
             args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
         resp = self.client.get(url)
         assert resp.status_code == 404
+
+
+class SiteEditTitle_ViewTest(ViewTestCase):
+    url = reverse_lazy(
+        'sites:edit-title',
+        args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+
+    def setUp(self):
+        super().setUp()
+        owner = get_user_model().objects.first()
+        Site.objects.update(created_by=owner)
+
+    def test_login_required(self):
+        resp = self.client.get(self.url)
+        assert resp.status_code == 302
+
+    def test_logined_user(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.get(self.url)
+        assert resp.status_code == 200
+
+    def test_not_found(self):
+        self.client.force_login(get_user_model().objects.first())
+        url = reverse_lazy(
+            'sites:edit-title',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee00'])
+        resp = self.client.get(url)
+        assert resp.status_code == 404
+
+    def test_post(self):
+        self.client.force_login(get_user_model().objects.first())
+        resp = self.client.post(self.url, {
+            'id': 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01',
+            'title': 'testsite'
+        })
+        redirect_to = reverse_lazy(
+            'sites:detail',
+            args=['aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeee01'])
+        assert resp.status_code == 302
+        assert resp['Location'] == redirect_to
+        assert Site.objects.first().title == 'testsite'
+
+    def test_only_owner__get(self):
+        user = get_user_model().objects.create_user('not-owner')
+        self.client.force_login(user)
+        resp = self.client.get(self.url)
+        assert 'sites/site_edittitle_ng.html' in resp.template_name
+
+    def test_only_owner__post(self):
+        user = get_user_model().objects.create_user('not-owner')
+        self.client.force_login(user)
+        resp = self.client.post(self.url)
+        assert resp.status_code == 200
 
 
 class SiteDisable_ViewTest(ViewTestCase):

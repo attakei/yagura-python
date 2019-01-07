@@ -5,7 +5,7 @@
   <h1 class="title">{% trans 'Confirm of disable monitoring site' %}</h1>
   <div class="content">
     <p>
-      {% blocktrans with url=site.url|guard_basic_auth %}Disable monitoring for <strong>{{ url }}</strong>{% endblocktrans %}
+      {% blocktrans with name=site.display_name|guard_basic_auth %}Disable monitoring for <strong>{{ name }}</strong>{% endblocktrans %}
     </p>
     <form method="POST">
       {% csrf_token %}

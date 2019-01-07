@@ -1,7 +1,6 @@
 import asyncio
 import importlib
 import logging
-import random
 import time
 import typing
 
@@ -20,6 +19,15 @@ from yagura.utils import get_base_url
 Logger = logging.getLogger(__name__)
 
 
+def fib() -> typing.Generator[int, None, None]:
+    """Generator of fibonacci
+    """
+    a, b = 1, 1
+    while True:
+        a, b = b, a + b
+        yield a
+
+
 async def monitor_site_requests(site: Site, max_retry: int = 1) \
         -> typing.Tuple[str, str]:
     """Monitor target site.
@@ -27,7 +35,11 @@ async def monitor_site_requests(site: Site, max_retry: int = 1) \
     if status unmatch for excepted, retry max argument request
     """
     Logger.debug(f"Start to check: {site.url}")
+    delay = fib()
     for try_idx in range(max_retry):
+        # FIXME:
+        if try_idx != 0:
+            time.sleep(next(delay))
         try:
             resp = requests.get(site.url, allow_redirects=False)
             Logger.debug(f"Status {resp.status_code}: {site.url}")
@@ -57,10 +69,11 @@ async def monitor_site_aiohttp(site: Site, max_retry: int = 1) \
     if not site.enabled:
         return 'DISABLED', ''
     async with aiohttp.ClientSession() as client:
+        delay = fib()
         for try_idx in range(max_retry):
             # FIXME:
             if try_idx != 0:
-                time.sleep(random.random() + 1)
+                time.sleep(next(delay))
             try:
                 resp = await client.get(site.url, allow_redirects=False)
                 Logger.debug(f"Status {resp.status}: {site.url}")

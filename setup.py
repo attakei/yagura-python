@@ -1,29 +1,29 @@
 """Setup module
 """
-import sys
-from codecs import open
-from os import path
+import re
+from pathlib import Path
 
 from setuptools import find_packages, setup
 
 
-here = path.abspath(path.dirname(__file__))
-sys.path.append(here)
+def fetch_version_string(target: Path) -> str:
+    line_re = re.compile(r"__version__ = '(.*?)'", re.S)
+    return line_re.search(target.open().read()).group(1)
 
-import yagura  # noqa: flake8
 
+here = Path(__file__).parent
 
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with (here / 'README.rst').open(encoding='utf-8') as f:
     long_description = f.read()
 
 install_requires = []
-with open('requirements.txt') as fp:
-    install_requires = [req.strip() for req in fp.readlines() if req != '\n']
+with (here / 'requirements.txt').open(encoding='utf-8') as f:
+    install_requires = [req.strip() for req in f.readlines() if req != '\n']
 
 
 setup(
     name='yagura',
-    version=yagura.__version__,
+    version=fetch_version_string(here / 'yagura' / '__init__.py'),
     description='Simple website monitoring kit',
     long_description=long_description,
     url='https://gitlab.com/attakei/yagura',
@@ -34,6 +34,7 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     # TODO: add after
     # keywords='django',

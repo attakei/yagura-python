@@ -8,7 +8,7 @@ from yagura.sites.models import Site
 class SiteCreateForm(forms.ModelForm):
     class Meta:
         model = Site
-        fields = ['url', 'ok_http_status', ]
+        fields = ['url', 'title', 'ok_http_status', ]
         widgets = {
             'url': forms.URLInput(attrs={
                 'placeholder': _('If you want use basic auth, set as URL')

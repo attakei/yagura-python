@@ -211,10 +211,11 @@ class SlackRecipientDelete_ViewTest(ViewTestCase):
     def test_get(self, r_id, u_id, can_delete, desc):
         user = get_user_model().objects.get(pk=u_id)
         self.client.force_login(user)
-        resp = self.client.get(
-            reverse_lazy('notifications:delete-slack-recipient', args=(r_id,)))
+        url = reverse_lazy(
+            'notifications:delete-slack-recipient', args=(r_id,))
+        resp = self.client.get(url)
         assert resp.status_code == 200
-        assert self.site.url in str(resp.content)
+        assert 'examplecom' in str(resp.content)
         if can_delete:
             assert 'You do not have permission' not in str(resp.content)
         else:

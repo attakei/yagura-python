@@ -1,16 +1,14 @@
 {% extends 'layouts/two_pane.html' %}
 {% load bulma_tags %}
-{% load url_filter %}
-{# TODO: Need transration #}
 
 {% block content_main %}
-  <h1 class="title">Add new notification recipient of Slack for {{ site.display_name|guard_basic_auth }}</h1>
+  <h1 class="title">{% trans 'Edit title of site' %}</h1>
   <div class="content">
     <form method="POST">
       {% csrf_token %}
       {{ form|bulma }}
       <div class="field">
-        <button type="submit" class="button is-primary">{% trans 'Register' %}</button>
+        <button type="submit" class="button is-primary">{% trans 'Update' %}</button>
       </div>
     </form>
   </div>

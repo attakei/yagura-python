@@ -51,6 +51,27 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
 
 
 # TODO: Set message
+class SiteEditTitleView(LoginRequiredMixin, UpdateView):
+    model = Site
+    fields = ['title']
+
+    def get_success_url(self):
+        site = self.get_object()
+        return reverse_lazy('sites:detail', args=(site.id, ))
+
+    def get_template_names(self):
+        if self.object.created_by == self.request.user:
+            return ['sites/site_edittitle_form.html']
+        return ['sites/site_edittitle_ng.html']
+
+    def post(self, request, *args, **kwargs):
+        site = self.get_object()
+        if site.created_by == request.user:
+            return super().post(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
+
+
+# TODO: Set message
 class SiteDisableView(LoginRequiredMixin, UpdateView):
     model = Site
     fields = ['enabled']
