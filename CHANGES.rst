@@ -2,6 +2,24 @@
 Change logs
 ===========
 
+ver 0.12.0
+==========
+
+:Date: 2019-01-07
+
+Features
+--------
+
+* Add site title attribute and render in pages
+* Update retrying delay logic
+
+Fixes
+-----
+
+* Lock aiohttp version
+* Lock py.test version
+
+
 ver 0.11.2
 ==========
 
